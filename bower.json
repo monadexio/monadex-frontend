@@ -11,9 +11,9 @@
     "angular-loader": "1.2.x",
     "angular-mocks": "~1.2.x",
     "html5-boilerplate": "~4.3.0",
-    "jquery": "~1.9.0",
+    "jquery": "2.0.3",
     "fabric": "1.4.5",
     "jquery-minicolors": "2.1.4",
-    "bootstrap": "3.1.1"
+    "bootstrap": "2.3.2"
   }
 }
