@@ -8,8 +8,8 @@ describe('controllers', function(){
 
   it('should ....', inject(function($controller) {
     //spec body
-    var monadexCtrl1 = $controller('MonadexCtrl1', { $scope: {} });
-    expect(monadexCtrl1).toBeDefined();
+    var monadexDesigner = $controller('MonadexTshirtDesigner', { $scope: {} });
+    expect(monadexDesigner).toBeDefined();
   }));
 
   it('should ....', inject(function($controller) {

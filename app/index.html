@@ -9,15 +9,21 @@
   <title>Monadex</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="bower_components/jquery/jquery.js"></script>
+  <script src="js/fabric.js"></script>
+  <script src="js/jquery.Minicolors.min.js"></script>
+
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
-  <link rel="stylesheet" href="bower_components/bootstrap/docs/assets/css/bootstrap.css">
-  <link rel="stylesheet" href="bower_components/bootstrap/docs/assets/css/bootstrap-responsive.css">
-  <link rel="stylesheet" href="bower_components/jquery-minicolors/jquery.minicolors.css">
+  <link rel="stylesheet" href="css/jquery.Minicolors.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
   <link rel="stylesheet" href="css/app.css"/>
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
-<body>
+
+<body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -40,7 +46,7 @@
   <footer class="footer">      
     <div class="container">
       <p class="pull-right"><a href="#">Back to top</a></p>	        
-    </div>       
+    </div>
   </footer>
 
   <!-- In production use:
@@ -48,10 +54,7 @@
   -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="bower_components/jquery/jquery.js"></script>
-  <script src="bower_components/fabric/dist/fabric.js"></script>
-  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-  <script src="bower_components/jquery-minicolors/jquery.minicolors.js"></script>
+  <script src="js/bootstrap.min.js"></script>
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/controllers.js"></script>
