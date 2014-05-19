@@ -3,18 +3,18 @@
 /* jasmine specs for controllers go here */
 
 describe('controllers', function(){
-  beforeEach(module('myApp.controllers'));
+  beforeEach(module('monadexApp.controllers'));
 
 
   it('should ....', inject(function($controller) {
     //spec body
-    var myCtrl1 = $controller('MyCtrl1', { $scope: {} });
-    expect(myCtrl1).toBeDefined();
+    var monadexCtrl1 = $controller('MonadexCtrl1', { $scope: {} });
+    expect(monadexCtrl1).toBeDefined();
   }));
 
   it('should ....', inject(function($controller) {
     //spec body
-    var myCtrl2 = $controller('MyCtrl2', { $scope: {} });
-    expect(myCtrl2).toBeDefined();
+    var monadexCtrl2 = $controller('MonadexCtrl2', { $scope: {} });
+    expect(monadexCtrl2).toBeDefined();
   }));
 });
