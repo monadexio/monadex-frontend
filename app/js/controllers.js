@@ -38,7 +38,23 @@ angular.module('monadexApp.controllers', [])
                       {src: "img/avatar/avatar-3.png"},
                       {src: "img/avatar/avatar-4.png"},
                       {src: "img/avatar/avatar-5.png"},
-                    ]
+                    ],
+
+    $scope.fonts = [ {name: 'Arial', class: 'Arial'},
+                     {name: 'Helvetica', class: 'Helvetica'},
+                     {name: 'Myriad Pro', class: 'MyriadPro'},
+                     {name: 'Delicious', class: 'Delicious'},
+                     {name: 'Verdana', class: 'Verdana'},
+                     {name: 'Georgia', class: 'Georgia'},
+                     {name: 'Courier', class: 'Courier'},
+                     {name: 'Comic Sans MS', class: 'ComicSansMS'},
+                     {name: 'Impact', class: 'Impact'},
+                     {name: 'Monaco', class: 'Monaco'},
+                     {name: 'Optima', class: 'Optima'},
+                     {name: 'Hoefler Text', class: 'Hoefler Text'},
+                     {name: 'Plaster', class: 'Plaster'},
+                     {name: 'Engagement', class: 'Engagement'},
+                   ]
 
     $scope.$on('$viewContentLoaded', function(event){
       console.log("viewcontentloaded");
