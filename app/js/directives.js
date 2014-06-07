@@ -1,6 +1,7 @@
 'use strict';
 
-function onObjectSelected(e) {	 
+function onObjectSelected(e) {
+  console.log("selected!");
   var selectedObject = e.target;
   $("#text-string").val("");
   selectedObject.hasRotatingPoint = true
@@ -20,6 +21,7 @@ function onObjectSelected(e) {
 };
 
 function onSelectedCleared(e){
+  console.log("cleared!");
   $("#texteditor").css('display', 'none');
   $("#text-string").val("");
   $("#imageeditor").css('display', 'none');
@@ -37,7 +39,8 @@ angular.module('monadexApp.directives', []).
       restrict: 'E',
       scope: {
         colors: '=tshirtcolors',
-        images: '=tshirtimages'
+        images: '=tshirtimages',
+        tshirtTypes: '=tshirttypes'
       },
       templateUrl: 'partials/tshirt-designer.html',
       link: function(scope, element, attrs) {
@@ -137,12 +140,12 @@ angular.module('monadexApp.directives', []).
             
             fabric.Image.fromURL(el.src, function(image) {
               image.set({
-	        left: left,
-	        top: top,
-	        angle: 0,
-	        padding: 10,
-	        cornersize: 10,
-	        hasRotatingPoint:true
+                left: left,
+                top: top,
+                angle: 0,
+                padding: 10,
+                cornersize: 10,
+                hasRotatingPoint:true
               });
               //image.scale(getRandomNum(0.1, 0.25)).setCoords();
               canvas.add(image);
