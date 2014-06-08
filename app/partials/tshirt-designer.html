@@ -1,4 +1,4 @@
-9<!-- Headings & Paragraph Copy -->
+<!-- Headings & Paragraph Copy -->
 <div class="span3">
   <div class="tabbable"> <!-- Only required for left/right tabs -->
     <ul class="nav nav-tabs">
@@ -52,10 +52,10 @@
           <i class="icon-font" style="width:19px;height:19px;"></i>
         </button>
 
-	<ul class="dropdown-menu" role="menu" aria-labelledby="font-family-X" ng-repeat="font in fonts">
-          <li><a tabindex="-1" href="#"
-                 ng-click="setFont('{{font.name}}');"
-                 class="{{font.class}}">{{font.name}}</a></li>
+	<ul class="dropdown-menu" role="menu" aria-labelledby="font-family-X">
+          <li ng-repeat="font in fonts">
+            <a tabindex="-1" href="#" ng-click="setFont('{{font.name}}');" class="{{font.class}}">{{font.name}}</a>
+          </li>
 	</ul>
 	<button id="text-bold" class="btn" data-original-title="Bold"><img src="img/font_bold.png" height="" width=""></button>
 	<button id="text-italic" class="btn" data-original-title="Italic"><img src="img/font_italic.png" height="" width=""></button>
@@ -66,14 +66,16 @@
 	<a class="btn" href="#" rel="tooltip" data-placement="top" data-original-title="Font Border Color"><input type="hidden" id="text-strokecolor" class="color-picker" size="7" value="#000000"></a>
 	<!--- Background <input type="hidden" id="text-bgcolor" class="color-picker" size="7" value="#ffffff"> --->
       </div>
+
       <div class="pull-right" align="" id="imageeditor" style="display:none">
         <div class="btn-group">
-	  <button class="btn" id="bring-to-front" title="Bring to Front"><i class="icon-fast-backward rotate" style="height:19px;"></i></button>
-	  <button class="btn" id="send-to-back" title="Send to Back"><i class="icon-fast-forward rotate" style="height:19px;"></i></button>
+	  <button id="bring-to-front" class="btn" title="Bring to Front"><i class="icon-fast-backward rotate" style="height:19px;"></i></button>
+	  <button id="send-to-back" class="btn" title="Send to Back"><i class="icon-fast-forward rotate" style="height:19px;"></i></button>
 	  <button id="flip" type="button" class="btn" title="Show Back View"><i class="icon-retweet" style="height:19px;"></i></button>
 	  <button id="remove-selected" class="btn" title="Delete selected item"><i class="icon-trash" style="height:19px;"></i></button>
 	</div>
       </div>
+
     </div>
   </div>
 

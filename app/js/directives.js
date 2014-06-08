@@ -27,6 +27,22 @@ function onSelectedCleared(e){
   $("#imageeditor").css('display', 'none');
 };
 
+function setFont(font){
+  var activeObject = canvas.getActiveObject();
+  if (activeObject && activeObject.type === 'text') {
+    activeObject.fontFamily = font;
+    canvas.renderAll();
+  }
+};
+
+function removeWhite(){
+  var activeObject = canvas.getActiveObject();
+  if (activeObject && activeObject.type === 'image') {			  
+    activeObject.filters[2] =  new fabric.Image.filters.RemoveWhite({hreshold: 100, distance: 10});//0-255, 0-255
+    activeObject.applyFilters(canvas.renderAll.bind(canvas));
+  }	        
+};
+
 /* Directives */
 angular.module('monadexApp.directives', []).
   directive('appVersion', ['version', function(version) {
@@ -40,7 +56,8 @@ angular.module('monadexApp.directives', []).
       scope: {
         colors: '=tshirtcolors',
         images: '=tshirtimages',
-        tshirtTypes: '=tshirttypes'
+        tshirtTypes: '=tshirttypes',
+        fonts: '='
       },
       templateUrl: 'partials/tshirt-designer.html',
       link: function(scope, element, attrs) {
@@ -101,7 +118,7 @@ angular.module('monadexApp.directives', []).
             //canvas.renderAll();
           });
 
-          $('#add-text').on("click", function(){
+          $('#add-text').click(function(){
             var text = $("#text-string").val();
             var textSample = new fabric.Text(text, {
               left: fabric.util.getRandomInt(0, 200),
@@ -152,7 +169,7 @@ angular.module('monadexApp.directives', []).
             });
           });
 
-          $('#remove-selected').onclick = function() {
+          $('#remove-selected').click(function() {
             var activeObject = canvas.getActiveObject(),
             activeGroup = canvas.getActiveGroup();
             if (activeObject) {
@@ -166,9 +183,9 @@ angular.module('monadexApp.directives', []).
 	        canvas.remove(object);
               });
             }
-          };
+          });
 
-          $('#bring-to-front').onclick = function() {
+          $('#bring-to-front').click(function() {
             var activeObject = canvas.getActiveObject(),
             activeGroup = canvas.getActiveGroup();
             if (activeObject) {
@@ -181,9 +198,9 @@ angular.module('monadexApp.directives', []).
 	        object.bringToFront();
               });
             }
-          };
+          });
 
-          $('#send-to-back').onclick = function() {
+          $('#send-to-back').click(function() {
             var activeObject = canvas.getActiveObject(),
             activeGroup = canvas.getActiveGroup();
             if (activeObject) {
@@ -196,7 +213,7 @@ angular.module('monadexApp.directives', []).
 	        object.sendToBack();
               });
             }
-          };
+          });
 
           $("#text-bold").click(function() {		  
             var activeObject = canvas.getActiveObject();
