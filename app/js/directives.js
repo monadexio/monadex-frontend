@@ -44,13 +44,15 @@ function removeWhite(){
 };
 
 /* Directives */
-angular.module('monadexApp.directives', []).
-  directive('appVersion', ['version', function(version) {
+var monadexDirectives = angular.module('monadexApp.directives', []);
+
+monadexDirectives.directive('appVersion', ['version', function(version) {
     return function(scope, elm, attrs) {
       elm.text(version);
     };
-  }])
-  .directive('tshirtDesigner', ['$document', function($document) {
+  }]);
+
+monadexDirectives.directive('tshirtDesigner', ['$document', function($document) {
     return {
       restrict: 'E',
       scope: {
