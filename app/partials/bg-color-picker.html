@@ -1,0 +1,7 @@
+<ul class="nav">
+  <!-- need to probably use directives, problem is
+       that this is not loaded when jquery in tshirtEditor
+       think the document is loaded. -->
+  <li class="color-preview" title="{{color.title}}"
+      style="{{color.style}}" ng-repeat="color in colors"></li>
+</ul>

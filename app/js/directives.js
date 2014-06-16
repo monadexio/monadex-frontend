@@ -6,16 +6,16 @@ function onObjectSelected(e) {
   $("#text-string").val("");
   selectedObject.hasRotatingPoint = true
   if (selectedObject && selectedObject.type === 'text') {
-    //display text editor	    	
+    //display text editor
     $("#texteditor").css('display', 'block');
-    $("#text-string").val(selectedObject.getText());	    	
+    $("#text-string").val(selectedObject.getText());
     $('#text-fontcolor').miniColors('value',selectedObject.fill);
-    $('#text-strokecolor').miniColors('value',selectedObject.strokeStyle);	
+    $('#text-strokecolor').miniColors('value',selectedObject.strokeStyle);
     $("#imageeditor").css('display', 'block');
   }
   else if (selectedObject && selectedObject.type === 'image'){
     //display image editor
-    $("#texteditor").css('display', 'none');	
+    $("#texteditor").css('display', 'none');
     $("#imageeditor").css('display', 'block');
   }
 };
@@ -37,10 +37,10 @@ function setFont(font){
 
 function removeWhite(){
   var activeObject = canvas.getActiveObject();
-  if (activeObject && activeObject.type === 'image') {			  
+  if (activeObject && activeObject.type === 'image') {
     activeObject.filters[2] =  new fabric.Image.filters.RemoveWhite({hreshold: 100, distance: 10});//0-255, 0-255
     activeObject.applyFilters(canvas.renderAll.bind(canvas));
-  }	        
+  }
 };
 
 /* Directives */
@@ -56,7 +56,7 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
     return {
       restrict: 'E',
       scope: {
-        colors: '=tshirtcolors',
+        colors: '=',
         images: '=tshirtimages',
         tshirtTypes: '=tshirttypes',
         fonts: '='
@@ -71,7 +71,7 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
           var line4;
 
 
-          //setup front side canvas 
+          //setup front side canvas
           canvas = new fabric.Canvas('tcanvas', {
             hoverCursor: 'pointer',
             selection: true,
@@ -79,7 +79,7 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
           });
 
           canvas.on({
-            'object:moving': function(e) {		  	
+            'object:moving': function(e) {
               e.target.opacity = 0.5;
             },
             'object:modified': function(e) {
@@ -94,28 +94,28 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
             return function() {
               var target = originalFn.apply(this, arguments);
               if (target) {
-	        if (this._hoveredTarget !== target) {
-	          canvas.fire('object:over', { target: target });
-	          if (this._hoveredTarget) {
-	            canvas.fire('object:out', { target: this._hoveredTarget });
-	          }
-	          this._hoveredTarget = target;
-	        }
+                if (this._hoveredTarget !== target) {
+                  canvas.fire('object:over', { target: target });
+                  if (this._hoveredTarget) {
+                    canvas.fire('object:out', { target: this._hoveredTarget });
+                  }
+                  this._hoveredTarget = target;
+                }
               }
               else if (this._hoveredTarget) {
-	        canvas.fire('object:out', { target: this._hoveredTarget });
-	        this._hoveredTarget = null;
+                canvas.fire('object:out', { target: this._hoveredTarget });
+                this._hoveredTarget = null;
               }
               return target;
             };
           })(canvas.findTarget);
 
-          canvas.on('object:over', function(e) {		
+          canvas.on('object:over', function(e) {
             //e.target.setFill('red');
             //canvas.renderAll();
           });
-        
-          canvas.on('object:out', function(e) {		
+
+          canvas.on('object:out', function(e) {
             //e.target.setFill('green');
             //canvas.renderAll();
           });
@@ -132,14 +132,17 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
               scaleY: 0.5,
               fontWeight: '',
               hasRotatingPoint:true
-            });	    
-            canvas.add(textSample);	
-            canvas.item(canvas.item.length-1).hasRotatingPoint = true;    
+            });
+            // bi-binding candidate
+            canvas.add(textSample);
+            canvas.item(canvas.item.length-1).hasRotatingPoint = true;
             $("#texteditor").css('display', 'block');
             $("#imageeditor").css('display', 'block');
           });
 
-          $("#text-string").keyup(function(){	  		
+          // directive should listen to the up event
+          // TODO
+          $("#text-string").keyup(function(){
             var activeObject = canvas.getActiveObject();
             if (activeObject && activeObject.type === 'text') {
               activeObject.text = this.value;
@@ -156,7 +159,7 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
             var angle = fabric.util.getRandomInt(-20, 40);
             var width = fabric.util.getRandomInt(30, 50);
             var opacity = (function(min, max){ return Math.random() * (max - min) + min; })(0.5, 1);
-            
+
             fabric.Image.fromURL(el.src, function(image) {
               image.set({
                 left: left,
@@ -182,7 +185,7 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
               var objectsInGroup = activeGroup.getObjects();
               canvas.discardActiveGroup();
               objectsInGroup.forEach(function(object) {
-	        canvas.remove(object);
+                canvas.remove(object);
               });
             }
           });
@@ -197,7 +200,7 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
               var objectsInGroup = activeGroup.getObjects();
               canvas.discardActiveGroup();
               objectsInGroup.forEach(function(object) {
-	        object.bringToFront();
+                object.bringToFront();
               });
             }
           });
@@ -212,28 +215,28 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
               var objectsInGroup = activeGroup.getObjects();
               canvas.discardActiveGroup();
               objectsInGroup.forEach(function(object) {
-	        object.sendToBack();
+                object.sendToBack();
               });
             }
           });
 
-          $("#text-bold").click(function() {		  
+          $("#text-bold").click(function() {
             var activeObject = canvas.getActiveObject();
             if (activeObject && activeObject.type === 'text') {
-              activeObject.fontWeight = (activeObject.fontWeight == 'bold' ? '' : 'bold');		    
+              activeObject.fontWeight = (activeObject.fontWeight == 'bold' ? '' : 'bold');
               canvas.renderAll();
             }
           });
 
-          $("#text-italic").click(function() {		 
+          $("#text-italic").click(function() {
             var activeObject = canvas.getActiveObject();
             if (activeObject && activeObject.type === 'text') {
-              activeObject.fontStyle = (activeObject.fontStyle == 'italic' ? '' : 'italic');		    
+              activeObject.fontStyle = (activeObject.fontStyle == 'italic' ? '' : 'italic');
               canvas.renderAll();
             }
           });
 
-          $("#text-strike").click(function() {		  
+          $("#text-strike").click(function() {
             var activeObject = canvas.getActiveObject();
             if (activeObject && activeObject.type === 'text') {
               activeObject.textDecoration = (activeObject.textDecoration == 'line-through' ? '' : 'line-through');
@@ -241,7 +244,7 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
             }
           });
 
-          $("#text-underline").click(function() {		  
+          $("#text-underline").click(function() {
             var activeObject = canvas.getActiveObject();
             if (activeObject && activeObject.type === 'text') {
               activeObject.textDecoration = (activeObject.textDecoration == 'underline' ? '' : 'underline');
@@ -249,7 +252,7 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
             }
           });
 
-          $("#text-left").click(function() {		  
+          $("#text-left").click(function() {
             var activeObject = canvas.getActiveObject();
             if (activeObject && activeObject.type === 'text') {
               activeObject.textAlign = 'left';
@@ -260,7 +263,7 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
           $("#text-center").click(function() {
             var activeObject = canvas.getActiveObject();
             if (activeObject && activeObject.type === 'text') {
-              activeObject.textAlign = 'center';		    
+              activeObject.textAlign = 'center';
               canvas.renderAll();
             }
           });
@@ -268,7 +271,7 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
           $("#text-right").click(function() {
             var activeObject = canvas.getActiveObject();
             if (activeObject && activeObject.type === 'text') {
-              activeObject.textAlign = 'right';		    
+              activeObject.textAlign = 'right';
               canvas.renderAll();
             }
           });
@@ -285,8 +288,8 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
             change: function(hex, rgb) {
               var activeObject = canvas.getActiveObject();
               if (activeObject && activeObject.type === 'text') {
-	        activeObject.backgroundColor = this.value;
-	        canvas.renderAll();
+                activeObject.backgroundColor = this.value;
+                canvas.renderAll();
               }
             },
             open: function(hex, rgb) {
@@ -301,8 +304,8 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
             change: function(hex, rgb) {
               var activeObject = canvas.getActiveObject();
               if (activeObject && activeObject.type === 'text') {
-	        activeObject.fill = this.value;
-	        canvas.renderAll();
+                activeObject.fill = this.value;
+                canvas.renderAll();
               }
             },
             open: function(hex, rgb) {
@@ -312,13 +315,13 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
               //
             }
           });
-        
+
           $('#text-strokecolor').miniColors({
             change: function(hex, rgb) {
               var activeObject = canvas.getActiveObject();
               if (activeObject && activeObject.type === 'text') {
-	        activeObject.strokeStyle = this.value;
-	        canvas.renderAll();
+                activeObject.strokeStyle = this.value;
+                canvas.renderAll();
               }
             },
             open: function(hex, rgb) {
@@ -328,17 +331,17 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
               //
             }
           });
-        
+
         //canvas.add(new fabric.fabric.Object({hasBorders:true,hasControls:false,hasRotatingPoint:false,selectable:false,type:'rect'}));
           $("#drawingArea").hover(
-            function() { 	        	
+            function() {
               canvas.add(line1);
               canvas.add(line2);
               canvas.add(line3);
-              canvas.add(line4); 
+              canvas.add(line4);
               canvas.renderAll();
             },
-            function() {	        	
+            function() {
               canvas.remove(line1);
               canvas.remove(line2);
               canvas.remove(line3);
@@ -347,43 +350,42 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
             }
           );
 
-          $('.color-preview').on("click", function(){
-            var color = $(this).css("background-color");
-            $("#shirtDiv").css("backgroundColor", color);
-          });
-        
+          //$('.color-preview').on("click", function(){
+          //  var color = $(this).css("background-color");
+          //  $("#shirtDiv").css("backgroundColor", color);
+          //});
+
           $('#flip').click(
-            function() {			   
+            function() {
               if ($(this).attr("data-original-title") == "Show Back View") {
-	        $(this).attr('data-original-title', 'Show Front View');			        		       
-	        $("#tshirtFacing").attr("src","img/crew_back.png");			        
-	        a = JSON.stringify(canvas);
-	        canvas.clear();
-	        try
-	        {
-	          var json = JSON.parse(b);
-	          canvas.loadFromJSON(b);
-	        }
-	        catch(e)
-	        {}
-	        
+                $(this).attr('data-original-title', 'Show Front View');
+                $("#tshirtFacing").attr("src","img/crew_back.png");
+                a = JSON.stringify(canvas);
+                canvas.clear();
+                try
+                {
+                  var json = JSON.parse(b);
+                  canvas.loadFromJSON(b);
+                }
+                catch(e)
+                {}
               } else {
-	        $(this).attr('data-original-title', 'Show Back View');			    				    	
-	        $("#tshirtFacing").attr("src","img/crew_front.png");			    	
-	        b = JSON.stringify(canvas);
-	        canvas.clear();
-	        try
-	        {
-	          var json = JSON.parse(a);
-	          canvas.loadFromJSON(a);			           
-	        }
-	        catch(e)
-	        {}
-              }		
+                $(this).attr('data-original-title', 'Show Back View');
+                $("#tshirtFacing").attr("src","img/crew_front.png");
+                b = JSON.stringify(canvas);
+                canvas.clear();
+                try
+                {
+                  var json = JSON.parse(a);
+                  canvas.loadFromJSON(a);
+                }
+                catch(e)
+                {}
+              }
               canvas.renderAll();
               setTimeout(function() {
-	        canvas.calcOffset();
-              },200);			   	
+                canvas.calcOffset();
+              },200);
             });
 
           $(".clearfix button,a").tooltip();
@@ -394,3 +396,36 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
         })}
     };
   }]);
+
+monadexDirectives.directive('tShirtCanvas', ['$document', 'canvasService', function($document, canvasService) {
+  var canvas;
+  return {
+    restrict: 'E',
+    scope: {
+    },
+    templateUrl: 'partials/tshirt-canvas.html',
+    link: function(scope, element, attrs) {
+      // initialize the canvasService
+      canvasService.init('tcanvas');
+    }
+  }
+}]);
+
+monadexDirectives.directive('bgColorPicker', ['$document', 'canvasService', function($document, canvasService){
+  return {
+    //require: "tShirt",
+    restrict: 'E',
+    scope: {
+      colors: '='
+    },
+    templateUrl: 'partials/bg-color-picker.html',
+    link: function(scope, element, attrs) {
+      $(window).load(function() {
+        $('.color-preview').on("click", function(){
+          var color = $(this).css("background-color");
+          canvasService.changeBackground(color);
+        });
+      })
+    }
+  }
+}]);
