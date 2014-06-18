@@ -57,7 +57,7 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
       restrict: 'E',
       scope: {
         colors: '=',
-        images: '=tshirtimages',
+        images: '=',
         tshirtTypes: '=tshirttypes',
         fonts: '='
       },
@@ -148,30 +148,6 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
               activeObject.text = this.value;
               canvas.renderAll();
             }
-          });
-
-          $(".img-polaroid").on("click", function(e){
-            var el = e.target;
-            /*temp code*/
-            var offset = 50;
-            var left = fabric.util.getRandomInt(0 + offset, 200 - offset);
-            var top = fabric.util.getRandomInt(0 + offset, 400 - offset);
-            var angle = fabric.util.getRandomInt(-20, 40);
-            var width = fabric.util.getRandomInt(30, 50);
-            var opacity = (function(min, max){ return Math.random() * (max - min) + min; })(0.5, 1);
-
-            fabric.Image.fromURL(el.src, function(image) {
-              image.set({
-                left: left,
-                top: top,
-                angle: 0,
-                padding: 10,
-                cornersize: 10,
-                hasRotatingPoint:true
-              });
-              //image.scale(getRandomNum(0.1, 0.25)).setCoords();
-              canvas.add(image);
-            });
           });
 
           $('#remove-selected').click(function() {
@@ -350,11 +326,6 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
             }
           );
 
-          //$('.color-preview').on("click", function(){
-          //  var color = $(this).css("background-color");
-          //  $("#shirtDiv").css("backgroundColor", color);
-          //});
-
           $('#flip').click(
             function() {
               if ($(this).attr("data-original-title") == "Show Back View") {
@@ -413,7 +384,6 @@ monadexDirectives.directive('tShirtCanvas', ['$document', 'canvasService', funct
 
 monadexDirectives.directive('bgColorPicker', ['$document', 'canvasService', function($document, canvasService){
   return {
-    //require: "tShirt",
     restrict: 'E',
     scope: {
       colors: '='
@@ -428,4 +398,22 @@ monadexDirectives.directive('bgColorPicker', ['$document', 'canvasService', func
       })
     }
   }
+}]);
+
+monadexDirectives.directive('imgPicker', ['$document', 'canvasService', function($document, canvasService){
+  return {
+    restrict: 'E',
+    scope: {
+      images: '='
+    },
+    templateUrl: 'partials/image-picker.html',
+    link: function(scope, element, attrs) {
+      console.log("imgpicker");
+      $(window).load(function() {
+        $(".img-polaroid").on("click", function(e){
+          var el = e.target;
+          canvasService.addImage(el.src);
+          });
+      })}
+    }
 }]);

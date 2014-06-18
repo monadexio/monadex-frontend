@@ -25,10 +25,7 @@
             <input class="span2" id="text-string" type="text" placeholder="add text here..."><button id="add-text" class="btn" title="Add text"><i class="icon-share-alt"></i></button>
             <hr>
           </div>
-          <div id="avatarlist" ng-repeat="img in images">
-            <!-- perhaps need to use directives here. -->
-            <img style="cursor:pointer;" class="img-polaroid" src="{{img.src}}">
-        </div>
+          <img-picker images="images"></img-picker>
         </div>
       </div>
     </div>

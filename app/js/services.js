@@ -125,7 +125,6 @@ myService.service("canvasService", function() {
   };
 
   this.changeBackground = function(color) {
-    console.log("in change background");
     $("#shirtDiv").css("backgroundColor", color);
   }
 });
