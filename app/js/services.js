@@ -11,6 +11,16 @@ myService.value('version', '0.1');
 
 myService.service("canvasService", function() {
   var canvas;
+  // line Left, Right, Up and Down
+  var lineL;
+  var lineR;
+  var lineU;
+  var lineD;
+
+  lineL = new fabric.Line([0,0,200,0], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});
+  lineR = new fabric.Line([199,0,200,399], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});
+  lineU = new fabric.Line([0,0,0,400], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});
+  lineD = new fabric.Line([0,400,200,399], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});
 
   // return the canvas instance
   this.getCanvas = function() {
@@ -126,5 +136,21 @@ myService.service("canvasService", function() {
 
   this.changeBackground = function(color) {
     $("#shirtDiv").css("backgroundColor", color);
-  }
+  };
+
+  this.addCanvasBorder = function() {
+    canvas.add(lineL);
+    canvas.add(lineR);
+    canvas.add(lineU);
+    canvas.add(lineD);
+    canvas.renderAll();
+  };
+
+  this.removeCanvasBorder = function() {
+    canvas.remove(lineL);
+    canvas.remove(lineR);
+    canvas.remove(lineU);
+    canvas.remove(lineD);
+    canvas.renderAll();
+  };
 });

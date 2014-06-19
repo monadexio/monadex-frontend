@@ -65,60 +65,6 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
       link: function(scope, element, attrs) {
         $(window).load(function() {
           var canvas;
-          var line1;
-          var line2;
-          var line3;
-          var line4;
-
-
-          //setup front side canvas
-          canvas = new fabric.Canvas('tcanvas', {
-            hoverCursor: 'pointer',
-            selection: true,
-            selectionBorderColor:'blue'
-          });
-
-          canvas.on({
-            'object:moving': function(e) {
-              e.target.opacity = 0.5;
-            },
-            'object:modified': function(e) {
-              e.target.opacity = 1;
-            },
-            'object:selected':onObjectSelected,
-            'selection:cleared':onSelectedCleared
-          });
-
-          // piggyback on `canvas.findTarget`, to fire "object:over" and "object:out" events
-          canvas.findTarget = (function(originalFn) {
-            return function() {
-              var target = originalFn.apply(this, arguments);
-              if (target) {
-                if (this._hoveredTarget !== target) {
-                  canvas.fire('object:over', { target: target });
-                  if (this._hoveredTarget) {
-                    canvas.fire('object:out', { target: this._hoveredTarget });
-                  }
-                  this._hoveredTarget = target;
-                }
-              }
-              else if (this._hoveredTarget) {
-                canvas.fire('object:out', { target: this._hoveredTarget });
-                this._hoveredTarget = null;
-              }
-              return target;
-            };
-          })(canvas.findTarget);
-
-          canvas.on('object:over', function(e) {
-            //e.target.setFill('red');
-            //canvas.renderAll();
-          });
-
-          canvas.on('object:out', function(e) {
-            //e.target.setFill('green');
-            //canvas.renderAll();
-          });
 
           $('#add-text').click(function(){
             var text = $("#text-string").val();
@@ -309,23 +255,6 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
           });
 
         //canvas.add(new fabric.fabric.Object({hasBorders:true,hasControls:false,hasRotatingPoint:false,selectable:false,type:'rect'}));
-          $("#drawingArea").hover(
-            function() {
-              canvas.add(line1);
-              canvas.add(line2);
-              canvas.add(line3);
-              canvas.add(line4);
-              canvas.renderAll();
-            },
-            function() {
-              canvas.remove(line1);
-              canvas.remove(line2);
-              canvas.remove(line3);
-              canvas.remove(line4);
-              canvas.renderAll();
-            }
-          );
-
           $('#flip').click(
             function() {
               if ($(this).attr("data-original-title") == "Show Back View") {
@@ -360,10 +289,6 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
             });
 
           $(".clearfix button,a").tooltip();
-          line1 = new fabric.Line([0,0,200,0], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});
-          line2 = new fabric.Line([199,0,200,399], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});
-          line3 = new fabric.Line([0,0,0,400], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});
-          line4 = new fabric.Line([0,400,200,399], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});        
         })}
     };
   }]);
@@ -378,6 +303,9 @@ monadexDirectives.directive('tShirtCanvas', ['$document', 'canvasService', funct
     link: function(scope, element, attrs) {
       // initialize the canvasService
       canvasService.init('tcanvas');
+      $(window).load(function() {
+        $("#drawingArea").hover(canvasService.addCanvasBorder, canvasService.removeCanvasBorder)
+      })
     }
   }
 }]);
