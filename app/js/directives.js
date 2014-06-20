@@ -96,52 +96,6 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
             }
           });
 
-          $('#remove-selected').click(function() {
-            var activeObject = canvas.getActiveObject(),
-            activeGroup = canvas.getActiveGroup();
-            if (activeObject) {
-              canvas.remove(activeObject);
-              $("#text-string").val("");
-            }
-            else if (activeGroup) {
-              var objectsInGroup = activeGroup.getObjects();
-              canvas.discardActiveGroup();
-              objectsInGroup.forEach(function(object) {
-                canvas.remove(object);
-              });
-            }
-          });
-
-          $('#bring-to-front').click(function() {
-            var activeObject = canvas.getActiveObject(),
-            activeGroup = canvas.getActiveGroup();
-            if (activeObject) {
-              activeObject.bringToFront();
-            }
-            else if (activeGroup) {
-              var objectsInGroup = activeGroup.getObjects();
-              canvas.discardActiveGroup();
-              objectsInGroup.forEach(function(object) {
-                object.bringToFront();
-              });
-            }
-          });
-
-          $('#send-to-back').click(function() {
-            var activeObject = canvas.getActiveObject(),
-            activeGroup = canvas.getActiveGroup();
-            if (activeObject) {
-              activeObject.sendToBack();
-            }
-            else if (activeGroup) {
-              var objectsInGroup = activeGroup.getObjects();
-              canvas.discardActiveGroup();
-              objectsInGroup.forEach(function(object) {
-                object.sendToBack();
-              });
-            }
-          });
-
           $("#text-bold").click(function() {
             var activeObject = canvas.getActiveObject();
             if (activeObject && activeObject.type === 'text') {
@@ -255,38 +209,38 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
           });
 
         //canvas.add(new fabric.fabric.Object({hasBorders:true,hasControls:false,hasRotatingPoint:false,selectable:false,type:'rect'}));
-          $('#flip').click(
-            function() {
-              if ($(this).attr("data-original-title") == "Show Back View") {
-                $(this).attr('data-original-title', 'Show Front View');
-                $("#tshirtFacing").attr("src","img/crew_back.png");
-                a = JSON.stringify(canvas);
-                canvas.clear();
-                try
-                {
-                  var json = JSON.parse(b);
-                  canvas.loadFromJSON(b);
-                }
-                catch(e)
-                {}
-              } else {
-                $(this).attr('data-original-title', 'Show Back View');
-                $("#tshirtFacing").attr("src","img/crew_front.png");
-                b = JSON.stringify(canvas);
-                canvas.clear();
-                try
-                {
-                  var json = JSON.parse(a);
-                  canvas.loadFromJSON(a);
-                }
-                catch(e)
-                {}
-              }
-              canvas.renderAll();
-              setTimeout(function() {
-                canvas.calcOffset();
-              },200);
-            });
+          //$('#flip').click(
+          //  function() {
+          //    if ($(this).attr("data-original-title") == "Show Back View") {
+          //      $(this).attr('data-original-title', 'Show Front View');
+          //      $("#tshirtFacing").attr("src","img/crew_back.png");
+          //      a = JSON.stringify(canvas);
+          //      canvas.clear();
+          //      try
+          //      {
+          //        var json = JSON.parse(b);
+          //        canvas.loadFromJSON(b);
+          //      }
+          //      catch(e)
+          //      {}
+          //    } else {
+          //      $(this).attr('data-original-title', 'Show Back View');
+          //      $("#tshirtFacing").attr("src","img/crew_front.png");
+          //      b = JSON.stringify(canvas);
+          //      canvas.clear();
+          //      try
+          //      {
+          //        var json = JSON.parse(a);
+          //        canvas.loadFromJSON(a);
+          //      }
+          //      catch(e)
+          //      {}
+          //    }
+          //    canvas.renderAll();
+          //    setTimeout(function() {
+          //      canvas.calcOffset();
+          //    },200);
+          //  });
 
           $(".clearfix button,a").tooltip();
         })}
@@ -302,7 +256,7 @@ monadexDirectives.directive('tShirtCanvas', ['$document', 'canvasService', funct
     templateUrl: 'partials/tshirt-canvas.html',
     link: function(scope, element, attrs) {
       // initialize the canvasService
-      canvasService.init('tcanvas');
+      canvasService.init('tcanvas', "#tshirtFacing");
       $(window).load(function() {
         $("#drawingArea").hover(canvasService.addCanvasBorder, canvasService.removeCanvasBorder)
       })
@@ -328,7 +282,24 @@ monadexDirectives.directive('bgColorPicker', ['$document', 'canvasService', func
   }
 }]);
 
-monadexDirectives.directive('imgPicker', ['$document', 'canvasService', function($document, canvasService){
+monadexDirectives.directive('textInput', ['$document', 'canvasService', function($document, canvasService){
+  return {
+    restrict: 'E',
+    scope: {
+    },
+    templateUrl: 'partials/text-input.html',
+    link: function(scope, element, attrs) {
+      $(window).load(function() {
+        $('#add-text').on("click", function(){
+          var text = $("#text-string").val();
+          canvasService.addText(text);
+        });
+      })
+    }
+  }
+}]);
+
+monadexDirectives.directive('imagePicker', ['$document', 'canvasService', function($document, canvasService){
   return {
     restrict: 'E',
     scope: {
@@ -342,6 +313,43 @@ monadexDirectives.directive('imgPicker', ['$document', 'canvasService', function
           var el = e.target;
           canvasService.addImage(el.src);
           });
+      })}
+    }
+}]);
+
+monadexDirectives.directive('imageEditor', ['$document', 'canvasService', function($document, canvasService){
+  return {
+    restrict: 'E',
+    scope: {
+    },
+    templateUrl: 'partials/image-editor.html',
+    link: function(scope, element, attrs) {
+      $(window).load(function() {
+        $('#remove-selected').click(canvasService.removeSelected);
+        $('#bring-to-front').click(canvasService.bringToFront);
+        $('#send-to-back').click(canvasService.sendToBack);
+        $('#flip').click(function() {
+          console.log("flip");
+          if ($(this).attr("data-original-title") == "Show Back View") {
+            $(this).attr('data-original-title', 'Show Front View');
+            canvasService.flip("img/crew_back.png");
+          } else {
+            $(this).attr('data-original-title', 'Show Back View');
+            canvasService.flip("img/crew_front.png");
+          }
+        });
+      })}
+    }
+}]);
+
+monadexDirectives.directive('textEditor', ['$document', 'canvasService', function($document, canvasService){
+  return {
+    restrict: 'E',
+    scope: {
+    },
+    templateUrl: 'partials/text-editor.html',
+    link: function(scope, element, attrs) {
+      $(window).load(function() {
       })}
     }
 }]);

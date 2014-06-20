@@ -27,8 +27,10 @@ myService.service("canvasService", function() {
     return canvas;
   };
 
-  this.init = function(canvasid) {
+  this.init = function(canvasid, imageId) {
     console.log("initialize...");
+
+    this.imageId = imageId;
 
     canvas = new fabric.Canvas(canvasid, {
       hoverCursor: 'pointer',
@@ -133,6 +135,54 @@ myService.service("canvasService", function() {
       });
     }
   };
+
+  this.bringToFront = function() {
+    var activeObject = canvas.getActiveObject(),
+    activeGroup = canvas.getActiveGroup();
+    if (activeObject) {
+      activeObject.bringToFront();
+    }
+    else if (activeGroup) {
+      var objectsInGroup = activeGroup.getObjects();
+      canvas.discardActiveGroup();
+      objectsInGroup.forEach(function(object) {
+        object.bringToFront();
+      });
+    }
+  };
+
+  this.sentToBack = function() {
+    var activeObject = canvas.getActiveObject(),
+    activeGroup = canvas.getActiveGroup();
+    if (activeObject) {
+      activeObject.sendToBack();
+    }
+    else if (activeGroup) {
+      var objectsInGroup = activeGroup.getObjects();
+      canvas.discardActiveGroup();
+      objectsInGroup.forEach(function(object) {
+        object.sendToBack();
+      });
+    }
+  };
+
+  // TODO: service refers to views, needs refactoring
+  this.flip = function(ImageSrc) {
+    var currentState = JSON.stringify(canvas);
+    try
+    {
+      var json = JSON.parse(this.prevState);
+      canvas.loadFromJSON(json);
+    }
+    catch(e) {};
+    this.prevState = currentState;
+
+    canvas.renderAll();
+    setTimeout(function() {
+      canvas.calcOffset();
+    }, 200);
+  };
+  
 
   this.changeBackground = function(color) {
     $("#shirtDiv").css("backgroundColor", color);
