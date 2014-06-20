@@ -12,10 +12,7 @@ myService.value('version', '0.1');
 myService.service("canvasService", function() {
   var canvas;
   // line Left, Right, Up and Down
-  var lineL;
-  var lineR;
-  var lineU;
-  var lineD;
+  var lineL, lineR, lineU, lineD;
 
   lineL = new fabric.Line([0,0,200,0], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});
   lineR = new fabric.Line([199,0,200,399], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});
@@ -167,8 +164,11 @@ myService.service("canvasService", function() {
   };
 
   // TODO: service refers to views, needs refactoring
-  this.flip = function(ImageSrc) {
-    var currentState = JSON.stringify(canvas);
+  this.flip = function(imageSrc) {
+    var currentState;
+
+    $(this.imageId).attr("src", imageSrc);
+    currentState = JSON.stringify(canvas);
     try
     {
       var json = JSON.parse(this.prevState);
