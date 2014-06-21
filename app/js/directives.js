@@ -66,36 +66,6 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
         $(window).load(function() {
           var canvas;
 
-          $('#add-text').click(function(){
-            var text = $("#text-string").val();
-            var textSample = new fabric.Text(text, {
-              left: fabric.util.getRandomInt(0, 200),
-              top: fabric.util.getRandomInt(0, 400),
-              fontFamily: 'helvetica',
-              angle: 0,
-              fill: '#000000',
-              scaleX: 0.5,
-              scaleY: 0.5,
-              fontWeight: '',
-              hasRotatingPoint:true
-            });
-            // bi-binding candidate
-            canvas.add(textSample);
-            canvas.item(canvas.item.length-1).hasRotatingPoint = true;
-            $("#texteditor").css('display', 'block');
-            $("#imageeditor").css('display', 'block');
-          });
-
-          // directive should listen to the up event
-          // TODO
-          $("#text-string").keyup(function(){
-            var activeObject = canvas.getActiveObject();
-            if (activeObject && activeObject.type === 'text') {
-              activeObject.text = this.value;
-              canvas.renderAll();
-            }
-          });
-
           $("#text-bold").click(function() {
             var activeObject = canvas.getActiveObject();
             if (activeObject && activeObject.type === 'text') {
@@ -176,22 +146,6 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
             }
           });
 
-          $('#text-fontcolor').miniColors({
-            change: function(hex, rgb) {
-              var activeObject = canvas.getActiveObject();
-              if (activeObject && activeObject.type === 'text') {
-                activeObject.fill = this.value;
-                canvas.renderAll();
-              }
-            },
-            open: function(hex, rgb) {
-              //
-            },
-            close: function(hex, rgb) {
-              //
-            }
-          });
-
           $('#text-strokecolor').miniColors({
             change: function(hex, rgb) {
               var activeObject = canvas.getActiveObject();
@@ -260,6 +214,13 @@ monadexDirectives.directive('textInput', ['$document', 'canvasService', function
         $('#add-text').on("click", function(){
           var text = $("#text-string").val();
           canvasService.addText(text);
+          //$("#texteditor").css('display', 'block');
+          //$("#imageeditor").css('display', 'block');
+        });
+
+        $("#text-string").keyup(function(){
+          var text = $(this).value;
+          canvasService.renderActiveText(text);
         });
       })
     }
@@ -316,6 +277,18 @@ monadexDirectives.directive('textEditor', ['$document', 'canvasService', functio
     templateUrl: 'partials/text-editor.html',
     link: function(scope, element, attrs) {
       $(window).load(function() {
+          $('#text-fontcolor').miniColors({
+            change: function(hex, rgb) {
+              var color = $(this).value;
+              canvasService.renderActiveTextColor(color);
+            },
+            open: function(hex, rgb) {
+              //
+            },
+            close: function(hex, rgb) {
+              //
+            }
+          });
       })}
     }
 }]);

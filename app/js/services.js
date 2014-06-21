@@ -203,4 +203,20 @@ myService.service("canvasService", function() {
     canvas.remove(lineD);
     canvas.renderAll();
   };
+
+  this.renderActiveText = function(text) {
+    var activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'text') {
+      activeObject.text = text;
+      canvas.renderAll();
+    }
+  };
+
+  this.renderActiveTextColor = function(color) {
+    var activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'text') {
+      activeObject.fill = color;
+      canvas.renderAll();
+    }
+  };
 });
