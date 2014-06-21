@@ -204,7 +204,7 @@ myService.service("canvasService", function() {
     canvas.renderAll();
   };
 
-  this.renderActiveText = function(text) {
+  this.renderActiveTextContent = function(text) {
     var activeObject = canvas.getActiveObject();
     if (activeObject && activeObject.type === 'text') {
       activeObject.text = text;
@@ -212,11 +212,77 @@ myService.service("canvasService", function() {
     }
   };
 
-  this.renderActiveTextColor = function(color) {
+  this.renderActiveTextFontColor = function(color) {
     var activeObject = canvas.getActiveObject();
     if (activeObject && activeObject.type === 'text') {
       activeObject.fill = color;
       canvas.renderAll();
     }
   };
+
+  this.renderActiveTextBgColor = function(color) {
+    var activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'text') {
+      activeObject.backgroundColor = color;
+      canvas.renderAll();
+    }
+  };
+
+  this.renderActiveTextStrokeColor = function(color) {
+    var activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'text') {
+      activeObject.strokeStyle = color;
+      canvas.renderAll();
+    }
+  };
+
+  this.changeTextFontFamily = function(font) {
+    var activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'text') {
+      activeObject.fontFamily = font;
+      canvas.renderAll();
+    }
+  };
+
+  this.toggleActiveTextBold = function() {
+    var activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'text') {
+      activeObject.fontWeight = (activeObject.fontWeight == 'bold' ? '' : 'bold');
+      canvas.renderAll();
+    }
+  };
+
+  this.toggleActiveTextItalic = function() {
+    var activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'text') {
+      activeObject.fontStyle = (activeObject.fontStyle == 'italic' ? '' : 'italic');
+      canvas.renderAll();
+    }
+  };
+
+  this.toggleActiveTextStrike = function() {
+    var activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'text') {
+      activeObject.textDecoration = (activeObject.textDecoration == 'line-through' ? '' : 'line-through');
+      canvas.renderAll();
+    }
+  };
+
+  this.toggleActiveTextUnderline = function() {
+    var activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'text') {
+      activeObject.textDecoration = (activeObject.textDecoration == 'underline' ? '' : 'underline');
+      canvas.renderAll();
+    }
+  };
+
+  this.setActiveTextAlignment = function(position) {
+    var activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'text') {
+      activeObject.textAlign = position;
+      canvas.renderAll();
+    }
+  };
+
+
 });
