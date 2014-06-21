@@ -52,7 +52,7 @@ monadexDirectives.directive('appVersion', ['version', function(version) {
     };
   }]);
 
-monadexDirectives.directive('tshirtDesigner', ['$document', function($document) {
+monadexDirectives.directive('tshirtDesigner', [function() {
     return {
       restrict: 'E',
       scope: {
@@ -70,7 +70,7 @@ monadexDirectives.directive('tshirtDesigner', ['$document', function($document) 
     };
   }]);
 
-monadexDirectives.directive('tShirtCanvas', ['$document', 'canvasService', function($document, canvasService) {
+monadexDirectives.directive('tShirtCanvas', ['canvasService', function(canvasService) {
   var canvas;
   return {
     restrict: 'E',
@@ -87,7 +87,7 @@ monadexDirectives.directive('tShirtCanvas', ['$document', 'canvasService', funct
   }
 }]);
 
-monadexDirectives.directive('bgColorPicker', ['$document', 'canvasService', function($document, canvasService){
+monadexDirectives.directive('bgColorPicker', ['canvasService', function(canvasService){
   return {
     restrict: 'E',
     scope: {
@@ -105,7 +105,7 @@ monadexDirectives.directive('bgColorPicker', ['$document', 'canvasService', func
   }
 }]);
 
-monadexDirectives.directive('textInput', ['$document', 'canvasService', function($document, canvasService){
+monadexDirectives.directive('textInput', ['canvasService', function(canvasService){
   return {
     restrict: 'E',
     scope: {
@@ -129,7 +129,7 @@ monadexDirectives.directive('textInput', ['$document', 'canvasService', function
   }
 }]);
 
-monadexDirectives.directive('imagePicker', ['$document', 'canvasService', function($document, canvasService){
+monadexDirectives.directive('imagePicker', ['canvasService', function(canvasService){
   return {
     restrict: 'E',
     scope: {
@@ -147,7 +147,7 @@ monadexDirectives.directive('imagePicker', ['$document', 'canvasService', functi
     }
 }]);
 
-monadexDirectives.directive('imageEditor', ['$document', 'canvasService', function($document, canvasService){
+monadexDirectives.directive('imageEditor', ['canvasService', function(canvasService){
   return {
     restrict: 'E',
     scope: {
@@ -171,7 +171,7 @@ monadexDirectives.directive('imageEditor', ['$document', 'canvasService', functi
     }
 }]);
 
-monadexDirectives.directive('textEditor', ['$document', 'canvasService', function($document, canvasService){
+monadexDirectives.directive('textEditor', ['canvasService', function(canvasService){
   return {
     restrict: 'E',
     scope: {
