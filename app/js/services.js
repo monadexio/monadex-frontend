@@ -204,85 +204,71 @@ myService.service("canvasService", function() {
     canvas.renderAll();
   };
 
-  this.renderActiveTextContent = function(text) {
+  var applyToActiveTextFun = function(Fun) {
     var activeObject = canvas.getActiveObject();
     if (activeObject && activeObject.type === 'text') {
-      activeObject.text = text;
+      Fun(activeObject);
       canvas.renderAll();
     }
+  };
+
+  this.renderActiveTextContent = function(text) {
+    applyToActiveTextFun(function(activeObject) {
+      activeObject.text = text;      
+    });
   };
 
   this.renderActiveTextFontColor = function(color) {
-    var activeObject = canvas.getActiveObject();
-    if (activeObject && activeObject.type === 'text') {
+    applyToActiveTextFun(function(activeObject) {
       activeObject.fill = color;
-      canvas.renderAll();
-    }
+    });
   };
 
   this.renderActiveTextBgColor = function(color) {
-    var activeObject = canvas.getActiveObject();
-    if (activeObject && activeObject.type === 'text') {
+    applyToActiveTextFun(function(activeObject) {
       activeObject.backgroundColor = color;
-      canvas.renderAll();
-    }
+    });
   };
 
   this.renderActiveTextStrokeColor = function(color) {
-    var activeObject = canvas.getActiveObject();
-    if (activeObject && activeObject.type === 'text') {
+    applyToActiveTextFun(function(activeObject) {
       activeObject.strokeStyle = color;
-      canvas.renderAll();
-    }
+    });
   };
 
   this.changeTextFontFamily = function(font) {
-    var activeObject = canvas.getActiveObject();
-    if (activeObject && activeObject.type === 'text') {
+    applyToActiveTextFun(function(activeObject) {
       activeObject.fontFamily = font;
-      canvas.renderAll();
-    }
+    });
   };
 
   this.toggleActiveTextBold = function() {
-    var activeObject = canvas.getActiveObject();
-    if (activeObject && activeObject.type === 'text') {
+    applyToActiveTextFun(function(activeObject) {
       activeObject.fontWeight = (activeObject.fontWeight == 'bold' ? '' : 'bold');
-      canvas.renderAll();
-    }
+    });
   };
 
   this.toggleActiveTextItalic = function() {
-    var activeObject = canvas.getActiveObject();
-    if (activeObject && activeObject.type === 'text') {
+    applyToActiveTextFun(function(activeObject) {
       activeObject.fontStyle = (activeObject.fontStyle == 'italic' ? '' : 'italic');
-      canvas.renderAll();
-    }
+    });
   };
 
   this.toggleActiveTextStrike = function() {
-    var activeObject = canvas.getActiveObject();
-    if (activeObject && activeObject.type === 'text') {
+    applyToActiveTextFun(function(activeObject) {
       activeObject.textDecoration = (activeObject.textDecoration == 'line-through' ? '' : 'line-through');
-      canvas.renderAll();
-    }
+    });
   };
 
   this.toggleActiveTextUnderline = function() {
-    var activeObject = canvas.getActiveObject();
-    if (activeObject && activeObject.type === 'text') {
+    applyToActiveTextFun(function(activeObject) {
       activeObject.textDecoration = (activeObject.textDecoration == 'underline' ? '' : 'underline');
-      canvas.renderAll();
-    }
+    });
   };
 
   this.setActiveTextAlignment = function(position) {
-    var activeObject = canvas.getActiveObject();
-    if (activeObject && activeObject.type === 'text') {
+    applyToActiveTextFun(function(activeObject) {
       activeObject.textAlign = position;
-      canvas.renderAll();
-    }
+    });
   };
-
-
 });
