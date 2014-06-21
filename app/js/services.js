@@ -1,5 +1,42 @@
 'use strict';
 
+// TODO: knows about the view, needs to be refactored. 
+function onObjectSelected(e) {
+  console.log("selected!");
+  var selectedObject = e.target;
+  $("#text-string").val("");
+  selectedObject.hasRotatingPoint = true
+  if (selectedObject && selectedObject.type === 'text') {
+    //display text editor
+    $("#texteditor").css('display', 'block');
+    $("#text-string").val(selectedObject.getText());
+    $('#text-fontcolor').miniColors('value',selectedObject.fill);
+    $('#text-strokecolor').miniColors('value',selectedObject.strokeStyle);
+    $("#imageeditor").css('display', 'block');
+  }
+  else if (selectedObject && selectedObject.type === 'image'){
+    //display image editor
+    $("#texteditor").css('display', 'none');
+    $("#imageeditor").css('display', 'block');
+  }
+};
+
+function onSelectedCleared(e){
+  console.log("cleared!");
+  $("#texteditor").css('display', 'none');
+  $("#text-string").val("");
+  $("#imageeditor").css('display', 'none');
+};
+
+function removeWhite(){
+  var activeObject = canvas.getActiveObject();
+  if (activeObject && activeObject.type === 'image') {
+    activeObject.filters[2] =  new fabric.Image.filters.RemoveWhite({hreshold: 100, distance: 10});//0-255, 0-255
+    activeObject.applyFilters(canvas.renderAll.bind(canvas));
+  }
+};
+
+
 /* Services */
 
 
