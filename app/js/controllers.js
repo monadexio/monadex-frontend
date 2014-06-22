@@ -56,11 +56,6 @@ angular.module('monadexApp.controllers', [])
                      {name: 'Engagement', class: 'Engagement'},
                    ]
 
-    $scope.$on('$viewContentLoaded', function(event){
-      console.log("viewcontentloaded");
-      console.log("scope");
-      console.log($scope)
-    })
   }])
   .controller('MonadexCtrl2', ['$scope', function($scope) {
 
