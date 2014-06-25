@@ -10,8 +10,7 @@
     "angular-route": "1.2.x",
     "angular-loader": "1.2.x",
     "angular-mocks": "~1.2.x",
-    "html5-boilerplate": "~4.3.0",
-    "jquery": "2.0.3",
+    "jquery": "1.10.2",
     "fabric": "0.9.35",
     "jquery-minicolors": "2.1.4",
     "bootstrap": "2.3.2"
