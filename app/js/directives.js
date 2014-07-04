@@ -40,6 +40,9 @@ monadexDirectives.directive('tShirtCanvas', ['$timeout', 'canvasService', functi
             canvasService.init('tcanvas', "#tshirtFacing");
             $timeout(function() {
                 element.find("#drawingArea").hover(canvasService.addCanvasBorder, canvasService.removeCanvasBorder);
+                scope.$on('mdeChangeBackground', function(event, color) {
+                    element.find("#shirtDiv").css("backgroundColor", color);
+                });
             }, 0);
         }
     };

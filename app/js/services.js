@@ -176,7 +176,6 @@ myService.service("canvasService", ['$rootScope', function($rootScope) {
         }
     };
 
-    // TODO: service refers to views, needs refactoring
     this.flip = function(imageSrc) {
         var currentState;
 
@@ -198,7 +197,7 @@ myService.service("canvasService", ['$rootScope', function($rootScope) {
     
 
     this.changeBackground = function(color) {
-        $("#shirtDiv").css("backgroundColor", color);
+        $rootScope.$broadcast('mdeChangeBackground', color);
     };
 
     this.addCanvasBorder = function() {
