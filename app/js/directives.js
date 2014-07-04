@@ -23,7 +23,8 @@ monadexDirectives.directive('tshirtDesigner', [function() {
         $(window).load(function() {
         //canvas.add(new fabric.fabric.Object({hasBorders:true,hasControls:false,hasRotatingPoint:false,selectable:false,type:'rect'}));
           $(".clearfix button,a").tooltip();
-        })}
+        });
+      }
     };
   }]);
 
@@ -38,28 +39,28 @@ monadexDirectives.directive('tShirtCanvas', ['canvasService', function(canvasSer
       // initialize the canvasService
       canvasService.init('tcanvas', "#tshirtFacing");
       $(window).load(function() {
-        $("#drawingArea").hover(canvasService.addCanvasBorder, canvasService.removeCanvasBorder)
-      })
+        $("#drawingArea").hover(canvasService.addCanvasBorder, canvasService.removeCanvasBorder);
+      });
     }
-  }
+  };
 }]);
 
-monadexDirectives.directive('bgColorPicker', ['canvasService', function(canvasService){
-  return {
-    restrict: 'E',
-    scope: {
-      colors: '='
-    },
-    templateUrl: 'partials/bg-color-picker.html',
-    link: function(scope, element, attrs) {
-      $(window).load(function() {
-        $('.color-preview').on("click", function(){
-          var color = $(this).css("background-color");
-          canvasService.changeBackground(color);
-        });
-      })
-    }
-  }
+monadexDirectives.directive('bgColorPicker', ['$timeout', 'canvasService', function($timeout, canvasService){
+    return {
+        restrict: 'E',
+        scope: {
+            colors: '='
+        },
+        templateUrl: 'partials/bg-color-picker.html',
+        link: function(scope, element, attrs) {
+            $timeout(function() {
+                element.find('.color-preview').on("click", function(){
+                    var color = $(this).css("background-color");
+                    canvasService.changeBackground(color);
+                });
+            }, 0);
+        }
+    };
 }]);
 
 monadexDirectives.directive('textInput', ['canvasService', function(canvasService){
@@ -81,9 +82,9 @@ monadexDirectives.directive('textInput', ['canvasService', function(canvasServic
           var text = $(this).value;
           canvasService.renderActiveTextContent(text);
         });
-      })
+      });
     }
-  }
+  };
 }]);
 
 monadexDirectives.directive('imagePicker', ['canvasService', function(canvasService){
@@ -100,8 +101,8 @@ monadexDirectives.directive('imagePicker', ['canvasService', function(canvasServ
           var el = e.target;
           canvasService.addImage(el.src);
           });
-      })}
-    }
+      });
+    }};
 }]);
 
 monadexDirectives.directive('imageEditor', ['canvasService', function(canvasService){
@@ -124,8 +125,8 @@ monadexDirectives.directive('imageEditor', ['canvasService', function(canvasServ
             canvasService.flip("img/crew_front.png");
           }
         });
-      })}
-    }
+      });
+    }};
 }]);
 
 monadexDirectives.directive('textEditor', ['canvasService', function(canvasService){
@@ -195,6 +196,6 @@ monadexDirectives.directive('textEditor', ['canvasService', function(canvasServi
         $("#text-right").click(function() {
           canvasService.setActiveTextAlignment('right');
         });
-      })}
-    }
+      });
+    }};
 }]);
