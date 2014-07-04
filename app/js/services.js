@@ -1,50 +1,13 @@
 'use strict';
 
-// TODO: knows about the view, needs to be refactored. 
-function onObjectSelected(e) {
-    console.log("selected!");
-    var selectedObject = e.target;
-    $("#text-string").val("");
-    selectedObject.hasRotatingPoint = true;
-    if (selectedObject && selectedObject.type === 'text') {
-        //display text editor
-        $("#texteditor").css('display', 'block');
-        $("#text-string").val(selectedObject.getText());
-        $('#text-fontcolor').miniColors('value',selectedObject.fill);
-        $('#text-strokecolor').miniColors('value',selectedObject.strokeStyle);
-        $("#imageeditor").css('display', 'block');
-    }
-    else if (selectedObject && selectedObject.type === 'image'){
-        //display image editor
-        $("#texteditor").css('display', 'none');
-        $("#imageeditor").css('display', 'block');
-    }
-};
-
-function onSelectedCleared(e){
-    console.log("cleared!");
-    $("#texteditor").css('display', 'none');
-    $("#text-string").val("");
-    $("#imageeditor").css('display', 'none');
-};
-
-function removeWhite(){
-    var activeObject = canvas.getActiveObject();
-    if (activeObject && activeObject.type === 'image') {
-        activeObject.filters[2] =  new fabric.Image.filters.RemoveWhite({hreshold: 100, distance: 10});//0-255, 0-255
-        activeObject.applyFilters(canvas.renderAll.bind(canvas));
-    }
-};
-
 /* Services */
-
 // Demonstrate how to register services
 // In this case it is a simple value service.
 var myService = angular.module('monadexApp.services', []);
 
 myService.value('version', '0.0.1');
 
-myService.service("canvasService", function() {
+myService.service("canvasService", ['$rootScope', function($rootScope) {
     var canvas;
     // line Left, Right, Up and Down
     var lineL, lineR, lineU, lineD;
@@ -77,8 +40,23 @@ myService.service("canvasService", function() {
             'object:modified': function(e) {
                 e.target.opacity = 1;
             },
-            'object:selected': onObjectSelected,
-            'selection:cleared': onSelectedCleared
+            'object:selected': function(e) {
+                var selectedObject = e.target;
+                selectedObject.hasRotatingPoint = true;
+                if (selectedObject && selectedObject.type === 'text') {
+                    $rootScope.$broadcast('mdeTextObjectSelected',
+                                         { text: selectedObject.getText(),
+                                           fontColor: selectedObject.fill,
+                                           strokeStyle: selectedObject.strokeStyle
+                                         });
+                }
+                else if (selectedObject && selectedObject.type === 'image'){
+                    $rootScope.$broadcast('mdeImageObjectSelected', e);
+                };
+            },
+            'selection:cleared': function(e) {
+                $rootScope.$broadcast('mdeObjectCleared', e);
+            }
         });
 
         // piggyback on `canvas.findTarget`, to fire "object:over" and "object:out" events
@@ -306,4 +284,4 @@ myService.service("canvasService", function() {
             activeObject.textAlign = position;
         });
     };
-});
+}]);

@@ -82,6 +82,15 @@ monadexDirectives.directive('textInput', ['$timeout', 'canvasService', function(
                     var text = $(this).value;
                     canvasService.renderActiveTextContent(text);
                 });
+
+                scope.$on('mdeTextObjectSelected', function(event, props) {
+                    element.find("#text-string").val("");
+                    element.find("#text-string").val(props.text);
+                });
+
+                scope.$on('mdeObjectCleared', function(event) {
+                    element.find("#text-string").val("");
+                });
             }, 0);
         }
     };
@@ -123,6 +132,18 @@ monadexDirectives.directive('imageEditor', ['$timeout', 'canvasService', functio
                         $(this).attr('data-original-title', 'Show Back View');
                         canvasService.flip("img/crew_front.png");
                     }
+                });
+
+                scope.$on('mdeTextObjectSelected', function(event, props) {
+                    element.find("#imageeditor").css('display', 'none');
+                });
+
+                scope.$on('mdeImageObjectSelected', function(event, props) {
+                    element.find("#imageeditor").css('display', 'block');
+                });
+
+                scope.$on('mdeObjectCleared', function(event) {
+                    element.find("#imageeditor").css('display', 'none');
                 });
             }, 0);
         }
@@ -193,6 +214,20 @@ monadexDirectives.directive('textEditor', ['$timeout', 'canvasService', function
                 });
                 element.find("#text-right").click(function() {
                     canvasService.setActiveTextAlignment('right');
+                });
+
+                scope.$on('mdeTextObjectSelected', function(event, props) {
+                    element.find("#texteditor").css('display', 'block');
+                    element.find('#text-fontcolor').miniColors('value', props.fontColor);
+                    element.find('#text-strokecolor').miniColors('value', props.strokeStyle);
+                });
+
+                scope.$on('mdeImageObjectSelected', function(event, props) {
+                    element.find("#texteditor").css('display', 'none');
+                });
+
+                scope.$on('mdeObjectCleared', function(event) {
+                    element.find("#texteditor").css('display', 'none');
                 });
             }, 0);
         }
