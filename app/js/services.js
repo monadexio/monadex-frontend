@@ -51,11 +51,11 @@ myService.service("canvasService", ['$rootScope', function($rootScope) {
                                          });
                 }
                 else if (selectedObject && selectedObject.type === 'image'){
-                    $rootScope.$broadcast('mdeImageObjectSelected', e);
+                    $rootScope.$broadcast('mdeImageObjectSelected');
                 };
             },
             'selection:cleared': function(e) {
-                $rootScope.$broadcast('mdeObjectCleared', e);
+                $rootScope.$broadcast('mdeObjectCleared');
             }
         });
 
