@@ -44,7 +44,7 @@ function removeWhite(){
 // In this case it is a simple value service.
 var myService = angular.module('monadexApp.services', []);
 
-myService.value('version', '0.1');
+myService.value('version', '0.0.1');
 
 myService.service("canvasService", function() {
   var canvas;
