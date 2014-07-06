@@ -147,36 +147,6 @@ myService.service("canvasService", ['$rootScope', function($rootScope) {
         }
     };
 
-    this.bringToFront = function() {
-        var activeObject = canvas.getActiveObject(),
-            activeGroup = canvas.getActiveGroup();
-        if (activeObject) {
-            activeObject.bringToFront();
-        }
-        else if (activeGroup) {
-            var objectsInGroup = activeGroup.getObjects();
-            canvas.discardActiveGroup();
-            objectsInGroup.forEach(function(object) {
-                object.bringToFront();
-            });
-        }
-    };
-
-    this.sentToBack = function() {
-        var activeObject = canvas.getActiveObject(),
-            activeGroup = canvas.getActiveGroup();
-        if (activeObject) {
-            activeObject.sendToBack();
-        }
-        else if (activeGroup) {
-            var objectsInGroup = activeGroup.getObjects();
-            canvas.discardActiveGroup();
-            objectsInGroup.forEach(function(object) {
-                object.sendToBack();
-            });
-        }
-    };
-
     this.flip = function(imageSrc) {
         var currentCanvas;
 

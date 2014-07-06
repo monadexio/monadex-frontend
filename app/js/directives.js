@@ -125,8 +125,6 @@ monadexDirectives.directive('imageEditor', ['$timeout', 'canvasService', functio
         link: function(scope, element, attrs) {
             $timeout(function() {
                 element.find('#remove-selected').click(canvasService.removeSelected);
-                element.find('#bring-to-front').click(canvasService.bringToFront);
-                element.find('#send-to-back').click(canvasService.sendToBack);
                 element.find('#flip').click(function() {
                     if (element.find('#flip').attr("title") == "Show Back View") {
                         element.find('#flip').attr('title', 'Show Front View');
