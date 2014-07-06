@@ -26,6 +26,7 @@ myService.service("canvasService", ['$rootScope', function($rootScope) {
         console.log("initialize...");
 
         this.imageId = imageId;
+        this.prevCanvas = null;
 
         canvas = new fabric.Canvas(canvasid, {
             hoverCursor: 'pointer',
@@ -177,17 +178,17 @@ myService.service("canvasService", ['$rootScope', function($rootScope) {
     };
 
     this.flip = function(imageSrc) {
-        var currentState;
+        var currentCanvas;
 
         $(this.imageId).attr("src", imageSrc);
-        currentState = JSON.stringify(canvas);
-        try
-        {
-            var json = JSON.parse(this.prevState);
-            canvas.loadFromJSON(json);
+        currentCanvas = JSON.stringify(canvas);
+        canvas.clear();
+
+        if(this.prevCanvas != null) {
+            canvas.loadFromJSON(this.prevCanvas);
         }
-        catch(e) {};
-        this.prevState = currentState;
+
+        this.prevCanvas = currentCanvas;
 
         canvas.renderAll();
         setTimeout(function() {

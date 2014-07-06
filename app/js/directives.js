@@ -128,11 +128,11 @@ monadexDirectives.directive('imageEditor', ['$timeout', 'canvasService', functio
                 element.find('#bring-to-front').click(canvasService.bringToFront);
                 element.find('#send-to-back').click(canvasService.sendToBack);
                 element.find('#flip').click(function() {
-                    if ($(this).attr("data-original-title") == "Show Back View") {
-                        $(this).attr('data-original-title', 'Show Front View');
+                    if (element.find('#flip').attr("title") == "Show Back View") {
+                        element.find('#flip').attr('title', 'Show Front View');
                         canvasService.flip("img/crew_back.png");
                     } else {
-                        $(this).attr('data-original-title', 'Show Back View');
+                        element.find('#flip').attr('title', 'Show Back View');
                         canvasService.flip("img/crew_front.png");
                     }
                 });
