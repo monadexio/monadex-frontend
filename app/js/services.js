@@ -12,10 +12,19 @@ myService.service("canvasService", ['$rootScope', function($rootScope) {
     // line Left, Right, Up and Down
     var lineL, lineR, lineU, lineD;
 
-    lineL = new fabric.Line([0,0,200,0], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});
-    lineR = new fabric.Line([199,0,200,399], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});
-    lineU = new fabric.Line([0,0,0,400], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});
-    lineD = new fabric.Line([0,400,200,399], {"stroke":"#000000", "strokeWidth":1,hasBorders:false,hasControls:false,hasRotatingPoint:false,selectable:false});
+    var lineProps = {
+        "stroke":"#000000",
+        "strokeWidth":1,
+        hasBorders:false,
+        hasControls:false,
+        hasRotatingPoint:false,
+        selectable:false
+    };
+
+    lineL = new fabric.Line([0,0,200,0], lineProps);
+    lineR = new fabric.Line([199,0,200,399], lineProps);
+    lineU = new fabric.Line([0,0,0,400], lineProps);
+    lineD = new fabric.Line([0,400,200,399], lineProps);
 
     // return the canvas instance
     this.getCanvas = function() {

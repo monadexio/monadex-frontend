@@ -1,18 +1,18 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
-  "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
-  "license": "MIT",
-  "private": true,
-  "dependencies": {
-    "angular": "1.2.x",
-    "angular-route": "1.2.x",
-    "angular-loader": "1.2.x",
-    "angular-mocks": "~1.2.x",
-    "jquery": "1.10.2",
-    "fabric": "1.4.7",
-    "jquery-minicolors": "2.1.6",
-    "bootstrap": "2.3.2"
-  }
+    "name": "monadex.io",
+    "description": "A starter project for AngularJS",
+    "version": "0.0.0",
+    "homepage": "https://github.com/angular/angular-seed",
+    "license": "MIT",
+    "private": true,
+    "dependencies": {
+        "angular": "1.2.x",
+        "angular-route": "1.2.x",
+        "angular-loader": "1.2.x",
+        "angular-mocks": "~1.2.x",
+        "jquery": "1.10.2",
+        "fabric": "1.4.7",
+        "jquery-minicolors": "2.1.6",
+        "bootstrap": "2.1.1"
+    }
 }
