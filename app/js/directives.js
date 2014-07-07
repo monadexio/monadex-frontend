@@ -159,7 +159,7 @@ monadexDirectives.directive('textEditor', ['$timeout', 'canvasService', function
         templateUrl: 'partials/text-editor.html',
         link: function(scope, element, attrs) {
             $timeout(function() {
-                element.find('#text-fontcolor').miniColors({
+                element.find('#text-fontcolor').minicolors({
                     change: function(hex, rgb) {
                         var color = $(this).value;
                         canvasService.renderActiveTextFontColor(color);
@@ -172,7 +172,7 @@ monadexDirectives.directive('textEditor', ['$timeout', 'canvasService', function
                     }
                 });
 
-                element.find('#text-bgcolor').miniColors({
+                element.find('#text-bgcolor').minicolors({
                     change: function(hex, rgb) {
                         var color = $(this).value;
                         canvasService.renderActiveTextBgColor(color);
@@ -185,7 +185,7 @@ monadexDirectives.directive('textEditor', ['$timeout', 'canvasService', function
                     }
                 });
 
-                element.find('#text-strokecolor').miniColors({
+                element.find('#text-strokecolor').minicolors({
                     change: function(hex, rgb) {
                         var color = $(this).value;
                         canvasService.renderActiveTextStrokeColor(color);
@@ -219,8 +219,8 @@ monadexDirectives.directive('textEditor', ['$timeout', 'canvasService', function
 
                 scope.$on('mdeTextObjectSelected', function(event, props) {
                     element.find("#texteditor").css('display', 'block');
-                    element.find('#text-fontcolor').miniColors('value', props.fontColor);
-                    element.find('#text-strokecolor').miniColors('value', props.strokeStyle);
+                    element.find('#text-fontcolor').minicolors('value', props.fontColor);
+                    element.find('#text-strokecolor').minicolors('value', props.strokeStyle);
                 });
 
                 scope.$on('mdeImageObjectSelected', function(event, props) {
