@@ -164,15 +164,11 @@ myService.service("canvasService", ['$rootScope', function($rootScope) {
         canvas.clear();
 
         if(this.prevCanvas != null) {
-            canvas.loadFromJSON(this.prevCanvas);
+            canvas.loadFromJSON(this.prevCanvas,
+                                canvas.renderAll.bind(canvas));
         }
 
         this.prevCanvas = currentCanvas;
-
-        canvas.renderAll();
-        setTimeout(function() {
-            canvas.calcOffset();
-        }, 200);
     };
     
 
