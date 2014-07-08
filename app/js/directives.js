@@ -82,7 +82,7 @@ monadexDirectives.directive('textInput', ['$timeout', 'canvasService', function(
                 });
 
                 element.find("#text-string").keyup(function(){
-                    var text = $(this).value;
+                    var text = $(this)[0].value;
                     canvasService.renderActiveTextContent(text);
                 });
 
