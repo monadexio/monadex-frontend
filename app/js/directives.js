@@ -180,12 +180,6 @@ monadexDirectives.directive('textEditor', ['$timeout', 'canvasService', function
                     }
                 });
 
-                element.find('#text-strokecolor').minicolors({
-                    change: function(hex, opacity) {
-                        canvasService.renderActiveTextStrokeColor(hex);
-                    }
-                });
-
                 element.find(".font-family-picker").click(function(event) {
                     var font = $(this).text();
                     canvasService.changeTextFontFamily(font);
@@ -195,7 +189,6 @@ monadexDirectives.directive('textEditor', ['$timeout', 'canvasService', function
 
                 element.find("#text-bold").click(canvasService.toggleActiveTextBold);
                 element.find("#text-italic").click(canvasService.toggleActiveTextItalic);
-                element.find("#text-strike").click(canvasService.toggleActiveTextStrike);
                 element.find("#text-underline").click(canvasService.toggleActiveTextUnderline);
                 element.find("#text-left").click(function() {
                     canvasService.setActiveTextAlignment('left');
@@ -212,7 +205,6 @@ monadexDirectives.directive('textEditor', ['$timeout', 'canvasService', function
                     // TODO: for some reasons, this makes the text disappear sometimes when
                     //       it is selected.
                     //element.find('#text-fontcolor').minicolors('value', props.fontColor);
-                    element.find('#text-strokecolor').minicolors('value', props.strokeStyle);
                 });
 
                 scope.$on('mdeImageObjectSelected', function(event, props) {

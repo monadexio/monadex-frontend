@@ -56,8 +56,7 @@ myService.service("canvasService", ['$rootScope', function($rootScope) {
                 if (selectedObject && selectedObject.type === 'text') {
                     $rootScope.$broadcast('mdeTextObjectSelected',
                                          { text: selectedObject.getText(),
-                                           fontColor: selectedObject.fill || '#000000',
-                                           strokeStyle: selectedObject.strokeStyle
+                                           fontColor: selectedObject.fill || '#000000'
                                          });
                 }
                 else if (selectedObject && selectedObject.type === 'image'){
@@ -222,12 +221,6 @@ myService.service("canvasService", ['$rootScope', function($rootScope) {
     this.renderActiveTextBgColor = function(color) {
         applyToActiveTextFun(function(activeObject) {
             activeObject.backgroundColor = color;
-        });
-    };
-
-    this.renderActiveTextStrokeColor = function(color) {
-        applyToActiveTextFun(function(activeObject) {
-            activeObject.strokeStyle = color;
         });
     };
 
