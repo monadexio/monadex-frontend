@@ -124,12 +124,13 @@ monadexDirectives.directive('imagePicker', ['$timeout', 'canvasService', functio
         }};
 }]);
 
-monadexDirectives.directive('imageEditor', ['$timeout', 'canvasService', function($timeout, canvasService){
+// this editor is used to remove the active objects (text or images) or flip the t-shirt canvas
+monadexDirectives.directive('canvasCommonEditor', ['$timeout', 'canvasService', function($timeout, canvasService){
     return {
         restrict: 'E',
         scope: {
         },
-        templateUrl: 'partials/image-editor.html',
+        templateUrl: 'partials/canvas-common-editor.html',
         link: function(scope, element, attrs) {
             $timeout(function() {
                 element.find('#remove-selected').click(canvasService.removeSelected);
@@ -144,7 +145,7 @@ monadexDirectives.directive('imageEditor', ['$timeout', 'canvasService', functio
                 });
 
                 scope.$on('mdeTextObjectSelected', function(event, props) {
-                    element.find("#imageeditor").css('display', 'none');
+                    element.find("#imageeditor").css('display', 'block');
                 });
 
                 scope.$on('mdeImageObjectSelected', function(event, props) {
