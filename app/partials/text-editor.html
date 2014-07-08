@@ -1,12 +1,10 @@
 <div class="btn-group inline pull-left" id="texteditor" style="display:none">
-  <button id="font-family" class="btn dropdown-toggle"
-          data-toggle="dropdown" title="Font Style">
+  <button id="font-family" class="btn dropdown-toggle" data-toggle="dropdown" title="Font Style">
     <i class="icon-font" style="width:19px;height:19px;"></i>
   </button>
-
-  <ul class="dropdown-menu" role="menu" aria-labelledby="font-family-X">
+  <ul class="dropdown-menu" role="menu" aria-labelledby="font-family-X" >
     <li ng-repeat="font in fonts">
-      <a tabindex="-1" href="#" ng-click="setFont('{{font.name}}');" class="{{font.class}}">{{font.name}}</a>
+      <a tabindex="-1" href="#" class="{{font.class}}, font-family-picker">{{ font.name }}</a>
     </li>
   </ul>
   <button id="text-bold" class="btn" data-original-title="Bold"><img src="img/font_bold.png" height="" width=""></button>

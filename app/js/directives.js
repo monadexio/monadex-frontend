@@ -154,6 +154,7 @@ monadexDirectives.directive('textEditor', ['$timeout', 'canvasService', function
     return {
         restrict: 'E',
         scope: {
+            fonts: '='
         },
         templateUrl: 'partials/text-editor.html',
         link: function(scope, element, attrs) {
@@ -197,9 +198,11 @@ monadexDirectives.directive('textEditor', ['$timeout', 'canvasService', function
                     }
                 });
 
-                element.find("#font-family").change(function() {
-                    var font = $(this).value;
+                element.find(".font-family-picker").click(function(event) {
+                    var font = $(this).text();
                     canvasService.changeTextFontFamily(font);
+
+                    event.preventDefault();
                 });
 
                 element.find("#text-bold").click(canvasService.toggleActiveTextBold);
