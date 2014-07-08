@@ -117,6 +117,13 @@ myService.service("canvasService", ['$rootScope', function($rootScope) {
         canvas.item(canvas.item.length-1).hasRotatingPoint = true;
     };
 
+    this.addTextWhenNoActiveText = function(text) {
+        var activeObject = canvas.getActiveObject();
+        if (!activeObject || activeObject.type != 'text') {
+            this.addText(text);
+        }
+    };
+
     this.addImage = function(ImgSrc) {
         /*temp code*/
         var offset = 50;

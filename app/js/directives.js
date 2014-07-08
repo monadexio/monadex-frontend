@@ -76,14 +76,23 @@ monadexDirectives.directive('textInput', ['$timeout', 'canvasService', function(
             $timeout(function() {
                 element.find('#add-text').on("click", function(){
                     var text = $("#text-string").val();
-                    canvasService.addText(text);
+                    canvasService.addTextWhenNoActiveText(text);
                     //$("#texteditor").css('display', 'block');
                     //$("#imageeditor").css('display', 'block');
                 });
 
-                element.find("#text-string").keyup(function(){
-                    var text = $(this)[0].value;
-                    canvasService.renderActiveTextContent(text);
+                element.find("#text-string").keyup(function(e){
+                    var text;
+                    var enterKeyCode = 13;
+                    if(e.which === enterKeyCode) {
+                        // click enter should have the same effect as
+                        // clicking the #add-text button.
+                        element.find('#add-text').trigger("click");
+                        element.find('#add-text').focus();
+                    } else {
+                        text = $(this)[0].value;
+                        canvasService.renderActiveTextContent(text);
+                    }
                 });
 
                 scope.$on('mdeTextObjectSelected', function(event, props) {
