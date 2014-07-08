@@ -56,7 +56,8 @@ myService.service("canvasService", ['$rootScope', function($rootScope) {
                 if (selectedObject && selectedObject.type === 'text') {
                     $rootScope.$broadcast('mdeTextObjectSelected',
                                          { text: selectedObject.getText(),
-                                           fontColor: selectedObject.fill || '#000000'
+                                           fontColor: selectedObject.fill || '#000000',
+                                           backgroundColor: selectedObject.backgroundColor
                                          });
                 }
                 else if (selectedObject && selectedObject.type === 'image'){

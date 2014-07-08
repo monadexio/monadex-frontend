@@ -202,9 +202,8 @@ monadexDirectives.directive('textEditor', ['$timeout', 'canvasService', function
 
                 scope.$on('mdeTextObjectSelected', function(event, props) {
                     element.find("#texteditor").css('display', 'block');
-                    // TODO: for some reasons, this makes the text disappear sometimes when
-                    //       it is selected.
-                    //element.find('#text-fontcolor').minicolors('value', props.fontColor);
+                    element.find('#text-fontcolor').minicolors('value', props.fontColor);
+                    element.find('#text-bgcolor').minicolors('value', props.backgroundColor);
                 });
 
                 scope.$on('mdeImageObjectSelected', function(event, props) {
