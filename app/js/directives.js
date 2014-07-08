@@ -169,41 +169,20 @@ monadexDirectives.directive('textEditor', ['$timeout', 'canvasService', function
         link: function(scope, element, attrs) {
             $timeout(function() {
                 element.find('#text-fontcolor').minicolors({
-                    change: function(hex, rgb) {
-                        var color = $(this).value;
-                        canvasService.renderActiveTextFontColor(color);
-                    },
-                    open: function(hex, rgb) {
-                        //
-                    },
-                    close: function(hex, rgb) {
-                        //
+                    change: function(hex, opacity) {
+                        canvasService.renderActiveTextFontColor(hex);
                     }
                 });
 
                 element.find('#text-bgcolor').minicolors({
-                    change: function(hex, rgb) {
-                        var color = $(this).value;
-                        canvasService.renderActiveTextBgColor(color);
-                    },
-                    open: function(hex, rgb) {
-                        //
-                    },
-                    close: function(hex, rgb) {
-                        //
+                    change: function(hex, opacity) {
+                        canvasService.renderActiveTextBgColor(hex);
                     }
                 });
 
                 element.find('#text-strokecolor').minicolors({
-                    change: function(hex, rgb) {
-                        var color = $(this).value;
-                        canvasService.renderActiveTextStrokeColor(color);
-                    },
-                    open: function(hex, rgb) {
-                        //
-                    },
-                    close: function(hex, rgb) {
-                        //
+                    change: function(hex, opacity) {
+                        canvasService.renderActiveTextStrokeColor(hex);
                     }
                 });
 
