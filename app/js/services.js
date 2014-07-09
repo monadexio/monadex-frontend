@@ -194,18 +194,16 @@ myService.service("canvasService", ['$rootScope',
         };
 
         this.addCanvasBorder = function() {
-            canvas.add(lineL);
-            canvas.add(lineR);
-            canvas.add(lineU);
-            canvas.add(lineD);
+           [lineL, lineR, lineU, lineD].map(function(elem) {
+                canvas.add(elem);
+            });
             canvas.renderAll();
         };
 
         this.removeCanvasBorder = function() {
-            canvas.remove(lineL);
-            canvas.remove(lineR);
-            canvas.remove(lineU);
-            canvas.remove(lineD);
+           [lineL, lineR, lineU, lineD].map(function(elem) {
+                canvas.remove(elem);
+            });
             canvas.renderAll();
         };
 
@@ -243,31 +241,35 @@ myService.service("canvasService", ['$rootScope',
 
         this.toggleActiveTextBold = function() {
             applyToActiveTextFun(function(activeObject) {
-                activeObject.fontWeight =
-                    (activeObject.fontWeight == 'bold' ? '' : 'bold');
+                activeObject.fontWeight = (
+                    activeObject.fontWeight == 'bold' ? '' : 'bold'
+                );
             });
         };
 
         this.toggleActiveTextItalic = function() {
             applyToActiveTextFun(function(activeObject) {
-                activeObject.fontStyle =
-                    (activeObject.fontStyle == 'italic' ? '' : 'italic');
+                activeObject.fontStyle = (
+                    activeObject.fontStyle == 'italic' ? '' : 'italic'
+                );
             });
         };
 
         this.toggleActiveTextStrike = function() {
             applyToActiveTextFun(function(activeObject) {
-                activeObject.textDecoration =
-                    (activeObject.textDecoration ==
-                     'line-through' ? '' : 'line-through');
+                activeObject.textDecoration = (
+                    activeObject.textDecoration ==
+                        'line-through' ? '' : 'line-through'
+                );
             });
         };
 
         this.toggleActiveTextUnderline = function() {
             applyToActiveTextFun(function(activeObject) {
-                activeObject.textDecoration =
-                    (activeObject.textDecoration ==
-                     'underline' ? '' : 'underline');
+                activeObject.textDecoration = (
+                    activeObject.textDecoration ==
+                        'underline' ? '' : 'underline'
+                );
             });
         };
 
