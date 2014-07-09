@@ -11,6 +11,19 @@ monadexDirectives.directive('appVersion', ['version',
     }
 ]);
 
+// TODO: more work needs to be done here. checkout panel should
+//       reflect the real price.
+monadexDirectives.directive('checkoutPanel', ['$timeout',
+   function($timeout) {
+       return {
+           restrict: 'E',
+           scope: {
+           },
+           templateUrl: 'partials/checkout-panel.html'
+       };
+   }
+]);
+
 monadexDirectives.directive('tshirtDesigner', ['$timeout',
    function($timeout) {
        return {
