@@ -1,8 +1,8 @@
 {
     "name": "monadex.io",
-    "description": "A starter project for AngularJS",
-    "version": "0.0.0",
-    "homepage": "https://github.com/angular/angular-seed",
+    "description": "Monadex T-shirts",
+    "version": "0.0.1",
+    "homepage": "n/a",
     "license": "MIT",
     "private": true,
     "dependencies": {

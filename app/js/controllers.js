@@ -2,8 +2,9 @@
 
 /* Controllers */
 
-angular.module('monadexApp.controllers', [])
-  .controller('MonadexTshirtDesigner', ['$scope', function($scope) {
+var monadexControllers = angular.module('monadexApp.controllers', []);
+
+monadexControllers.controller('MonadexTshirtDesigner', ['$scope', function($scope) {
     $scope.currentTshirtType = {id: 1, name: "Short Sleeve Shirts"},
     $scope.tshirtTypes = [ {id: 1, name: "Short Sleeve Shirts" },
                            {id: 2, name: "Long Sleeve Shirts"},
@@ -56,7 +57,4 @@ angular.module('monadexApp.controllers', [])
                      {name: 'Engagement', class: 'Engagement'},
                    ]
 
-  }])
-  .controller('MonadexCtrl2', ['$scope', function($scope) {
-
-  }]);
+}]);
