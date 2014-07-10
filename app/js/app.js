@@ -14,7 +14,7 @@ monadexApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when(
         '/designer',
         {
-            templateUrl: 'partials/designer-page.html',
+            templateUrl: 'partials/tshirt-designer-page.html',
             controller: 'MonadexTshirtDesigner'
         }
     );
