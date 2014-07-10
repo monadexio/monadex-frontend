@@ -24,14 +24,27 @@ monadexDirectives.directive('checkoutPanel', ['$timeout',
    }
 ]);
 
+// TODO: more work needs to be done here. checkout panel should
+//       reflect the real price.
+monadexDirectives.directive('tshirtGoodiesPanel', ['$timeout',
+   function($timeout) {
+       return {
+           restrict: 'E',
+           scope: {
+               colors: "=",
+               tshirtTypes: '=tshirttypes'
+           },
+           templateUrl: 'partials/tshirt-goodies-panel.html'
+       };
+   }
+]);
+
 monadexDirectives.directive('tshirtDesigner', ['$timeout',
    function($timeout) {
        return {
            restrict: 'E',
            scope: {
-               colors: '=',
                images: '=',
-               tshirtTypes: '=tshirttypes',
                fonts: '='
            },
            templateUrl: 'partials/tshirt-designer.html',
