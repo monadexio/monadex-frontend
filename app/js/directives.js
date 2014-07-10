@@ -175,17 +175,24 @@ monadexDirectives.directive('canvasCommonEditor', ['$timeout', 'canvasService',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find('#remove-selected').click(
-                        canvasService.removeSelected);
+                        canvasService.removeSelected
+                    );
 
                     element.find('#flip').click(function() {
-                        if (element.find('#flip').attr("title") ==
+                        if (element.find('#flip').attr("data-original-title") ==
                             "Show Back View") {
                             element.find('#flip').attr(
-                                'title', 'Show Front View');
+                                'data-original-title',
+                                'Show Front View'
+                            );
+
                             canvasService.flip("img/crew_back.png");
                         } else {
                             element.find('#flip').attr(
-                                'title', 'Show Back View');
+                                'data-original-title',
+                                'Show Back View'
+                            );
+
                             canvasService.flip("img/crew_front.png");
                         }
                     });
