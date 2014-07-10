@@ -32,6 +32,7 @@ monadexDirectives.directive('tshirtGoodiesPanel', ['$timeout',
            restrict: 'E',
            scope: {
                colors: "=",
+               images: '=',
                tshirtTypes: '=tshirttypes'
            },
            templateUrl: 'partials/tshirt-goodies-panel.html'
@@ -44,7 +45,6 @@ monadexDirectives.directive('tshirtDesigner', ['$timeout',
        return {
            restrict: 'E',
            scope: {
-               images: '=',
                fonts: '='
            },
            templateUrl: 'partials/tshirt-designer.html',
@@ -207,14 +207,14 @@ monadexDirectives.directive('canvasCommonEditor', ['$timeout', 'canvasService',
     }
 ]);
 
-monadexDirectives.directive('textEditor', ['$timeout', 'canvasService',
+monadexDirectives.directive('textStyleEditor', ['$timeout', 'canvasService',
     function($timeout, canvasService){
         return {
             restrict: 'E',
             scope: {
                 fonts: '='
             },
-            templateUrl: 'partials/text-editor.html',
+            templateUrl: 'partials/text-style-editor.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find('#text-fontcolor').minicolors({
