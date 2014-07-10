@@ -40,14 +40,14 @@ monadexDirectives.directive('tshirtGoodiesPanel', ['$timeout',
    }
 ]);
 
-monadexDirectives.directive('tshirtDesigner', ['$timeout',
+monadexDirectives.directive('tshirtDesignAssistant', ['$timeout',
    function($timeout) {
        return {
            restrict: 'E',
            scope: {
                fonts: '='
            },
-           templateUrl: 'partials/tshirt-designer.html',
+           templateUrl: 'partials/tshirt-design-assistant.html',
            link: function(scope, element, attrs) {
                $timeout(function() {
                    element.find(".clearfix button,a").tooltip();
@@ -57,7 +57,7 @@ monadexDirectives.directive('tshirtDesigner', ['$timeout',
    }
 ]);
 
-monadexDirectives.directive('tShirtCanvas', ['$timeout', 'canvasService',
+monadexDirectives.directive('tshirtCanvas', ['$timeout', 'canvasService',
     function($timeout, canvasService) {
         var canvas;
         return {
