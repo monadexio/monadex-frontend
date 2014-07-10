@@ -35,7 +35,12 @@ monadexDirectives.directive('tshirtGoodiesPanel', ['$timeout',
                images: '=',
                tshirtTypes: '=tshirttypes'
            },
-           templateUrl: 'partials/tshirt-goodies-panel.html'
+           templateUrl: 'partials/tshirt-goodies-panel.html',
+           link: function(scope, element) {
+               element.find(".tab-link").click(function(event) {
+                   event.preventDefault();
+               });
+           }
        };
    }
 ]);
