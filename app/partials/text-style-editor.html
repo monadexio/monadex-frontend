@@ -1,19 +1,19 @@
 <div class="btn-group inline pull-left" id="texteditor" style="display:none">
-  <button id="font-family" class="btn dropdown-toggle" data-toggle="dropdown" title="Font Style">
-    <i class="icon-font" style="width:19px;height:19px;"></i>
+  <button id="font-family" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Font Style">
+    <i class="glyphicon glyphicon-font" style="width:19px;height:19px;"></i>
   </button>
   <ul class="dropdown-menu" role="menu" aria-labelledby="font-family-X" >
     <li ng-repeat="font in fonts">
       <a tabindex="-1" href="#" class="{{font.class}}, font-family-picker">{{ font.name }}</a>
     </li>
   </ul>
-  <button id="text-bold" class="btn" data-original-title="Bold"><img src="img/font_bold.png" height="" width=""></button>
-  <button id="text-italic" class="btn" data-original-title="Italic"><img src="img/font_italic.png" height="" width=""></button>
-  <button id="text-underline" class="btn" title="Underline" style=""><img src="img/font_underline.png"></button>
-  <p class="btn" href="#" rel="tooltip" data-placement="top" data-original-title="Font Color">
+  <button id="text-bold" class="btn btn-default" data-original-title="Bold"><img src="img/font_bold.png" height="" width=""></button>
+  <button id="text-italic" class="btn btn-default" data-original-title="Italic"><img src="img/font_italic.png" height="" width=""></button>
+  <button id="text-underline" class="btn btn-default" title="Underline" style=""><img src="img/font_underline.png"></button>
+  <p class="btn btn-default" href="#" rel="tooltip" data-placement="top" data-original-title="Font Color">
     <input type="hidden" id="text-fontcolor" class="color-picker" size="7" value="#000000">
   </p>
-  <p class="btn" href="#" rel="tooltip" data-placement="top" data-original-title="Font Background Color">
+  <p class="btn btn-default" href="#" rel="tooltip" data-placement="top" data-original-title="Font Background Color">
     <input type="hidden" id="text-bgcolor" class="color-picker" size="7" value="#ffffff">
   </p>
 </div>
