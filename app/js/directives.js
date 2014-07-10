@@ -154,7 +154,7 @@ monadexDirectives.directive('imagePicker', ['$timeout', 'canvasService',
             templateUrl: 'partials/image-picker.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
-                    element.find(".img-polaroid").on("click", function(e){
+                    element.find(".img-thumbnail").on("click", function(e){
                         var el = e.target;
                         canvasService.addImage(el.src);
                     });
