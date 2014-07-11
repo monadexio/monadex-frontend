@@ -34,3 +34,26 @@ header .intro-text .skills {
         font-size: 1.75em;
     }
 }
+
+section {
+    padding: 100px 0;
+}
+
+section h2 {
+    margin: 0;
+    font-size: 3em;
+}
+
+section.success {
+    background: #18bc9c;
+    color: #fff;
+}
+
+@media (max-width:767px) {
+    section {
+        padding: 75px 0;
+    }
+    section.first {
+        padding-top: 75px;
+    }
+}
