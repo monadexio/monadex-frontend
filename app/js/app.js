@@ -16,12 +16,16 @@ monadexApp.config(['$routeProvider', function($routeProvider) {
         {
             templateUrl: 'partials/landing/landing-main.html',
             controller: 'MonadexTshirtDesigner'
-        },
+        }
+    );
+
+    $routeProvider.when(
         '/designer',
         {
             templateUrl: 'partials/tshirt-designer-pages/designer-main.html',
             controller: 'MonadexTshirtDesigner'
         }
     );
+
     $routeProvider.otherwise({redirectTo: '/landing'});
 }]);
