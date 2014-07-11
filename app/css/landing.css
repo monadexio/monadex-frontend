@@ -3,10 +3,12 @@ header {
     background: #3399FF;
     color: #fff;
 }
+
 header .container {
     padding-top: 100px;
     padding-bottom: 50px;
 }
+
 header img {
     display: block;
     margin: 0 auto 20px;
