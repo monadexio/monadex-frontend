@@ -12,11 +12,16 @@ var monadexApp = angular.module('monadexApp', [
 
 monadexApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when(
+        '/landing',
+        {
+            templateUrl: 'partials/landing/landing-main.html',
+            controller: 'MonadexTshirtDesigner'
+        },
         '/designer',
         {
-            templateUrl: 'partials/tshirt-designer-page.html',
+            templateUrl: 'partials/tshirt-designer-pages/designer-main.html',
             controller: 'MonadexTshirtDesigner'
         }
     );
-    $routeProvider.otherwise({redirectTo: '/designer'});
+    $routeProvider.otherwise({redirectTo: '/landing'});
 }]);
