@@ -1,0 +1,59 @@
+header {
+    text-align: center;
+    background: #3399FF;
+    color: #fff;
+}
+header .container {
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+header img {
+    display: block;
+    margin: 0 auto 20px;
+}
+
+header .intro-text .name {
+    display: block;
+    font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 2em;
+}
+header .intro-text .skills {
+    font-size: 1.25em;
+    font-weight: 300;
+}
+@media (min-width:768px) {
+    header .container {
+        padding: 200px 0 100px;
+    }
+    header .intro-text .name {
+        font-size: 5em;
+    }
+    header .intro-text .skills {
+        font-size: 1.75em;
+    }
+}
+
+section {
+    padding: 100px 0;
+}
+
+section h2 {
+    margin: 0;
+    font-size: 3em;
+}
+
+section.success {
+    background: #18bc9c;
+    color: #fff;
+}
+
+@media (max-width:767px) {
+    section {
+        padding: 75px 0;
+    }
+    section.first {
+        padding-top: 75px;
+    }
+}

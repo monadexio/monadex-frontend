@@ -19,7 +19,7 @@ monadexDirectives.directive('checkoutPanel', ['$timeout',
            restrict: 'E',
            scope: {
            },
-           templateUrl: 'partials/checkout-panel.html'
+           templateUrl: 'partials/tshirt-designer-pages/checkout-panel.html'
        };
    }
 ]);
@@ -35,7 +35,7 @@ monadexDirectives.directive('tshirtGoodiesPanel', ['$timeout',
                images: '=',
                tshirtTypes: '=tshirttypes'
            },
-           templateUrl: 'partials/tshirt-goodies-panel.html',
+           templateUrl: 'partials/tshirt-designer-pages/tshirt-goodies-panel.html',
            link: function(scope, element) {
                element.find(".tab-link").click(function(event) {
                    event.preventDefault();
@@ -52,7 +52,7 @@ monadexDirectives.directive('tshirtDesignAssistant', ['$timeout',
            scope: {
                fonts: '='
            },
-           templateUrl: 'partials/tshirt-design-assistant.html',
+           templateUrl: 'partials/tshirt-designer-pages/tshirt-design-assistant.html',
            link: function(scope, element, attrs) {
                $timeout(function() {
                    element.find(".clearfix button,a").tooltip();
@@ -69,7 +69,7 @@ monadexDirectives.directive('tshirtCanvas', ['$timeout', 'canvasService',
             restrict: 'E',
             scope: {
             },
-            templateUrl: 'partials/tshirt-canvas.html',
+            templateUrl: 'partials/tshirt-designer-pages/tshirt-canvas.html',
             link: function(scope, element, attrs) {
                 // initialize the canvasService
                 canvasService.init('tcanvas', "#tshirtFacing");
@@ -95,7 +95,7 @@ monadexDirectives.directive('bgColorPicker', ['$timeout', 'canvasService',
             scope: {
                 colors: '='
             },
-            templateUrl: 'partials/bg-color-picker.html',
+            templateUrl: 'partials/tshirt-designer-pages/bg-color-picker.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find('.color-preview').on("click", function(){
@@ -114,7 +114,7 @@ monadexDirectives.directive('textInput', ['$timeout', 'canvasService',
             restrict: 'E',
             scope: {
             },
-            templateUrl: 'partials/text-input.html',
+            templateUrl: 'partials/tshirt-designer-pages/text-input.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find('#add-text').on("click", function(){
@@ -156,7 +156,7 @@ monadexDirectives.directive('imagePicker', ['$timeout', 'canvasService',
             scope: {
                 images: '='
             },
-            templateUrl: 'partials/image-picker.html',
+            templateUrl: 'partials/tshirt-designer-pages/image-picker.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find(".img-thumbnail").on("click", function(e){
@@ -176,7 +176,7 @@ monadexDirectives.directive('canvasCommonEditor', ['$timeout', 'canvasService',
             restrict: 'E',
             scope: {
             },
-            templateUrl: 'partials/canvas-common-editor.html',
+            templateUrl: 'partials/tshirt-designer-pages/canvas-common-editor.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find('#remove-selected').click(
@@ -226,7 +226,7 @@ monadexDirectives.directive('textStyleEditor', ['$timeout', 'canvasService',
             scope: {
                 fonts: '='
             },
-            templateUrl: 'partials/text-style-editor.html',
+            templateUrl: 'partials/tshirt-designer-pages/text-style-editor.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find('#text-fontcolor').minicolors({
