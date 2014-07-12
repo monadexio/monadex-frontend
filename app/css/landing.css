@@ -1,6 +1,6 @@
 header {
     text-align: center;
-    background: #3399FF;
+    background: #3399ff;
     color: #fff;
 }
 
@@ -61,8 +61,15 @@ hr.star-light {
 }
 
 hr.star-light:after {
-    background-color: #18bc9c;
     color: #fff;
+}
+
+header hr.star-light:after {
+    background-color: #3399ff;
+}
+
+section hr.star-light:after {
+    background-color: #18bc9c;
 }
 
 hr.star-primary {
