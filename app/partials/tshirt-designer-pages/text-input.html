@@ -1,39 +1,39 @@
+<b>Enter text below</b>
+<br>
 <div class="input-group">
-  <b>Enter text below</b>
-  <br>
-  <input id="text-string" type="text" placeholder="Add your text here">
-  <button id="add-text" class="btn btn-default" title="Add text">
-    <i class="glyphicon glyphicon-share-alt"></i>
-  </button>
-  <br>
-
-  <b>Choose a font</b>
-  <br>
-  <!-- TODO: set the style of the list -->
-  <select class="font-family-picker select-picker" ng-init="currentFont=fonts[0]" ng-model="currentFont" ng-options="font.name for font in fonts">
-  </select>
-  <br>
-
-  <b>Text color</b>
-  <br>
-  <p class="btn btn-default" href="#" data-placement="top" data-original-title="Font Color">
-    <input type="hidden" id="text-fontcolor" class="color-picker" size="7" value="#000000">
-  </p>
-  <br>
-
-  <b>Text background color</b>
-  <br>
-  <p class="btn btn-default" href="#" data-placement="top" data-original-title="Font Background Color">
-    <input type="hidden" id="text-bgcolor" class="color-picker" size="7" value="#ffffff">
-  </p>
-  <br>
-
-  <b>Text Style</b>
-  <br>
-  <button id="text-bold" class="btn btn-default" data-original-title="Bold"><img src="img/font_bold.png" height="" width=""></button>
-  <button id="text-italic" class="btn btn-default" data-original-title="Italic"><img src="img/font_italic.png" height="" width=""></button>
-  <button id="text-underline" class="btn btn-default" title="Underline" style=""><img src="img/font_underline.png"></button>
-  <br>
-
-  <hr>
+  <input id="text-string" class="form-control" type="text" placeholder="Add your text here">
+  <span class="input-group-btn">
+    <button id="add-text" class="btn btn-default" title="Add text">
+      <i class="glyphicon glyphicon-share-alt"></i>
+    </button>
+  </span>
 </div>
+<br>
+
+<b>Choose a font</b>
+<br>
+<!-- TODO: set the style of the list -->
+<select class="font-family-picker" ng-init="currentFont=fonts[0]" ng-model="currentFont" ng-options="font.name for font in fonts">
+</select>
+<br><br>
+
+<b>Text color</b>
+<br>
+<p class="btn btn-default" href="#" data-placement="top" data-original-title="Font Color">
+  <input type="hidden" id="text-fontcolor" class="color-picker" size="7" value="#000000">
+</p>
+<br><br>
+
+<b>Text background color</b>
+<br>
+<p class="btn btn-default" href="#" data-placement="top" data-original-title="Font Background Color">
+  <input type="hidden" id="text-bgcolor" class="color-picker" size="7" value="#ffffff">
+</p>
+<br><br>
+
+<b>Text Style</b>
+<br>
+<button id="text-bold" class="btn btn-default" data-original-title="Bold"><img src="img/font_bold.png" height="" width=""></button>
+<button id="text-italic" class="btn btn-default" data-original-title="Italic"><img src="img/font_italic.png" height="" width=""></button>
+<button id="text-underline" class="btn btn-default" title="Underline" style=""><img src="img/font_underline.png"></button>
+<br>
