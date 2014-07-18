@@ -33,6 +33,7 @@ monadexDirectives.directive('tshirtGoodiesPanel', ['$timeout',
            scope: {
                colors: "=",
                images: '=',
+               fonts: "=",
                tshirtTypes: '=tshirttypes'
            },
            templateUrl: 'partials/tshirt-designer-pages/tshirt-goodies-panel.html',
@@ -50,7 +51,6 @@ monadexDirectives.directive('tshirtDesignAssistant', ['$timeout',
        return {
            restrict: 'E',
            scope: {
-               fonts: '='
            },
            templateUrl: 'partials/tshirt-designer-pages/tshirt-design-assistant.html',
            link: function(scope, element, attrs) {
@@ -113,14 +113,39 @@ monadexDirectives.directive('textInput', ['$timeout', 'canvasService',
         return {
             restrict: 'E',
             scope: {
+                fonts: "="
             },
             templateUrl: 'partials/tshirt-designer-pages/text-input.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
+                    element.find('#text-fontcolor').minicolors({
+                        change: function(hex, opacity) {
+                            canvasService.renderActiveTextFontColor(hex);
+                        }
+                    });
+
+                    element.find('#text-bgcolor').minicolors({
+                        change: function(hex, opacity) {
+                            canvasService.renderActiveTextBgColor(hex);
+                        }
+                    });
+
                     element.find('#add-text').on("click", function(){
                         var text = $("#text-string").val();
                         canvasService.addTextWhenNoActiveText(text);
                     });
+
+
+                    element.find(".font-family-picker").change(
+                        function(event) {
+                            var sclass = ".font-family-picker option:selected",
+                                selected = element.find(sclass)[0],
+                                font = $(selected).text();
+
+                            canvasService.changeTextFontFamily(font);
+                            event.preventDefault();
+                        }
+                    );
 
                     element.find("#text-string").keyup(function(e){
                         var text;
@@ -138,6 +163,14 @@ monadexDirectives.directive('textInput', ['$timeout', 'canvasService',
 
                     scope.$on('mdeTextObjectSelected', function(event, props) {
                         element.find("#text-string").val(props.text);
+
+                        element.find('#text-fontcolor').minicolors(
+                            'value', props.fontColor
+                        );
+
+                        element.find('#text-bgcolor').minicolors(
+                            'value', props.backgroundColor
+                        );
                     });
 
                     scope.$on('mdeObjectCleared', function(event) {
@@ -224,30 +257,10 @@ monadexDirectives.directive('textStyleEditor', ['$timeout', 'canvasService',
         return {
             restrict: 'E',
             scope: {
-                fonts: '='
             },
             templateUrl: 'partials/tshirt-designer-pages/text-style-editor.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
-                    element.find('#text-fontcolor').minicolors({
-                        change: function(hex, opacity) {
-                            canvasService.renderActiveTextFontColor(hex);
-                        }
-                    });
-
-                    element.find('#text-bgcolor').minicolors({
-                        change: function(hex, opacity) {
-                            canvasService.renderActiveTextBgColor(hex);
-                        }
-                    });
-
-                    element.find(".font-family-picker").click(function(event) {
-                        var font = $(this).text();
-                        canvasService.changeTextFontFamily(font);
-
-                        event.preventDefault();
-                    });
-
                     element.find("#text-bold").click(
                         canvasService.toggleActiveTextBold
                     );
@@ -274,12 +287,6 @@ monadexDirectives.directive('textStyleEditor', ['$timeout', 'canvasService',
 
                     scope.$on('mdeTextObjectSelected', function(event, props) {
                         element.find("#texteditor").css('display', 'block');
-                        element.find('#text-fontcolor').minicolors(
-                            'value', props.fontColor
-                        );
-                        element.find('#text-bgcolor').minicolors(
-                            'value', props.backgroundColor
-                        );
                     });
 
                     scope.$on('mdeImageObjectSelected', function(event, props) {

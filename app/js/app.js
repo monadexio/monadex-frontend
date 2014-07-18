@@ -15,7 +15,7 @@ monadexApp.config(['$routeProvider', function($routeProvider) {
         '/landing',
         {
             templateUrl: 'partials/landing/landing-main.html',
-            controller: 'MonadexTshirtDesigner'
+            controller: 'MonadexTshirtLanding'
         }
     );
 
@@ -30,7 +30,7 @@ monadexApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.otherwise({redirectTo: '/landing'});
 }]);
 
-monadexApp.run(function($rootScope, $location, $anchorScroll, $routeParams) {
+monadexApp.run(function($rootScope, $location, $anchorScroll, $timeout, $routeParams) {
     $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
         $location.hash($routeParams.scrollTo);
         $anchorScroll();

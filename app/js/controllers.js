@@ -50,6 +50,11 @@ monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
             {src: "img/avatar/avatar-5.png"},
         ];
 
+        $scope.currentFont = {
+            name: 'Arial',
+            class: 'Arial'
+        };
+
         $scope.fonts = [
             {name: 'Arial', class: 'Arial'},
             {name: 'Helvetica', class: 'Helvetica'},
@@ -66,5 +71,10 @@ monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
             {name: 'Plaster', class: 'Plaster'},
             {name: 'Engagement', class: 'Engagement'},
         ];
+    }
+]);
+
+monadexControllers.controller('MonadexTshirtLanding', ['$scope',
+    function($scope) {
     }
 ]);

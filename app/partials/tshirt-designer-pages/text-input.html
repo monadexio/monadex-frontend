@@ -1,7 +1,32 @@
 <div class="input-group">
-  <input id="text-string" type="text" placeholder="add text here...">
+  <b>Enter text below</b>
+  <br>
+  <input id="text-string" type="text" placeholder="Add your text here">
   <button id="add-text" class="btn btn-default" title="Add text">
     <i class="glyphicon glyphicon-share-alt"></i>
   </button>
+  <br>
+
+  <b>Choose a font</b>
+  <br>
+  <!-- TODO: set the style of the list -->
+  <select class="font-family-picker" ng-init="currentFont=fonts[0]" ng-model="currentFont" ng-options="font.name for font in fonts">
+  </select>
+  <br>
+
+  <b>Text color</b>
+  <br>
+  <p class="btn btn-default" href="#" data-placement="top" data-original-title="Font Color">
+    <input type="hidden" id="text-fontcolor" class="color-picker" size="7" value="#000000">
+  </p>
+  <br>
+
+  <b>Text background color</b>
+  <br>
+  <p class="btn btn-default" href="#" data-placement="top" data-original-title="Font Background Color">
+    <input type="hidden" id="text-bgcolor" class="color-picker" size="7" value="#ffffff">
+  </p>
+  <br>
+
   <hr>
 </div>
