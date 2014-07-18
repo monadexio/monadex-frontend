@@ -79,6 +79,17 @@ monadexDirectives.directive('tshirtCanvas', ['$timeout', 'canvasService',
                         canvasService.removeCanvasBorder
                     );
 
+                    element.find('#flip').click(function() {
+                        var flipText = element.find('#flip-text');
+                        if (flipText.text()==="Show Back View") {
+                            flipText.text('Show Front View');
+                            canvasService.flip("img/crew_back.png");
+                        } else {
+                            flipText.text('Show Back View');
+                            canvasService.flip("img/crew_front.png");
+                        }
+                    });
+
                     scope.$on('mdeChangeBackground', function(event, color) {
                         element.find("#shirtDiv").css("backgroundColor", color);
                     });
@@ -238,25 +249,6 @@ monadexDirectives.directive('canvasCommonEditor', ['$timeout', 'canvasService',
                     element.find('#remove-selected').click(
                         canvasService.removeSelected
                     );
-
-                    element.find('#flip').click(function() {
-                        if (element.find('#flip').attr("data-original-title") ==
-                            "Show Back View") {
-                            element.find('#flip').attr(
-                                'data-original-title',
-                                'Show Front View'
-                            );
-
-                            canvasService.flip("img/crew_back.png");
-                        } else {
-                            element.find('#flip').attr(
-                                'data-original-title',
-                                'Show Back View'
-                            );
-
-                            canvasService.flip("img/crew_front.png");
-                        }
-                    });
 
                     scope.$on('mdeTextObjectSelected', function(event, props) {
                         element.find("#imageeditor").css('display', 'block');
