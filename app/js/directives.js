@@ -135,6 +135,29 @@ monadexDirectives.directive('textInput', ['$timeout', 'canvasService',
                         canvasService.addTextWhenNoActiveText(text);
                     });
 
+                    element.find("#text-bold").click(
+                        canvasService.toggleActiveTextBold
+                    );
+
+                    element.find("#text-italic").click(
+                        canvasService.toggleActiveTextItalic
+                    );
+
+                    element.find("#text-underline").click(
+                        canvasService.toggleActiveTextUnderline
+                    );
+
+                    element.find("#text-left").click(function() {
+                        canvasService.setActiveTextAlignment('left');
+                    });
+
+                    element.find("#text-center").click(function() {
+                        canvasService.setActiveTextAlignment('center');
+                    });
+
+                    element.find("#text-right").click(function() {
+                        canvasService.setActiveTextAlignment('right');
+                    });
 
                     element.find(".font-family-picker").change(
                         function(event) {
@@ -245,56 +268,6 @@ monadexDirectives.directive('canvasCommonEditor', ['$timeout', 'canvasService',
 
                     scope.$on('mdeObjectCleared', function(event) {
                         element.find("#imageeditor").css('display', 'none');
-                    });
-                }, 0);
-            }
-        };
-    }
-]);
-
-monadexDirectives.directive('textStyleEditor', ['$timeout', 'canvasService',
-    function($timeout, canvasService){
-        return {
-            restrict: 'E',
-            scope: {
-            },
-            templateUrl: 'partials/tshirt-designer-pages/text-style-editor.html',
-            link: function(scope, element, attrs) {
-                $timeout(function() {
-                    element.find("#text-bold").click(
-                        canvasService.toggleActiveTextBold
-                    );
-
-                    element.find("#text-italic").click(
-                        canvasService.toggleActiveTextItalic
-                    );
-
-                    element.find("#text-underline").click(
-                        canvasService.toggleActiveTextUnderline
-                    );
-
-                    element.find("#text-left").click(function() {
-                        canvasService.setActiveTextAlignment('left');
-                    });
-
-                    element.find("#text-center").click(function() {
-                        canvasService.setActiveTextAlignment('center');
-                    });
-
-                    element.find("#text-right").click(function() {
-                        canvasService.setActiveTextAlignment('right');
-                    });
-
-                    scope.$on('mdeTextObjectSelected', function(event, props) {
-                        element.find("#texteditor").css('display', 'block');
-                    });
-
-                    scope.$on('mdeImageObjectSelected', function(event, props) {
-                        element.find("#texteditor").css('display', 'none');
-                    });
-
-                    scope.$on('mdeObjectCleared', function(event) {
-                        element.find("#texteditor").css('display', 'none');
                     });
                 }, 0);
             }

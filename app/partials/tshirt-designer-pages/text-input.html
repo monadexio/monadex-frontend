@@ -10,7 +10,7 @@
   <b>Choose a font</b>
   <br>
   <!-- TODO: set the style of the list -->
-  <select class="font-family-picker" ng-init="currentFont=fonts[0]" ng-model="currentFont" ng-options="font.name for font in fonts">
+  <select class="font-family-picker select-picker" ng-init="currentFont=fonts[0]" ng-model="currentFont" ng-options="font.name for font in fonts">
   </select>
   <br>
 
@@ -26,6 +26,13 @@
   <p class="btn btn-default" href="#" data-placement="top" data-original-title="Font Background Color">
     <input type="hidden" id="text-bgcolor" class="color-picker" size="7" value="#ffffff">
   </p>
+  <br>
+
+  <b>Text Style</b>
+  <br>
+  <button id="text-bold" class="btn btn-default" data-original-title="Bold"><img src="img/font_bold.png" height="" width=""></button>
+  <button id="text-italic" class="btn btn-default" data-original-title="Italic"><img src="img/font_italic.png" height="" width=""></button>
+  <button id="text-underline" class="btn btn-default" title="Underline" style=""><img src="img/font_underline.png"></button>
   <br>
 
   <hr>
