@@ -216,15 +216,21 @@ monadexDirectives.directive('textInput', ['$timeout', 'canvasService',
     }
 ]);
 
-monadexDirectives.directive('imageList', ['$timeout', 'canvasService',
+monadexDirectives.directive('imagePage', ['$timeout', 'canvasService',
     function($timeout, canvasService){
         return {
             restrict: 'E',
             scope: {
                 images: "="
             },
-            templateUrl: 'partials/tshirt-designer-pages/image-list.html',
+            templateUrl: 'partials/tshirt-designer-pages/image-page.html',
             link: function(scope, element, attrs) {
+                $timeout(function() {
+                    element.find(".img-thumbnail").on("click", function(e){
+                        var el = e.target;
+                        canvasService.addImage(el.src);
+                    });
+                }, 0);
             }
         };
     }
@@ -237,24 +243,19 @@ monadexDirectives.directive('imagePicker',
             restrict: 'E',
             scope: {
                 images: "=",
-                param: '@'
+                popover: '@'
             },
             templateUrl: 'partials/tshirt-designer-pages/image-picker.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
-                    // compile the html in param attributes and set it
-                    // as the content of the popover
-                    var param = $compile(scope.param)(scope);
-
-                    element.find(".img-thumbnail").on("click", function(e){
-                        var el = e.target;
-                        canvasService.addImage(el.src);
-                    });
-
                     element.find('#image-picker').popover({
+                        trigger: "focus",
                         html: true,
                         content: function() {
-                            return param;
+                            // compile the html in popover attributes and set it
+                            // as the content of the popover
+                            var popoverContent = $compile(scope.popover)(scope);
+                            return popoverContent;
                         }
                     });
                 }, 0);
