@@ -13,7 +13,7 @@ monadexDirectives.directive('appVersion', ['version',
 
 // TODO: more work needs to be done here. checkout panel should
 //       reflect the real price.
-monadexDirectives.directive('checkoutPanel', ['$timeout',
+monadexDirectives.directive('mdCheckoutPanel', ['$timeout',
    function($timeout) {
        return {
            restrict: 'E',
@@ -26,7 +26,7 @@ monadexDirectives.directive('checkoutPanel', ['$timeout',
 
 // TODO: more work needs to be done here. checkout panel should
 //       reflect the real price.
-monadexDirectives.directive('tshirtGoodiesPanel', ['$timeout',
+monadexDirectives.directive('mdTshirtGoodiesPanel', ['$timeout',
    function($timeout) {
        return {
            restrict: 'E',
@@ -46,7 +46,7 @@ monadexDirectives.directive('tshirtGoodiesPanel', ['$timeout',
    }
 ]);
 
-monadexDirectives.directive('tshirtDesignAssistant', ['$timeout',
+monadexDirectives.directive('mdTshirtDesignAssistant', ['$timeout',
    function($timeout) {
        return {
            restrict: 'E',
@@ -62,7 +62,7 @@ monadexDirectives.directive('tshirtDesignAssistant', ['$timeout',
    }
 ]);
 
-monadexDirectives.directive('tshirtCanvas', ['$timeout', 'canvasService',
+monadexDirectives.directive('mdTshirtCanvas', ['$timeout', 'canvasService',
     function($timeout, canvasService) {
         var canvas;
         return {
@@ -99,7 +99,8 @@ monadexDirectives.directive('tshirtCanvas', ['$timeout', 'canvasService',
     }
 ]);
 
-monadexDirectives.directive('bgColorPicker', ['$timeout', 'canvasService',
+// currently not used
+monadexDirectives.directive('mdBgColorPicker', ['$timeout', 'canvasService',
     function($timeout, canvasService){
         return {
             restrict: 'E',
@@ -119,7 +120,7 @@ monadexDirectives.directive('bgColorPicker', ['$timeout', 'canvasService',
     }
 ]);
 
-monadexDirectives.directive('textInput', ['$timeout', 'canvasService',
+monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
     function($timeout, canvasService){
         return {
             restrict: 'E',
@@ -216,7 +217,7 @@ monadexDirectives.directive('textInput', ['$timeout', 'canvasService',
     }
 ]);
 
-monadexDirectives.directive('imagePage', ['$timeout', 'canvasService',
+monadexDirectives.directive('mdImagePage', ['$timeout', 'canvasService',
     function($timeout, canvasService){
         return {
             restrict: 'E',
@@ -236,7 +237,7 @@ monadexDirectives.directive('imagePage', ['$timeout', 'canvasService',
     }
 ]);
 
-monadexDirectives.directive('imagePicker',
+monadexDirectives.directive('mdImagePicker',
                             ['$timeout', '$compile', 'canvasService',
     function($timeout, $compile, canvasService){
         return {
@@ -266,13 +267,13 @@ monadexDirectives.directive('imagePicker',
 
 // This editor is used to remove the active objects (text or images) or
 // flip the t-shirt canvas
-monadexDirectives.directive('canvasCommonEditor', ['$timeout', 'canvasService',
+monadexDirectives.directive('mdCanvasObjTrash', ['$timeout', 'canvasService',
     function($timeout, canvasService){
         return {
             restrict: 'E',
             scope: {
             },
-            templateUrl: 'partials/tshirt-designer-pages/canvas-common-editor.html',
+            templateUrl: 'partials/tshirt-designer-pages/md-canvas-obj-trash.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find('#remove-selected').click(
