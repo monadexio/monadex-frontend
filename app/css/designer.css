@@ -32,3 +32,7 @@
 .HoeflerText{font-family:"Hoefler Text";}
 .Plaster{font-family:"Plaster";}
 .Engagement{font-family:"Engagement";}
+
+.popover {
+    max-width: 600px;
+}

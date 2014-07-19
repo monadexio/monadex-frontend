@@ -1,3 +1,15 @@
-<div id="avatarlist" class="avatarlist" ng-repeat="img in images">
-  <img style="cursor:pointer;" class="img-thumbnail" ng-src="{{img.src}}">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <!--Sidebar content-->
+      Search: <input ng-model="query">
+    </div>
+  </div>
+  <br class="divide"/>
+  <div class="row">
+      <!--Body content-->
+      <div id="avatarlist" class="avatarlist col-md-4" ng-repeat="img in images | filter:query">
+        <img style="cursor:pointer;" class="img-thumbnail" ng-src="{{img.src}}">
+      </div>
+  </div>
 </div>

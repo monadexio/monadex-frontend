@@ -249,8 +249,9 @@ monadexDirectives.directive('imagePicker',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find('#image-picker').popover({
-                        trigger: "focus",
+                        trigger: "click",
                         html: true,
+                        container: 'body',
                         content: function() {
                             // compile the html in popover attributes and set it
                             // as the content of the popover
