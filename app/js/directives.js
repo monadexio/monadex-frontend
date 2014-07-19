@@ -216,26 +216,53 @@ monadexDirectives.directive('textInput', ['$timeout', 'canvasService',
     }
 ]);
 
-monadexDirectives.directive('imagePicker', ['$timeout', 'canvasService',
+monadexDirectives.directive('imageList', ['$timeout', 'canvasService',
     function($timeout, canvasService){
         return {
             restrict: 'E',
             scope: {
-                images: '='
+                images: "="
+            },
+            templateUrl: 'partials/tshirt-designer-pages/image-list.html',
+            link: function(scope, element, attrs) {
+            }
+        };
+    }
+]);
+
+monadexDirectives.directive('imagePicker',
+                            ['$timeout', '$compile', 'canvasService',
+    function($timeout, $compile, canvasService){
+        return {
+            restrict: 'E',
+            scope: {
+                images: "=",
+                param: '@'
             },
             templateUrl: 'partials/tshirt-designer-pages/image-picker.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
+                    // compile the html in param attributes and set it
+                    // as the content of the popover
+                    var param = $compile(scope.param)(scope);
+
                     element.find(".img-thumbnail").on("click", function(e){
                         var el = e.target;
                         canvasService.addImage(el.src);
+                    });
+
+                    element.find('#image-picker').popover({
+                        html: true,
+                        content: function() {
+                            return param;
+                        }
                     });
                 }, 0);
             }};
     }
 ]);
 
-// this editor is used to remove the active objects (text or images) or
+// This editor is used to remove the active objects (text or images) or
 // flip the t-shirt canvas
 monadexDirectives.directive('canvasCommonEditor', ['$timeout', 'canvasService',
     function($timeout, canvasService){
