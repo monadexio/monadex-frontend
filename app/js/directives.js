@@ -46,22 +46,6 @@ monadexDirectives.directive('mdTshirtGoodiesPanel', ['$timeout',
    }
 ]);
 
-monadexDirectives.directive('mdTshirtDesignAssistant', ['$timeout',
-   function($timeout) {
-       return {
-           restrict: 'E',
-           scope: {
-           },
-           templateUrl: 'partials/tshirt-designer-pages/tshirt-design-assistant.html',
-           link: function(scope, element, attrs) {
-               $timeout(function() {
-                   element.find(".clearfix button,a").tooltip();
-               }, 0);
-           }
-       };
-   }
-]);
-
 monadexDirectives.directive('mdTshirtCanvas', ['$timeout', 'canvasService',
     function($timeout, canvasService) {
         var canvas;
@@ -276,6 +260,8 @@ monadexDirectives.directive('mdCanvasObjTrash', ['$timeout', 'canvasService',
             templateUrl: 'partials/tshirt-designer-pages/md-canvas-obj-trash.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
+                    element.find(".clearfix button,a").tooltip();
+
                     element.find('#remove-selected').click(
                         canvasService.removeSelected
                     );
