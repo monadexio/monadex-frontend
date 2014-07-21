@@ -14,7 +14,7 @@ monadexDirectives.directive('appVersion', ['version',
 // TODO: more work needs to be done here. checkout panel should
 //       reflect the real price.
 monadexDirectives.directive('mdCheckoutPanel', ['$timeout',
-   function($timeout) {
+   function() {
        return {
            restrict: 'E',
            scope: {
@@ -38,9 +38,11 @@ monadexDirectives.directive('mdTshirtGoodiesPanel', ['$timeout',
            },
            templateUrl: 'partials/tshirt-designer-pages/tshirt-goodies-panel.html',
            link: function(scope, element) {
-               element.find(".tab-link").click(function(event) {
-                   event.preventDefault();
-               });
+               $timeout(function() {
+                   element.find(".tab-link").click(function(event) {
+                       event.preventDefault();
+                   });
+               }, 0);
            }
        };
    }
