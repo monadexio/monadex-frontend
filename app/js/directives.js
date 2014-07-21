@@ -117,7 +117,7 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find('#text-fontcolor').minicolors({
-                        change: function(hex, opacity) {
+                        change: function(hex) {
                             canvasService.renderActiveTextFontColor(hex);
                         }
                     });
@@ -129,8 +129,19 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
                     });
 
                     element.find('#add-text').on("click", function(){
-                        var text = $("#text-string").val();
-                        canvasService.addTextWhenNoActiveText(text);
+                        var text = $("#text-string").val(),
+                            miniColorValFun = function(sel) {
+                                return element.find(sel).minicolors("value");
+                            },
+                            fontColor = miniColorValFun('#text-fontcolor'),
+                            backgroundColor = miniColorValFun('#text-bgcolor'),
+                            sFontClass = ".font-family-picker option:selected",
+                            sFontObj = element.find(sFontClass)[0],
+                            fontFamily = $(sFontObj).text();
+
+                        canvasService.addTextWhenNoActiveText(
+                            text, fontColor, backgroundColor, fontFamily
+                        );
                     });
 
                     element.find("#text-bold").click(
@@ -192,10 +203,29 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
                         element.find('#text-bgcolor').minicolors(
                             'value', props.backgroundColor
                         );
+
+                        var index = undefined;
+                        for(var i=0; i<scope.fonts.length; i++) {
+                            if (scope.fonts[i].name.toLowerCase() ==
+                                props.fontFamily.toLowerCase()) {
+                                index = i;
+                            }
+                        }
+
+                        element.find(".font-family-picker").val(index || 0);
                     });
 
                     scope.$on('mdeObjectCleared', function(event) {
                         element.find("#text-string").val("");
+                        element.find('#text-fontcolor').minicolors(
+                            'value', "#000000"
+                        );
+
+                        element.find('#text-bgcolor').minicolors(
+                            'value', "#FFFFFF"
+                        );
+
+                        element.find(".font-family-picker").val(0);
                     });
                 }, 0);
             }

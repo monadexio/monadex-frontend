@@ -54,16 +54,19 @@ myService.service("canvasService", ['$rootScope',
                 'object:selected': function(e) {
                     var selectedObject = e.target;
                     selectedObject.hasRotatingPoint = true;
-                    if (selectedObject && selectedObject.type === 'text') {
+                    if (selectedObject &&
+                        selectedObject.type === 'text') {
                         $rootScope.$broadcast(
                             'mdeTextObjectSelected',
                             {
                                 text: selectedObject.getText(),
                                 fontColor: selectedObject.fill || '#000000',
-                                backgroundColor: selectedObject.backgroundColor
+                                backgroundColor: selectedObject.backgroundColor,
+                                fontFamily: selectedObject.fontFamily
                             }
                         );
-                    } else if (selectedObject && selectedObject.type === 'image'){
+                    } else if (selectedObject &&
+                               selectedObject.type === 'image'){
                         $rootScope.$broadcast('mdeImageObjectSelected');
                     };
                 },
@@ -72,7 +75,8 @@ myService.service("canvasService", ['$rootScope',
                 }
             });
 
-            // piggyback on `canvas.findTarget`, to fire "object:over" and "object:out" events
+            // piggyback on `canvas.findTarget`,
+            // to fire "object:over" and "object:out" events
             canvas.findTarget = (function(originalFn) {
                 return function() {
                     var target = originalFn.apply(this, arguments);
@@ -80,13 +84,17 @@ myService.service("canvasService", ['$rootScope',
                         if (this._hoveredTarget !== target) {
                             canvas.fire('object:over', { target: target });
                             if (this._hoveredTarget) {
-                                canvas.fire('object:out', { target: this._hoveredTarget });
+                                canvas.fire('object:out', {
+                                    target: this._hoveredTarget
+                                });
                             }
                             this._hoveredTarget = target;
                         }
                     }
                     else if (this._hoveredTarget) {
-                        canvas.fire('object:out', { target: this._hoveredTarget });
+                        canvas.fire('object:out', {
+                            target: this._hoveredTarget
+                        });
                         this._hoveredTarget = null;
                     }
                     return target;
@@ -104,15 +112,18 @@ myService.service("canvasService", ['$rootScope',
             });
         };
 
-        this.addText = function(text) {
+        this.addText = function(text, fontColor, bgColor, fontFamily) {
             var textSample = new fabric.Text(
                 text,
                 {
-                    left: fabric.util.getRandomInt(0, 200),
-                    top: fabric.util.getRandomInt(0, 400),
-                    fontFamily: 'helvetica',
+                    //left: fabric.util.getRandomInt(0, 200),
+                    //top: fabric.util.getRandomInt(0, 400),
+                    left: 80,
+                    top: 50,
+                    fontFamily: fontFamily,
                     angle: 0,
-                    fill: '#000000',
+                    fill: fontColor,
+                    backgroundColor: bgColor,
                     scaleX: 0.5,
                     scaleY: 0.5,
                     fontWeight: '',
@@ -124,12 +135,13 @@ myService.service("canvasService", ['$rootScope',
             canvas.item(canvas.item.length-1).hasRotatingPoint = true;
         };
 
-        this.addTextWhenNoActiveText = function(text) {
-            var activeObject = canvas.getActiveObject();
-            if (!activeObject || activeObject.type != 'text') {
-                this.addText(text);
-            }
-        };
+        this.addTextWhenNoActiveText =
+            function(text, fontColor, backgroundColor, fontFamily) {
+                var activeObject = canvas.getActiveObject();
+                if (!activeObject || activeObject.type != 'text') {
+                    this.addText(text, fontColor, backgroundColor, fontFamily);
+                }
+            };
 
         this.addImage = function(ImgSrc) {
             /*temp code*/
@@ -138,7 +150,9 @@ myService.service("canvasService", ['$rootScope',
             var top = fabric.util.getRandomInt(0 + offset, 400 - offset);
             var angle = fabric.util.getRandomInt(-20, 40);
             var width = fabric.util.getRandomInt(30, 50);
-            var opacity = (function(min, max){ return Math.random() * (max - min) + min; })(0.5, 1);
+            var opacity = (function(min, max){
+                return Math.random() * (max - min) + min;
+            })(0.5, 1);
 
             fabric.Image.fromURL(ImgSrc, function(image) {
                 image.set(
