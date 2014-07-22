@@ -127,7 +127,7 @@ myService.service("canvasService", ['$rootScope',
                     scaleX: 0.5,
                     scaleY: 0.5,
                     fontWeight: '',
-                    hasRotatingPoint:true
+                    hasRotatingPoint: true
                 }
             );
 
@@ -142,6 +142,15 @@ myService.service("canvasService", ['$rootScope',
                     this.addText(text, fontColor, backgroundColor, fontFamily);
                 }
             };
+
+        this.activeTextP = function() {
+            var activeObject = canvas.getActiveObject();
+            return activeObject && activeObject.type == 'text';
+        };
+
+        this.setTheLastObjActive = function() {
+            canvas.setActiveObject(canvas.item(canvas.getObjects().length - 1));
+        };
 
         this.addImage = function(ImgSrc) {
             /*temp code*/

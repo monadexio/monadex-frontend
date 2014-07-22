@@ -128,22 +128,6 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
                         }
                     });
 
-                    element.find('#add-text').on("click", function(){
-                        var text = $("#text-string").val(),
-                            miniColorValFun = function(sel) {
-                                return element.find(sel).minicolors("value");
-                            },
-                            fontColor = miniColorValFun('#text-fontcolor'),
-                            backgroundColor = miniColorValFun('#text-bgcolor'),
-                            sFontClass = ".font-family-picker option:selected",
-                            sFontObj = element.find(sFontClass)[0],
-                            fontFamily = $(sFontObj).text();
-
-                        canvasService.addTextWhenNoActiveText(
-                            text, fontColor, backgroundColor, fontFamily
-                        );
-                    });
-
                     element.find("#text-bold").click(
                         canvasService.toggleActiveTextBold
                     );
@@ -180,16 +164,24 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
                     );
 
                     element.find("#text-string").keyup(function(e){
-                        var text;
-                        var enterKeyCode = 13;
-                        if(e.which === enterKeyCode) {
-                            // click enter should have the same effect as
-                            // clicking the #add-text button.
-                            element.find('#add-text').trigger("click");
-                            element.find('#add-text').focus();
-                        } else {
-                            text = $(this)[0].value;
+                        var text = $(this)[0].value,
+                            miniColorValFun = function(sel) {
+                                return element.find(sel).minicolors("value");
+                            };
+
+                        if(canvasService.activeTextP()) {
                             canvasService.renderActiveTextContent(text);
+                        } else {
+                            var fontColor = miniColorValFun('#text-fontcolor'),
+                                bgColor = miniColorValFun('#text-bgcolor'),
+                                sfClass = ".font-family-picker option:selected",
+                                sFontObj = element.find(sfClass)[0],
+                                fontFamily = $(sFontObj).text();
+
+                            canvasService.addTextWhenNoActiveText(
+                                text, fontColor, bgColor, fontFamily
+                            );
+                            canvasService.setTheLastObjActive();
                         }
                     });
 
