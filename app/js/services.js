@@ -22,10 +22,43 @@ myService.service("canvasService", ['$rootScope',
             selectable:false
         };
 
-        lineL = new fabric.Line([0,0,200,0], lineProps);
-        lineR = new fabric.Line([199,0,200,399], lineProps);
-        lineU = new fabric.Line([0,0,0,400], lineProps);
-        lineD = new fabric.Line([0,400,200,399], lineProps);
+        var DrawAreaWidth   = 200,
+            DrawAreaHeight  = 400,
+            UpperLeftPoint  = [0, 0],
+            UpperRightPoint = [DrawAreaWidth, 0],
+            DownLeftPoint   = [0, DrawAreaHeight],
+            DownRightPoint  = [DrawAreaWidth, DrawAreaHeight],
+            LineWidthOffset = 1;
+
+        var offsetXFun = function(Point, OffsetVal) {
+            return [Point[0]-OffsetVal, Point[1]];
+        };
+
+        var offsetYFun = function(Point, OffsetVal) {
+            return [Point[0], Point[1]-OffsetVal];
+        };
+
+        var fabricLineFun = function(Point1, Point2) {
+            console.log(Point1.concat(Point2));
+            return new fabric.Line(Point1.concat(Point2), lineProps);
+        };
+
+        lineL = fabricLineFun(
+            offsetXFun(UpperLeftPoint, 1),
+            offsetXFun(DownLeftPoint, 1)
+        );
+        lineR = fabricLineFun(
+            offsetXFun(UpperRightPoint, 1),
+            offsetXFun(DownRightPoint, 1)
+        );
+        lineU = fabricLineFun(
+            offsetYFun(UpperRightPoint, 1),
+            offsetYFun(UpperLeftPoint, 1)
+        );
+        lineD = fabricLineFun(
+            offsetYFun(DownLeftPoint, 1),
+            offsetYFun(DownRightPoint, 1)
+        );
 
         // return the canvas instance
         this.getCanvas = function() {
@@ -126,6 +159,7 @@ myService.service("canvasService", ['$rootScope',
                     backgroundColor: bgColor,
                     scaleX: 0.5,
                     scaleY: 0.5,
+                    textAlign: "center",
                     fontWeight: '',
                     hasRotatingPoint: true
                 }
