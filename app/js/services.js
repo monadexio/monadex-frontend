@@ -10,25 +10,28 @@ myService.value('version', '0.0.1');
 myService.service("canvasService", ['$rootScope',
     function($rootScope) {
         var canvas;
-        // line Left, Right, Up and Down
-        var lineL, lineR, lineU, lineD;
 
-        var lineProps = {
-            "stroke":"#000000",
-            "strokeWidth":1,
-            hasBorders:false,
-            hasControls:false,
-            hasRotatingPoint:false,
-            selectable:false
-        };
-
+        // Variables related to the demarcation lines for the
+        // Drawing area.
         var DrawAreaWidth   = 200,
             DrawAreaHeight  = 400,
             UpperLeftPoint  = [0, 0],
             UpperRightPoint = [DrawAreaWidth, 0],
             DownLeftPoint   = [0, DrawAreaHeight],
             DownRightPoint  = [DrawAreaWidth, DrawAreaHeight],
-            LineWidthOffset = 1;
+            LineWidthOffset = 1,
+            lineProps = {
+                "stroke":"#000000",
+                "strokeWidth":1,
+                hasBorders:false,
+                hasControls:false,
+                hasRotatingPoint:false,
+                selectable:false
+            },
+            lineL, lineR, lineU, lineD;
+
+        // Position for the newly added text
+        var newTextTop = 50;
 
         var offsetXFun = function(Point, OffsetVal) {
             return [Point[0]-OffsetVal, Point[1]];
@@ -39,7 +42,6 @@ myService.service("canvasService", ['$rootScope',
         };
 
         var fabricLineFun = function(Point1, Point2) {
-            console.log(Point1.concat(Point2));
             return new fabric.Line(Point1.concat(Point2), lineProps);
         };
 
@@ -93,8 +95,7 @@ myService.service("canvasService", ['$rootScope',
                             'mdeTextObjectSelected',
                             {
                                 text: selectedObject.getText(),
-                                fontColor: selectedObject.fill || '#000000',
-                                backgroundColor: selectedObject.backgroundColor,
+                                fontColor: selectedObject.fill,
                                 fontFamily: selectedObject.fontFamily
                             }
                         );
@@ -145,7 +146,7 @@ myService.service("canvasService", ['$rootScope',
             });
         };
 
-        this.addText = function(text, fontColor, bgColor, fontFamily) {
+        var addText = function(text, fontColor, fontFamily) {
             var textSample = new fabric.Text(
                 text,
                 {
@@ -156,7 +157,6 @@ myService.service("canvasService", ['$rootScope',
                     fontFamily: fontFamily,
                     angle: 0,
                     fill: fontColor,
-                    backgroundColor: bgColor,
                     scaleX: 0.5,
                     scaleY: 0.5,
                     textAlign: "center",
@@ -170,10 +170,10 @@ myService.service("canvasService", ['$rootScope',
         };
 
         this.addTextWhenNoActiveText =
-            function(text, fontColor, backgroundColor, fontFamily) {
+            function(text, fontColor, fontFamily) {
                 var activeObject = canvas.getActiveObject();
                 if (!activeObject || activeObject.type != 'text') {
-                    this.addText(text, fontColor, backgroundColor, fontFamily);
+                    addText(text, fontColor, fontFamily);
                 }
             };
 
@@ -273,20 +273,18 @@ myService.service("canvasService", ['$rootScope',
         };
 
         this.renderActiveTextContent = function(text) {
-            applyToActiveTextFun(function(activeObject) {
+            var activeObject = canvas.getActiveObject();
+            if (activeObject && activeObject.type === 'text') {
                 activeObject.text = text;
-            });
+                activeObject.left = (DrawAreaWidth - activeObject.width)/2;
+                canvas.renderAll();
+            }
+
         };
 
         this.renderActiveTextFontColor = function(color) {
             applyToActiveTextFun(function(activeObject) {
                 activeObject.fill = color;
-            });
-        };
-
-        this.renderActiveTextBgColor = function(color) {
-            applyToActiveTextFun(function(activeObject) {
-                activeObject.backgroundColor = color;
             });
         };
 

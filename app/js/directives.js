@@ -122,12 +122,6 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
                         }
                     });
 
-                    element.find('#text-bgcolor').minicolors({
-                        change: function(hex, opacity) {
-                            canvasService.renderActiveTextBgColor(hex);
-                        }
-                    });
-
                     element.find("#text-bold").click(
                         canvasService.toggleActiveTextBold
                     );
@@ -173,13 +167,12 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
                             canvasService.renderActiveTextContent(text);
                         } else {
                             var fontColor = miniColorValFun('#text-fontcolor'),
-                                bgColor = miniColorValFun('#text-bgcolor'),
                                 sfClass = ".font-family-picker option:selected",
                                 sFontObj = element.find(sfClass)[0],
                                 fontFamily = $(sFontObj).text();
 
                             canvasService.addTextWhenNoActiveText(
-                                text, fontColor, bgColor, fontFamily
+                                text, fontColor, fontFamily
                             );
                             canvasService.setTheLastObjActive();
                         }
@@ -190,10 +183,6 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
 
                         element.find('#text-fontcolor').minicolors(
                             'value', props.fontColor
-                        );
-
-                        element.find('#text-bgcolor').minicolors(
-                            'value', props.backgroundColor
                         );
 
                         var index = undefined;
@@ -211,10 +200,6 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
                         element.find("#text-string").val("");
                         element.find('#text-fontcolor').minicolors(
                             'value', "#000000"
-                        );
-
-                        element.find('#text-bgcolor').minicolors(
-                            'value', ""
                         );
 
                         element.find(".font-family-picker").val(0);
