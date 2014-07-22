@@ -214,7 +214,7 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
                         );
 
                         element.find('#text-bgcolor').minicolors(
-                            'value', "#FFFFFF"
+                            'value', ""
                         );
 
                         element.find(".font-family-picker").val(0);
