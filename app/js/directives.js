@@ -158,15 +158,15 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
                     );
 
                     element.find("#text-string").keyup(function(e){
-                        var text = $(this)[0].value,
-                            miniColorValFun = function(sel) {
-                                return element.find(sel).minicolors("value");
-                            };
+                        var text = $(this)[0].value;
 
                         if(canvasService.activeTextP()) {
                             canvasService.renderActiveTextContent(text);
                         } else {
-                            var fontColor = miniColorValFun('#text-fontcolor'),
+                            var miniColorValFun = function(sel) {
+                                return element.find(sel).minicolors("value");
+                            },
+                                fontColor = miniColorValFun('#text-fontcolor'),
                                 sfClass = ".font-family-picker option:selected",
                                 sFontObj = element.find(sfClass)[0],
                                 fontFamily = $(sFontObj).text();

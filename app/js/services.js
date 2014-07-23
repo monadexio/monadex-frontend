@@ -275,11 +275,14 @@ myService.service("canvasService", ['$rootScope',
         this.renderActiveTextContent = function(text) {
             var activeObject = canvas.getActiveObject();
             if (activeObject && activeObject.type === 'text') {
-                activeObject.text = text;
-                activeObject.left = (DrawAreaWidth - activeObject.width)/2;
+                if(text === "") {
+                    canvas.remove(activeObject);
+                } else {
+                    activeObject.text = text;
+                    activeObject.left = (DrawAreaWidth - activeObject.width)/2;
+                }
                 canvas.renderAll();
             }
-
         };
 
         this.renderActiveTextFontColor = function(color) {
