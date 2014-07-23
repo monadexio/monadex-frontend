@@ -79,6 +79,80 @@ myService.service("canvasService", ['$rootScope',
                 selectionBorderColor:'blue'
             });
 
+            canvas.cursorMap = [
+                'n-resize',
+                '-webkit-grab',
+                'e-resize',
+                '-webkit-grab',
+                's-resize',
+                'pointer',
+                'w-resize',
+                '-webkit-grab'
+            ];
+
+            canvas._getActionFromCorner = function(target, corner) {
+                var action = 'drag';
+                if (corner) {
+                    action = (corner === 'ml' || corner === 'mr')
+                        ? 'scaleX'
+                        : (corner === 'mt' || corner === 'mb')
+                            ? 'scaleY'
+                            : corner === 'tr'
+                                ? 'rotate'
+                                : corner === 'bl'
+                                    ? 'delete'
+                                    : corner === 'tl'
+                                        ? 'drag'
+                                        : 'scale';
+                }
+                return action;
+            };
+
+
+            canvas._setupCurrentTransform = function(e, target) {
+                var degreesToRadians = fabric.util.degreesToRadians;
+
+                if (!target) return;
+
+                var pointer = this.getPointer(e),
+                corner = target._findTargetCorner(pointer),
+                action = this._getActionFromCorner(target, corner),
+                origin = this._getOriginFromCorner(target, corner);
+
+                this._currentTransform = {
+                    target: target,
+                    action: action,
+                    scaleX: target.scaleX,
+                    scaleY: target.scaleY,
+                    offsetX: pointer.x - target.left,
+                    offsetY: pointer.y - target.top,
+                    originX: origin.x,
+                    originY: origin.y,
+                    ex: pointer.x,
+                    ey: pointer.y,
+                    left: target.left,
+                    top: target.top,
+                    theta: degreesToRadians(target.angle),
+                    width: target.width * target.scaleX,
+                    mouseXSign: 1,
+                    mouseYSign: 1
+                };
+
+                this._currentTransform.original = {
+                    left: target.left,
+                    top: target.top,
+                    scaleX: target.scaleX,
+                    scaleY: target.scaleY,
+                    originX: origin.x,
+                    originY: origin.y
+                };
+
+                this._resetCurrentTransform(e);
+                if(action === 'delete') {
+                    this.remove(target);
+                }
+            };
+
             canvas.on({
                 'object:moving': function(e) {
                     e.target.opacity = 0.5;
@@ -164,6 +238,10 @@ myService.service("canvasService", ['$rootScope',
                     hasRotatingPoint: true
                 }
             );
+
+            textSample.setControlVisible('mtr', false);
+            textSample.lockUniScaling = true;
+            textSample.centeredScaling = true;
 
             canvas.add(textSample);
             canvas.item(canvas.item.length-1).hasRotatingPoint = true;
