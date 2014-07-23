@@ -288,6 +288,7 @@ myService.service("canvasService", ['$rootScope',
                 );
 
                 image.setControlVisible('mtr', false);
+                image.centeredScaling = true;
                 canvas.add(image);
             });
         };
