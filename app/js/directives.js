@@ -257,37 +257,3 @@ monadexDirectives.directive('mdImagePicker',
             }};
     }
 ]);
-
-// This editor is used to remove the active objects (text or images) or
-// flip the t-shirt canvas
-monadexDirectives.directive('mdCanvasObjTrash', ['$timeout', 'canvasService',
-    function($timeout, canvasService){
-        return {
-            restrict: 'E',
-            scope: {
-            },
-            templateUrl: 'partials/tshirt-designer-pages/md-canvas-obj-trash.html',
-            link: function(scope, element, attrs) {
-                $timeout(function() {
-                    element.find(".clearfix button,a").tooltip();
-
-                    element.find('#remove-selected').click(
-                        canvasService.removeSelected
-                    );
-
-                    scope.$on('mdeTextObjectSelected', function(event, props) {
-                        element.find("#imageeditor").css('display', 'block');
-                    });
-
-                    scope.$on('mdeImageObjectSelected', function(event, props) {
-                        element.find("#imageeditor").css('display', 'block');
-                    });
-
-                    scope.$on('mdeObjectCleared', function(event) {
-                        element.find("#imageeditor").css('display', 'none');
-                    });
-                }, 0);
-            }
-        };
-    }
-]);
