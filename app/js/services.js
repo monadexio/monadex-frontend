@@ -287,6 +287,7 @@ myService.service("canvasService", ['$rootScope',
                     }
                 );
 
+                image.setControlVisible('mtr', false);
                 canvas.add(image);
             });
         };
