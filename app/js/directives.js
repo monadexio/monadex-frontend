@@ -11,22 +11,20 @@ monadexDirectives.directive('appVersion', ['version',
     }
 ]);
 
-// TODO: more work needs to be done here. checkout panel should
-//       reflect the real price.
-monadexDirectives.directive('mdCheckoutPanel', ['$timeout',
+// Style and quality panel let the customer choose the style of the
+// t-shirts with various qualities.
+monadexDirectives.directive('mdTshirtStyleQualityPanel', ['$timeout',
    function() {
        return {
            restrict: 'E',
            scope: {
            },
-           templateUrl: 'partials/tshirt-designer-pages/checkout-panel.html'
+           templateUrl: 'partials/tshirt-designer-pages/tshirt-style-quality-panel.html'
        };
    }
 ]);
 
-// TODO: more work needs to be done here. checkout panel should
-//       reflect the real price.
-monadexDirectives.directive('mdTshirtGoodiesPanel', ['$timeout',
+monadexDirectives.directive('mdTshirtDesignPanel', ['$timeout',
    function($timeout) {
        return {
            restrict: 'E',
@@ -36,7 +34,7 @@ monadexDirectives.directive('mdTshirtGoodiesPanel', ['$timeout',
                fonts: "=",
                tshirtTypes: '=tshirttypes'
            },
-           templateUrl: 'partials/tshirt-designer-pages/tshirt-goodies-panel.html',
+           templateUrl: 'partials/tshirt-designer-pages/tshirt-design-panel.html',
            link: function(scope, element) {
                $timeout(function() {
                    element.find(".tab-link").click(function(event) {
