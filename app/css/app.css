@@ -1,4 +1,14 @@
 /* app css stylesheet */
+html{
+    height: 100%;
+    min-height: 100%;
+}
+
+body {
+    padding-top: 60px;
+    height: 100%;
+    min-height: 100%;
+}
 
 .menu {
   list-style: none;
@@ -35,10 +45,6 @@
     margin-top: 70px;
     border-top: 1px solid #E5E5E5;
     background-color: whiteSmoke;
-}
-
-body {
-    padding-top: 60px;
 }
 
 .navbar-fixed-top {
@@ -90,4 +96,9 @@ body {
 
 .navbar-default, .navbar-inverse {
     border: 0;
+}
+
+.full-screen {
+    height: 100%;
+    min-height: 100%;
 }
