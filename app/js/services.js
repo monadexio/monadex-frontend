@@ -97,7 +97,7 @@ myService.service("canvasService", ['$rootScope',
                         ? 'scaleX'
                         : (corner === 'mt' || corner === 'mb')
                             ? 'scaleY'
-                            : corner === 'tr'
+                            : (corner === 'tr' || corner === 'mtr')
                                 ? 'rotate'
                                 : corner === 'bl'
                                     ? 'delete'
