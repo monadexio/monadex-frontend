@@ -3,7 +3,8 @@
   <!--Select types of the T-Shirts-->
   <select ng-init="currentTshirtType=tshirtTypes[0]"
           ng-model="currentTshirtType"
-          ng-options="tshirtType.name for tshirtType in tshirtTypes">
+          ng-options="tshirtType.name for tshirtType in tshirtTypes"
+          class="form-control">
   </select>
 
   <ul class="list-group">
