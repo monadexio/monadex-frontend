@@ -39,15 +39,67 @@ monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
             },
             { id: 2,
               name: "Long Sleeve Shirts",
-              variants: []
+              variants:
+              [ { name: "Gildan 6.1oz Long Sleeve",
+                  description: "Budget friendly",
+                  colors: [ {title:"White", style:"background-color:#ffffff;"},
+                            {title:"Dark Heather", style:"background-color:#616161;"},
+                            {title:"Gray", style:"background-color:#f0f0f0;"}
+                          ]
+                },
+                { name: "Hanes 6.1oz Long Sleeve",
+                  description: "Premium material",
+                  colors: [ {title:"Heather Orange", style:"background-color:#fc8d74;"},
+                            {title:"Heather Dark Chocolate", style:"background-color:#432d26;"},
+                            {title:"Salmon", style:"background-color:#eead91;"}
+                          ]
+                }
+              ]
             },
             { id: 3,
               name: "Hoodies",
-              variants: []
+              variants:
+              [ { name: "Gildan 8oz Heavy Blend Hoodie",
+                  description: "Basic hoodie",
+                  colors: [ {title:"White", style:"background-color:#ffffff;"},
+                            {title:"Dark Heather", style:"background-color:#616161;"},
+                            {title:"Gray", style:"background-color:#f0f0f0;"}
+                          ]
+                },
+                { name: "Canvas Poly-Cotton Hoodie",
+                  description: "Premium blend hoodie",
+                  colors: [ {title:"Heather Orange", style:"background-color:#fc8d74;"},
+                            {title:"Heather Dark Chocolate", style:"background-color:#432d26;"},
+                            {title:"Salmon", style:"background-color:#eead91;"}
+                          ]
+                }
+              ]
             },
             { id: 4,
               name: "Tank tops",
-              variants: []
+              variants:
+              [ { name: "Gildan Unisex Tank",
+                  description: "Budget friendly",
+                  colors: [ {title:"White", style:"background-color:#ffffff;"},
+                            {title:"Dark Heather", style:"background-color:#616161;"},
+                            {title:"Gray", style:"background-color:#f0f0f0;"}
+                          ]
+                },
+                { name: "Canvas Ringspun Tank",
+                  description: "Premium material",
+                  colors: [ {title:"Heather Orange", style:"background-color:#fc8d74;"},
+                            {title:"Heather Dark Chocolate", style:"background-color:#432d26;"},
+                            {title:"Salmon", style:"background-color:#eead91;"}
+                          ]
+                },
+                { name: "American Apparel Tank",
+                  description: "Top of the line",
+                  colors: [ {title:"Avocado", style:"background-color:#aeba5e;"},
+                            {title:"Kiwi", style:"background-color:#8aa140;"},
+                            {title:"Irish Green", style:"background-color:#1f6522;"},
+                          ]
+                }
+              ]
             }
         ];
 
