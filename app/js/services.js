@@ -79,6 +79,8 @@ myService.service("canvasService", ['$rootScope',
                 selectionBorderColor:'blue'
             });
 
+            canvas.selection = false;
+
             canvas.cursorMap = [
                 'n-resize',
                 '-webkit-grab',
