@@ -73,6 +73,38 @@ myService.service("canvasService", ['$rootScope',
             this.imageId = imageId;
             this.prevCanvas = null;
 
+            fabric.Object.prototype._drawControl = function(control, ctx, methodName, left, top) {
+              var degreesToRadians = fabric.util.degreesToRadians,
+              isVML = typeof G_vmlCanvasManager !== 'undefined';
+              var sizeX = this.cornerSize / this.scaleX,
+              sizeY = this.cornerSize / this.scaleY,
+              img   = new Image();
+
+              if (this.isControlVisible(control)) {
+                isVML || this.transparentCorners || ctx.clearRect(left, top, sizeX, sizeY);
+                switch(control) {
+                  case 'br':
+                    img.src = 'img/tool/scale.png';
+                  ctx.drawImage(img, left, top, sizeX, sizeY);
+                  break;
+                  case 'bl':
+                    img.src = 'img/tool/delete.png';
+                  ctx.drawImage(img, left, top, sizeX, sizeY);
+                  break;
+                  case 'tl':
+                    img.src = 'img/tool/drag.png';
+                  ctx.drawImage(img, left, top, sizeX, sizeY);
+                  break;
+                  case 'tr':
+                    img.src = 'img/tool/rotate.png';
+                  ctx.drawImage(img, left, top, sizeX, sizeY);
+                  break;
+                  default:
+                    ctx[methodName](left, top, sizeX, sizeY);
+                }
+              }
+            };
+
             canvas = new fabric.Canvas(canvasid, {
                 hoverCursor: 'pointer',
                 selection: true,
