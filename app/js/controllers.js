@@ -6,16 +6,49 @@ var monadexControllers = angular.module('monadexApp.controllers', []);
 
 monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
     function($scope) {
-        $scope.currentTshirtType = {
-            id: 1,
-            name: "Short Sleeve Shirts"
-        };
+        // base cost for tshirt
+        $scope.baseCost = 50;
+        $scope.currentTshirtType = null;
 
         $scope.tshirtTypes = [
-            {id: 1, name: "Short Sleeve Shirts" },
-            {id: 2, name: "Long Sleeve Shirts"},
-            {id: 3, name: "Hoodies"},
-            {id: 4, name: "Tank tops"}
+            { id: 1,
+              name: "Short Sleeve Shirts",
+              variants:
+              [ { name: "Hanes Tagless Tee",
+                  description: "Budget friendly",
+                  colors: [ {title:"White", style:"background-color:#ffffff;"},
+                            {title:"Dark Heather", style:"background-color:#616161;"},
+                            {title:"Gray", style:"background-color:#f0f0f0;"}
+                          ]
+                },
+                { name: "Canvas Ringspun Tee",
+                  description: "Premium material",
+                  colors: [ {title:"Heather Orange", style:"background-color:#fc8d74;"},
+                            {title:"Heather Dark Chocolate", style:"background-color:#432d26;"},
+                            {title:"Salmon", style:"background-color:#eead91;"}
+                          ]
+                },
+                { name: "American Apparel Crew",
+                  description: "Brand name",
+                  colors: [ {title:"Avocado", style:"background-color:#aeba5e;"},
+                            {title:"Kiwi", style:"background-color:#8aa140;"},
+                            {title:"Irish Green", style:"background-color:#1f6522;"},
+                          ]
+                }
+              ]
+            },
+            { id: 2,
+              name: "Long Sleeve Shirts",
+              variants: []
+            },
+            { id: 3,
+              name: "Hoodies",
+              variants: []
+            },
+            { id: 4,
+              name: "Tank tops",
+              variants: []
+            }
         ];
 
         $scope.colors = [

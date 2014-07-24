@@ -18,6 +18,8 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel', ['$timeout',
        return {
            restrict: 'E',
            scope: {
+               tshirtTypes: '=',
+               baseCost: "="
            },
            templateUrl: 'partials/tshirt-designer-pages/tshirt-style-quality-panel.html'
        };
@@ -31,8 +33,7 @@ monadexDirectives.directive('mdTshirtDesignPanel', ['$timeout',
            scope: {
                colors: "=",
                images: '=',
-               fonts: "=",
-               tshirtTypes: '=tshirttypes'
+               fonts: "="
            },
            templateUrl: 'partials/tshirt-designer-pages/tshirt-design-panel.html',
            link: function(scope, element) {
