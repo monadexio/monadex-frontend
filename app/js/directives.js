@@ -162,7 +162,7 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
 
                         if(canvasService.activeTextP()) {
                             canvasService.renderActiveTextContent(text);
-                        } else {
+                        } else if (text != "") {
                             var miniColorValFun = function(sel) {
                                 return element.find(sel).minicolors("value");
                             },
