@@ -1,7 +1,8 @@
 <div class="well">
   <h3>Style & quality</h3>
   <!--Select types of the T-Shirts-->
-  <select ng-init="currentTshirtType=tshirtTypes[0]"
+  <select id="tshirt-type-selector"
+          ng-init="currentTshirtType=tshirtTypes[0]"
           ng-model="currentTshirtType"
           ng-options="tshirtType.name for tshirtType in tshirtTypes"
           class="form-control">

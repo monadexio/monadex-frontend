@@ -26,17 +26,26 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
            templateUrl: 'partials/tshirt-designer-pages/tshirt-style-quality-panel.html',
            link: function(scope, element, attrs) {
                $timeout(function() {
-                   var initColors =
-                           element.find('.tshirt-variant').attr("colors");
+                   var setInitColor = function() {
+                       var col = element.find('.tshirt-variant').attr("colors");
+                       scope.colors = eval(col);
+                   };
+                   var setAvailableColorsFun = function() {
+                       element.find('.tshirt-variant').click(function() {
+                           canvasService.setAvailableBgColors(eval(
+                               $(this).attr("colors")
+                           ));
+                       });
+                   };
 
-                   scope.$apply(function() {
-                       scope.colors = eval(initColors);
-                   });
+                   scope.$apply(setInitColor);
+                   setAvailableColorsFun();
 
-                   element.find('.tshirt-variant').click(function() {
-                       canvasService.setAvailableBgColors(eval(
-                           $(this).attr("colors")
-                       ));
+                   element.find('#tshirt-type-selector').change(function(e) {
+                       scope.$apply(function() {
+                           setInitColor();
+                           setAvailableColorsFun();
+                       });
                    });
 
                    scope.$on('mdeBgAvailableColorsChanged', function(e, o) {
