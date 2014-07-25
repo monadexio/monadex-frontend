@@ -385,8 +385,9 @@ myService.service("canvasService", ['$rootScope',
                 if(text === "") {
                     canvas.remove(activeObject);
                 } else {
-                    activeObject.text = text;
-                    activeObject.left = (DrawAreaWidth - activeObject.width)/2;
+                    activeObject.setText(text);
+                    var left = (DrawAreaWidth - activeObject.width)/2;
+                    activeObject.setLeft(left);
                 }
                 canvas.renderAll();
             }
@@ -394,53 +395,47 @@ myService.service("canvasService", ['$rootScope',
 
         this.renderActiveTextFontColor = function(color) {
             applyToActiveTextFun(function(activeObject) {
-                activeObject.fill = color;
+                activeObject.setFill(color);
             });
         };
 
         this.changeTextFontFamily = function(font) {
             applyToActiveTextFun(function(activeObject) {
-                activeObject.fontFamily = font;
+                activeObject.setFontFamily(font);
             });
         };
 
         this.toggleActiveTextBold = function() {
             applyToActiveTextFun(function(activeObject) {
-                activeObject.fontWeight = (
-                    activeObject.fontWeight == 'bold' ? '' : 'bold'
-                );
+                var weight = activeObject.fontWeight == 'bold' ? '' : 'bold';
+                activeObject.setFontWeight(weight);
             });
         };
 
         this.toggleActiveTextItalic = function() {
             applyToActiveTextFun(function(activeObject) {
-                activeObject.fontStyle = (
-                    activeObject.fontStyle == 'italic' ? '' : 'italic'
-                );
+                var style = activeObject.fontStyle == 'italic' ? '' : 'italic';
+                activeObject.setFontStyle(style);
             });
         };
 
         this.toggleActiveTextStrike = function() {
             applyToActiveTextFun(function(activeObject) {
-                activeObject.textDecoration = (
-                    activeObject.textDecoration ==
-                        'line-through' ? '' : 'line-through'
-                );
+                var decoration = activeObject.textDecoration == 'line-through' ? '' : 'line-through';
+                activeObject.setTextDecoration(decoration);
             });
         };
 
         this.toggleActiveTextUnderline = function() {
             applyToActiveTextFun(function(activeObject) {
-                activeObject.textDecoration = (
-                    activeObject.textDecoration ==
-                        'underline' ? '' : 'underline'
-                );
+                var decoration = activeObject.textDecoration == 'underline' ? '' : 'underline'
+                activeObject.setTextDecoration(decoration);
             });
         };
 
         this.setActiveTextAlignment = function(position) {
             applyToActiveTextFun(function(activeObject) {
-                activeObject.textAlign = position;
+                activeObject.setTextAlign(position);
             });
         };
     }
