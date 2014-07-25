@@ -13,15 +13,32 @@ monadexDirectives.directive('appVersion', ['version',
 
 // Style and quality panel let the customer choose the style of the
 // t-shirts with various qualities.
-monadexDirectives.directive('mdTshirtStyleQualityPanel', ['$timeout',
-   function() {
+monadexDirectives.directive('mdTshirtStyleQualityPanel', ['$timeout', '$compile',
+   function($timeout, $compile) {
        return {
            restrict: 'E',
            scope: {
                tshirtTypes: '=',
-               baseCost: "="
+               baseCost: "=",
+               popover: "@"
            },
-           templateUrl: 'partials/tshirt-designer-pages/tshirt-style-quality-panel.html'
+           templateUrl: 'partials/tshirt-designer-pages/tshirt-style-quality-panel.html',
+           link: function(scope, element, attrs) {
+               $timeout(function() {
+                   element.find('.tshirt-variant').popover({
+                       trigger: "focus",
+                       html: true,
+                       container: 'body',
+                       placement: 'left',
+                       content: function() {
+                           // compile the html in popover attributes and set it
+                           // as the content of the popover
+                           var popoverContent = $compile($(this).attr("popover"))(scope);
+                           return popoverContent;
+                       }
+                   });
+               }, 0);
+           }
        };
    }
 ]);

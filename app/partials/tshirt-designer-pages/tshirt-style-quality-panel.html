@@ -10,7 +10,9 @@
   <br>
 
   <ul class="list-group">
-    <a class="list-group-item" ng-repeat="variant in currentTshirtType.variants">
+    <a class="list-group-item tshirt-variant"
+       ng-repeat="variant in currentTshirtType.variants" tabindex="0"
+       popover="<md-bg-color-picker colors='{{variant.colors}}'></md-bg-color-picker>">
       {{variant.name}}
       <br>
       <small>{{variant.description}}</small>
