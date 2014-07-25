@@ -119,9 +119,11 @@ monadexDirectives.directive('mdBgColorPicker', ['$timeout', 'canvasService',
             templateUrl: 'partials/tshirt-designer-pages/bg-color-picker.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
-                    element.find('.color-preview').on("click", function(){
-                        var color = $(this).css("background-color");
-                        canvasService.changeBackground(color);
+                    scope.$watch("colors", function() {
+                        element.find('.color-preview').on("click", function(){
+                            var color = $(this).css("background-color");
+                            canvasService.changeBackground(color);
+                        });
                     });
                 }, 0);
             }
