@@ -187,6 +187,21 @@ myService.service("canvasService", ['$rootScope',
                 }
             };
 
+            canvas._getRotatedCornerCursor = function(corner, target) {
+              var cursorOffset = {
+                mt: 0, // n
+                tr: 1, // ne
+                mr: 2, // e
+                br: 3, // se
+                mb: 4, // s
+                bl: 5, // sw
+                ml: 6, // w
+                tl: 7 // nw
+              };
+              var n = cursorOffset[corner];
+              return this.cursorMap[n];
+            };
+
             canvas.on({
                 'object:moving': function(e) {
                     e.target.opacity = 0.5;
