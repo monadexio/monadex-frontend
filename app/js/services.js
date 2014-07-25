@@ -62,58 +62,11 @@ myService.service("canvasService", ['$rootScope',
             offsetYFun(DownRightPoint, 1)
         );
 
-        // return the canvas instance
-        this.getCanvas = function() {
-            return canvas;
-        };
+        // Monkey patch on fabric.js
+        (function(){
+            fabric.Canvas.prototype.selection = false;
 
-        this.init = function(canvasid, imageId) {
-            console.log("initialize...");
-
-            this.imageId = imageId;
-            this.prevCanvas = null;
-
-            fabric.Object.prototype._drawControl = function(control, ctx, methodName, left, top) {
-              var degreesToRadians = fabric.util.degreesToRadians,
-              isVML = typeof G_vmlCanvasManager !== 'undefined';
-              var sizeX = this.cornerSize / this.scaleX,
-              sizeY = this.cornerSize / this.scaleY,
-              img   = new Image();
-
-              if (this.isControlVisible(control)) {
-                isVML || this.transparentCorners || ctx.clearRect(left, top, sizeX, sizeY);
-                switch(control) {
-                  case 'br':
-                    img.src = 'img/tool/scale.png';
-                  ctx.drawImage(img, left, top, sizeX, sizeY);
-                  break;
-                  case 'bl':
-                    img.src = 'img/tool/delete.png';
-                  ctx.drawImage(img, left, top, sizeX, sizeY);
-                  break;
-                  case 'tl':
-                    img.src = 'img/tool/drag.png';
-                  ctx.drawImage(img, left, top, sizeX, sizeY);
-                  break;
-                  case 'tr':
-                    img.src = 'img/tool/rotate.png';
-                  ctx.drawImage(img, left, top, sizeX, sizeY);
-                  break;
-                  default:
-                    ctx[methodName](left, top, sizeX, sizeY);
-                }
-              }
-            };
-
-            canvas = new fabric.Canvas(canvasid, {
-                hoverCursor: 'pointer',
-                selection: true,
-                selectionBorderColor:'blue'
-            });
-
-            canvas.selection = false;
-
-            canvas.cursorMap = [
+            fabric.Canvas.prototype.cursorMap = [
                 'n-resize',
                 '-webkit-grab',
                 'e-resize',
@@ -124,7 +77,7 @@ myService.service("canvasService", ['$rootScope',
                 '-webkit-grab'
             ];
 
-            canvas._getActionFromCorner = function(target, corner) {
+            fabric.Canvas.prototype._getActionFromCorner = function(target, corner) {
                 var action = 'drag';
                 if (corner) {
                     action = (corner === 'ml' || corner === 'mr')
@@ -143,7 +96,7 @@ myService.service("canvasService", ['$rootScope',
             };
 
 
-            canvas._setupCurrentTransform = function(e, target) {
+            fabric.Canvas.prototype._setupCurrentTransform = function(e, target) {
                 var degreesToRadians = fabric.util.degreesToRadians;
 
                 if (!target) return;
@@ -187,20 +140,87 @@ myService.service("canvasService", ['$rootScope',
                 }
             };
 
-            canvas._getRotatedCornerCursor = function(corner, target) {
-              var cursorOffset = {
-                mt: 0, // n
-                tr: 1, // ne
-                mr: 2, // e
-                br: 3, // se
-                mb: 4, // s
-                bl: 5, // sw
-                ml: 6, // w
-                tl: 7 // nw
-              };
-              var n = cursorOffset[corner];
-              return this.cursorMap[n];
+            fabric.Canvas.prototype._getRotatedCornerCursor = function(corner, target) {
+                var cursorOffset = {
+                    mt: 0, // n
+                    tr: 1, // ne
+                    mr: 2, // e
+                    br: 3, // se
+                    mb: 4, // s
+                    bl: 5, // sw
+                    ml: 6, // w
+                    tl: 7 // nw
+                };
+                var n = cursorOffset[corner];
+                return this.cursorMap[n];
             };
+
+            fabric.Object.prototype._drawControl = function(control, ctx, methodName, left, top) {
+                var degreesToRadians = fabric.util.degreesToRadians,
+                isVML = typeof G_vmlCanvasManager !== 'undefined';
+                var sizeX = this.cornerSize / this.scaleX,
+                sizeY = this.cornerSize / this.scaleY,
+                img   = new Image();
+
+                if (this.isControlVisible(control)) {
+                    isVML || this.transparentCorners || ctx.clearRect(left, top, sizeX, sizeY);
+                    switch(control) {
+                        case 'br':
+                            img.src = 'img/tool/scale.png';
+                        ctx.drawImage(img, left, top, sizeX, sizeY);
+                        break;
+                        case 'bl':
+                            img.src = 'img/tool/delete.png';
+                        ctx.drawImage(img, left, top, sizeX, sizeY);
+                        break;
+                        case 'tl':
+                            img.src = 'img/tool/drag.png';
+                        ctx.drawImage(img, left, top, sizeX, sizeY);
+                        break;
+                        case 'tr':
+                            img.src = 'img/tool/rotate.png';
+                        ctx.drawImage(img, left, top, sizeX, sizeY);
+                        break;
+                        default:
+                            ctx[methodName](left, top, sizeX, sizeY);
+                    }
+                }
+            };
+
+            fabric.Object.prototype._controlsVisibility = {
+                tl: true,
+                tr: true,
+                br: true,
+                bl: true,
+                ml: true,
+                mt: true,
+                mr: true,
+                mb: true,
+                mtr: false
+            };
+
+            fabric.Text.prototype.lockUniScaling = true;
+
+            fabric.Text.prototype.centeredScaling = true;
+
+            fabric.Image.prototype.centeredScaling = true;
+        })();
+
+        // return the canvas instance
+        this.getCanvas = function() {
+            return canvas;
+        };
+
+        this.init = function(canvasid, imageId) {
+            console.log("initialize...");
+
+            this.imageId = imageId;
+            this.prevCanvas = null;
+
+            canvas = new fabric.Canvas(canvasid, {
+                hoverCursor: 'pointer',
+                selectionBorderColor:'blue'
+            });
 
             canvas.on({
                 'object:moving': function(e) {
@@ -252,10 +272,6 @@ myService.service("canvasService", ['$rootScope',
                 }
             );
 
-            textSample.setControlVisible('mtr', false);
-            textSample.lockUniScaling = true;
-            textSample.centeredScaling = true;
-
             canvas.add(textSample);
             canvas.item(canvas.item.length-1).hasRotatingPoint = true;
         };
@@ -300,8 +316,6 @@ myService.service("canvasService", ['$rootScope',
                     }
                 );
 
-                image.setControlVisible('mtr', false);
-                image.centeredScaling = true;
                 canvas.add(image);
             });
         };
