@@ -218,7 +218,6 @@ myService.service("canvasService", ['$rootScope',
             this.prevCanvas = null;
 
             canvas = new fabric.Canvas(canvasid, {
-                hoverCursor: 'pointer',
                 selectionBorderColor:'blue'
             });
 
