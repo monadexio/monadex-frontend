@@ -263,31 +263,3 @@ monadexDirectives.directive('mdImagePage', ['$timeout', 'canvasService',
         };
     }
 ]);
-
-monadexDirectives.directive('mdImagePicker',
-                            ['$timeout', '$compile', 'canvasService',
-    function($timeout, $compile, canvasService){
-        return {
-            restrict: 'E',
-            scope: {
-                images: "=",
-                popover: '@'
-            },
-            templateUrl: 'partials/tshirt-designer-pages/image-picker.html',
-            link: function(scope, element, attrs) {
-                $timeout(function() {
-                    element.find('#image-picker').popover({
-                        trigger: "focus",
-                        html: true,
-                        container: 'body',
-                        content: function() {
-                            // compile the html in popover attributes and set it
-                            // as the content of the popover
-                            var popoverContent = $compile(scope.popover)(scope);
-                            return popoverContent;
-                        }
-                    });
-                }, 0);
-            }};
-    }
-]);
