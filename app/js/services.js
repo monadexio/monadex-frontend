@@ -427,7 +427,7 @@ myService.service("canvasService", ['$rootScope',
 
         this.toggleActiveTextUnderline = function() {
             applyToActiveTextFun(function(activeObject) {
-                var decoration = activeObject.textDecoration == 'underline' ? '' : 'underline'
+                var decoration = activeObject.textDecoration == 'underline' ? '' : 'underline';
                 activeObject.setTextDecoration(decoration);
             });
         };
@@ -435,6 +435,12 @@ myService.service("canvasService", ['$rootScope',
         this.setActiveTextAlignment = function(position) {
             applyToActiveTextFun(function(activeObject) {
                 activeObject.setTextAlign(position);
+            });
+        };
+
+        this.setAvailableBgColors = function(colors) {
+            $rootScope.$broadcast('mdeBgAvailableColorsChanged', {
+                colors: colors
             });
         };
     }

@@ -1,7 +1,8 @@
 <div class="well">
   <h3>Style & quality</h3>
   <!--Select types of the T-Shirts-->
-  <select ng-init="currentTshirtType=tshirtTypes[0]"
+  <select id="tshirt-type-selector"
+          ng-init="currentTshirtType=tshirtTypes[0]"
           ng-model="currentTshirtType"
           ng-options="tshirtType.name for tshirtType in tshirtTypes"
           class="form-control">
@@ -12,12 +13,15 @@
   <ul class="list-group">
     <a class="list-group-item tshirt-variant"
        ng-repeat="variant in currentTshirtType.variants" tabindex="0"
-       popover="<md-bg-color-picker colors='{{variant.colors}}'></md-bg-color-picker>">
+       colors="{{variant.colors}}">
       {{variant.name}}
       <br>
       <small>{{variant.description}}</small>
+      <br>
     </a>
   </ul>
+
+  <md-bg-color-picker colors="colors"></md-bg-color-picker>
 
   <h5>Base cost @ 50 shirts</h5>
   <h3>{{ baseCost }} SEK</h3>

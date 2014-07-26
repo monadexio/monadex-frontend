@@ -13,29 +13,45 @@ monadexDirectives.directive('appVersion', ['version',
 
 // Style and quality panel let the customer choose the style of the
 // t-shirts with various qualities.
-monadexDirectives.directive('mdTshirtStyleQualityPanel', ['$timeout', '$compile',
-   function($timeout, $compile) {
+monadexDirectives.directive('mdTshirtStyleQualityPanel',
+                            ['$timeout', '$compile', 'canvasService',
+   function($timeout, $compile, canvasService) {
        return {
            restrict: 'E',
            scope: {
                tshirtTypes: '=',
                baseCost: "=",
-               popover: "@"
+               colors: "="
            },
            templateUrl: 'partials/tshirt-designer-pages/tshirt-style-quality-panel.html',
            link: function(scope, element, attrs) {
                $timeout(function() {
-                   element.find('.tshirt-variant').popover({
-                       trigger: "focus",
-                       html: true,
-                       container: 'body',
-                       placement: 'left',
-                       content: function() {
-                           // compile the html in popover attributes and set it
-                           // as the content of the popover
-                           var popoverContent = $compile($(this).attr("popover"))(scope);
-                           return popoverContent;
-                       }
+                   var setInitColor = function() {
+                       var col = element.find('.tshirt-variant').attr("colors");
+                       scope.colors = eval(col);
+                   };
+                   var setAvailableColorsFun = function() {
+                       element.find('.tshirt-variant').click(function() {
+                           canvasService.setAvailableBgColors(eval(
+                               $(this).attr("colors")
+                           ));
+                       });
+                   };
+
+                   scope.$apply(setInitColor);
+                   setAvailableColorsFun();
+
+                   element.find('#tshirt-type-selector').change(function(e) {
+                       scope.$apply(function() {
+                           setInitColor();
+                           setAvailableColorsFun();
+                       });
+                   });
+
+                   scope.$on('mdeBgAvailableColorsChanged', function(e, o) {
+                       scope.$apply(function() {
+                           scope.colors = o.colors;
+                       });
                    });
                }, 0);
            }
@@ -112,9 +128,11 @@ monadexDirectives.directive('mdBgColorPicker', ['$timeout', 'canvasService',
             templateUrl: 'partials/tshirt-designer-pages/bg-color-picker.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
-                    element.find('.color-preview').on("click", function(){
-                        var color = $(this).css("background-color");
-                        canvasService.changeBackground(color);
+                    scope.$watch("colors", function() {
+                        element.find('.color-preview').on("click", function(){
+                            var color = $(this).css("background-color");
+                            canvasService.changeBackground(color);
+                        });
                     });
                 }, 0);
             }
