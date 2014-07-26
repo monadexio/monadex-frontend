@@ -79,7 +79,7 @@ body {
     font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     font-weight: 700;
-    background: #005b99;
+    background: rgb(0,101,153);
 }
 
 .navbar a:focus {
@@ -101,4 +101,14 @@ body {
 .full-screen {
     height: 100%;
     min-height: 100%;
+}
+
+.campaign-subheader {
+    padding-top: 65px;
+    background: rgba(0,101,153,0.9);
+}
+
+.campaign-subheader a {
+    color: rgba(252,209,22,0.9);
+    background: rgba(0,0,0,0.3);
 }
