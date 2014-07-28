@@ -1,0 +1,11 @@
+#numOfTshirtSlider .slider-selection {
+    background: #005b99; /* swedish blue */
+}
+
+#numOfTshirtSlider .slider-track {
+    background: #d4d4d4;
+}
+
+.slider.slider-horizontal {
+    width: 320px;
+}

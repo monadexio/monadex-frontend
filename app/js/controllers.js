@@ -4,6 +4,10 @@
 
 var monadexControllers = angular.module('monadexApp.controllers', []);
 
+monadexControllers.controller('MonadexTshirtLanding', [
+    function() {}
+]);
+
 monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
     function($scope) {
         // base cost for tshirt
@@ -140,7 +144,8 @@ monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
     }
 ]);
 
-monadexControllers.controller('MonadexTshirtLanding', ['$scope',
+monadexControllers.controller('MonadexTshirtCampaign', ['$scope',
     function($scope) {
+        $scope.numOfTshirts = 50;
     }
 ]);

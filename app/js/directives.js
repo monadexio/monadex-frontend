@@ -23,7 +23,7 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                baseCost: "=",
                colors: "="
            },
-           templateUrl: 'partials/tshirt-designer-pages/tshirt-style-quality-panel.html',
+           templateUrl: 'partials/designer/tshirt-style-quality-panel.html',
            link: function(scope, element, attrs) {
                $timeout(function() {
                    var setInitColor = function() {
@@ -68,7 +68,7 @@ monadexDirectives.directive('mdTshirtDesignPanel', ['$timeout',
                images: '=',
                fonts: "="
            },
-           templateUrl: 'partials/tshirt-designer-pages/tshirt-design-panel.html',
+           templateUrl: 'partials/designer/tshirt-design-panel.html',
            link: function(scope, element) {
                $timeout(function() {
                    element.find(".tab-link").click(function(event) {
@@ -87,7 +87,7 @@ monadexDirectives.directive('mdTshirtCanvas', ['$timeout', 'canvasService',
             restrict: 'E',
             scope: {
             },
-            templateUrl: 'partials/tshirt-designer-pages/tshirt-canvas.html',
+            templateUrl: 'partials/designer/tshirt-canvas.html',
             link: function(scope, element, attrs) {
                 // initialize the canvasService
                 canvasService.init('tcanvas', "#tshirtFacing");
@@ -125,7 +125,7 @@ monadexDirectives.directive('mdBgColorPicker', ['$timeout', 'canvasService',
             scope: {
                 colors: '='
             },
-            templateUrl: 'partials/tshirt-designer-pages/bg-color-picker.html',
+            templateUrl: 'partials/designer/bg-color-picker.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     scope.$watch("colors", function() {
@@ -147,7 +147,7 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
             scope: {
                 fonts: "="
             },
-            templateUrl: 'partials/tshirt-designer-pages/text-input.html',
+            templateUrl: 'partials/designer/text-input.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find('#text-fontcolor').minicolors({
@@ -251,12 +251,47 @@ monadexDirectives.directive('mdImagePage', ['$timeout', 'canvasService',
             scope: {
                 images: "="
             },
-            templateUrl: 'partials/tshirt-designer-pages/image-page.html',
+            templateUrl: 'partials/designer/image-page.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find(".img-thumbnail").on("click", function(e){
                         var el = e.target;
                         canvasService.addImage(el.src);
+                    });
+                }, 0);
+            }
+        };
+    }
+]);
+
+monadexDirectives.directive('mdCampaignPanel', ['$timeout',
+    function($timeout){
+        return {
+            restrict: 'E',
+            scope: {
+            },
+            templateUrl: 'partials/campaign/campaign-panel.html',
+            link: function(scope, element, attrs) {
+                $timeout(function() {
+                }, 0);
+            }
+        };
+    }
+]);
+
+monadexDirectives.directive('mdSalesGoal', ['$timeout',
+    function($timeout){
+        return {
+            restrict: 'E',
+            scope: {
+            },
+            templateUrl: 'partials/campaign/sales-goal.html',
+            link: function(scope, element, attrs) {
+                $timeout(function() {
+                    $("#numOfTshirtSlider").slider({
+                    });
+
+                    $("#numOfTshirtSlider").on('slideStop', function(e) {
                     });
                 }, 0);
             }
