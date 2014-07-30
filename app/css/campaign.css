@@ -6,6 +6,10 @@
     background: #d4d4d4;
 }
 
+#numOfTshirtInput {
+    width: 60px
+}
+
 .slider.slider-horizontal {
     width: 320px;
 }

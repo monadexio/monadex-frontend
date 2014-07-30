@@ -288,10 +288,20 @@ monadexDirectives.directive('mdSalesGoal', ['$timeout',
             templateUrl: 'partials/campaign/sales-goal.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
-                    $("#numOfTshirtSlider").slider({
+                    var sliderElem = element.find("#numOfTshirtSlider"),
+                        inputElem = element.find("#numOfTshirtInput"),
+                        slider = sliderElem.slider({});
+
+                    // init the input value
+                    inputElem.val(slider.slider('getValue'));
+
+                    sliderElem.on('slideStop', function(e) {
+                        inputElem.val(e.value);
                     });
 
-                    $("#numOfTshirtSlider").on('slideStop', function(e) {
+                    inputElem.keyup(function(e) {
+                        var val = parseInt($(this)[0].value);
+                        slider.slider('setValue', val);
                     });
                 }, 0);
             }
