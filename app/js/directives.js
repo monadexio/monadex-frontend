@@ -289,19 +289,31 @@ monadexDirectives.directive('mdSalesGoal', ['$timeout',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     var sliderElem = element.find("#numOfTshirtSlider"),
-                        inputElem = element.find("#numOfTshirtInput"),
+                        numInputElem = element.find("#numOfTshirtInput"),
+                        priceInputElem = element.find("#priceOfTshirtInput"),
                         slider = sliderElem.slider({});
 
                     // init the input value
-                    inputElem.val(slider.slider('getValue'));
+                    numInputElem.val(slider.slider('getValue'));
+                    priceInputElem.val("80");
 
                     sliderElem.on('slideStop', function(e) {
-                        inputElem.val(e.value);
+                        numInputElem.val(e.value);
                     });
 
-                    inputElem.keyup(function(e) {
-                        var val = parseInt($(this)[0].value);
+                    numInputElem.keyup(function(e) {
+                        var val = Number($(this)[0].value);
                         slider.slider('setValue', val);
+                    });
+
+                    priceInputElem.keyup(function(e) {
+                        var val = Number($(this)[0].value);
+                        if (isNaN(val)) {
+                            element.find('#profitPerTshirt').text("0");
+                        } else {
+                            console.log("not equal nan");
+                            element.find('#profitPerTshirt').text(val);
+                        }
                     });
                 }, 0);
             }

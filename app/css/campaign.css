@@ -10,6 +10,14 @@
     width: 60px
 }
 
+#priceOfTshirtInput {
+    width: 60px
+}
+
+.priceTag {
+    color: green
+}
+
 .slider.slider-horizontal {
     width: 320px;
 }
