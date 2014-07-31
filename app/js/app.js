@@ -37,9 +37,9 @@ monadexApp.config(['$routeProvider', function($routeProvider) {
     );
 
     $routeProvider.when(
-        '/details',
+        '/campaign_details',
         {
-            templateUrl: 'partials/details/details-main.html',
+            templateUrl: 'partials/campaign_details/campaign-details-main.html',
             controller: 'MonadexTshirtCampaignDetails'
         }
     );

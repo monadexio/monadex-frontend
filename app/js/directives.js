@@ -306,14 +306,14 @@ monadexDirectives.directive('mdSalesGoalPanel', ['$timeout',
     }
 ]);
 
-monadexDirectives.directive('mdCampaignDetails', ['$timeout',
+monadexDirectives.directive('mdCampaignDetailsPanel', ['$timeout',
     function($timeout){
         return {
             restrict: 'E',
             scope: {
                 campaignLengths: "="
             },
-            templateUrl: 'partials/details/campaign-details.html',
+            templateUrl: 'partials/campaign_details/campaign-details-panel.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                 }, 0);
