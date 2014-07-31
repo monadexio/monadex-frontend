@@ -144,7 +144,7 @@ monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
     }
 ]);
 
-monadexControllers.controller('MonadexTshirtCampaign', ['$scope',
+monadexControllers.controller('MonadexTshirtSalesGoal', ['$scope',
     function($scope) {
         $scope.numOfTshirts = 50;
     }

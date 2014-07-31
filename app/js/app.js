@@ -29,10 +29,10 @@ monadexApp.config(['$routeProvider', function($routeProvider) {
     );
 
     $routeProvider.when(
-        '/campaign',
+        '/sales_goal',
         {
-            templateUrl: 'partials/campaign/campaign-main.html',
-            controller: 'MonadexTshirtCampaign'
+            templateUrl: 'partials/sales_goal/sales-goal-main.html',
+            controller: 'MonadexTshirtSalesGoal'
         }
     );
 

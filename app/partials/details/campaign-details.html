@@ -3,7 +3,8 @@
   <h4>Campaign title</h4>
 
   <input id="campaignTitleInput" ng-model="campaignTitle">
-  <h6>Summarize your campaign in 40 characters or less</h6>
+  <br/>
+  <small>Summarize your campaign in 40 characters or less</small>
 
   <hr/>
   <h4>Description</h4>
@@ -24,16 +25,19 @@
   <hr/>
 
   <h4>Choose a URL</h4>
+  monadex.io/<input id="campaignUrlInput" ng-model="campaignUrl">
+  <br/>
+  <small>This is where you will send buyers to view your campaign</small>
 
   <hr/>
-
-  <h4>Shipping options</h4>
-
-  <hr/>
-
-  <p>I have read and agreed to the terms of service (TOS) and can
-  confirm that the images, slogans, and content used in my campaign
-  do not infringe upon the rights of any third party.</p>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" value="">
+      <p>I have read and agreed to the terms of service (TOS) and can
+        confirm that the images, slogans, and content used in my campaign
+        do not infringe upon the rights of any third party.</p>
+    </label>
+  </div>
 
   <a href="#details" type="button" class="btn btn-lg btn-block btn-success"
      name="designNextStep" id="designNextStep">Launch your campaign

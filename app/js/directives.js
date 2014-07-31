@@ -264,13 +264,13 @@ monadexDirectives.directive('mdImagePage', ['$timeout', 'canvasService',
     }
 ]);
 
-monadexDirectives.directive('mdSalesGoal', ['$timeout',
+monadexDirectives.directive('mdSalesGoalPanel', ['$timeout',
     function($timeout){
         return {
             restrict: 'E',
             scope: {
             },
-            templateUrl: 'partials/campaign/sales-goal.html',
+            templateUrl: 'partials/sales_goal/sales-goal-panel.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     var sliderElem = element.find("#numOfTshirtSlider"),
