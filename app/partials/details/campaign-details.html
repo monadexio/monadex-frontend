@@ -1,20 +1,13 @@
 <!--Select types of the T-Shirts-->
 <div class="well">
-  <h4>Sales goal</h4>
-  <b>10</b>
-  <input id="numOfTshirtSlider" data-slider-id='numOfTshirtSlider' type="text"
-         data-slider-min="10" data-slider-max="400" data-slider-step="1"
-         data-slider-value="50"/>
-  <b>400</b>
+  <h4>Campaign title</h4>
 
-  <br/><br/>
-
-  <input id="numOfTshirtInput" ng-model="numOfTshirts"> Shirts
+  <input id="campaignTitleInput" ng-model="campaignTitle">
+  <h6>Summarize your campaign in 40 characters or less</h6>
 
   <hr/>
-
-  <h4>Estimated Profit</h4>
-  <h4 class="priceTag">1240 SEK</h4>
+  <h4>Description</h4>
+  <text-angular ng-model="campaignDescription"></text-angular>
 
   <hr/>
 
@@ -30,3 +23,4 @@
     <i class="glyphicon glyphicon-chevron-right glyphicon-white"></i>
   </a>
 </div>
+

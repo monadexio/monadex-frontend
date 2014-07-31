@@ -264,21 +264,6 @@ monadexDirectives.directive('mdImagePage', ['$timeout', 'canvasService',
     }
 ]);
 
-monadexDirectives.directive('mdCampaignPanel', ['$timeout',
-    function($timeout){
-        return {
-            restrict: 'E',
-            scope: {
-            },
-            templateUrl: 'partials/campaign/campaign-panel.html',
-            link: function(scope, element, attrs) {
-                $timeout(function() {
-                }, 0);
-            }
-        };
-    }
-]);
-
 monadexDirectives.directive('mdSalesGoal', ['$timeout',
     function($timeout){
         return {
@@ -315,6 +300,21 @@ monadexDirectives.directive('mdSalesGoal', ['$timeout',
                             element.find('#profitPerTshirt').text(val);
                         }
                     });
+                }, 0);
+            }
+        };
+    }
+]);
+
+monadexDirectives.directive('mdCampaignDetails', ['$timeout',
+    function($timeout){
+        return {
+            restrict: 'E',
+            scope: {
+            },
+            templateUrl: 'partials/details/campaign-details.html',
+            link: function(scope, element, attrs) {
+                $timeout(function() {
                 }, 0);
             }
         };

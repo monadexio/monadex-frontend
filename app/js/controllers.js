@@ -149,3 +149,10 @@ monadexControllers.controller('MonadexTshirtCampaign', ['$scope',
         $scope.numOfTshirts = 50;
     }
 ]);
+
+monadexControllers.controller('MonadexTshirtCampaignDetails', ['$scope',
+    function($scope) {
+        $scope.campaignTitle = "";
+        $scope.campaignDescription = "";
+    }
+]);
