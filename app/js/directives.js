@@ -311,6 +311,7 @@ monadexDirectives.directive('mdCampaignDetails', ['$timeout',
         return {
             restrict: 'E',
             scope: {
+                campaignLengths: "="
             },
             templateUrl: 'partials/details/campaign-details.html',
             link: function(scope, element, attrs) {
