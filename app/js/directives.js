@@ -101,10 +101,10 @@ monadexDirectives.directive('mdTshirtCanvas', ['$timeout', 'canvasService',
                         var flipText = element.find('#flip-text');
                         if (flipText.text()==="Show Back View") {
                             flipText.text('Show Front View');
-                            canvasService.flip("img/crew_back.png");
+                            canvasService.flip_back();
                         } else {
                             flipText.text('Show Back View');
-                            canvasService.flip("img/crew_front.png");
+                            canvasService.flip_front();
                         }
                     });
 

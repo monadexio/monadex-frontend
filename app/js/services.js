@@ -200,9 +200,7 @@ myService.service("canvasService", ['$rootScope',
             };
 
             fabric.Text.prototype.lockUniScaling = true;
-
             fabric.Text.prototype.centeredScaling = true;
-
             fabric.Image.prototype.centeredScaling = true;
         })();
 
@@ -335,21 +333,27 @@ myService.service("canvasService", ['$rootScope',
             }
         };
 
-        this.flip = function(imageSrc) {
-            var currentCanvas;
-
-            $(this.imageId).attr("src", imageSrc);
-            currentCanvas = JSON.stringify(canvas);
+        this.renderCanvas = function(Img, tshirtCanvas) {
+            $(this.imageId).attr("src", Img);
             canvas.clear();
-
-            if(this.prevCanvas != null) {
+            if(tshirtCanvas != null) {
                 canvas.loadFromJSON(
-                    this.prevCanvas,
+                    tshirtCanvas,
                     canvas.renderAll.bind(canvas)
                 );
             }
+        };
 
-            this.prevCanvas = currentCanvas;
+        this.flip_back = function() {
+            var backImg = "img/crew_back.png";
+            this.frontCanvas = JSON.stringify(canvas);
+            this.renderCanvas(backImg, this.backCanvas);
+        };
+
+        this.flip_front = function() {
+            var frontImg = "img/crew_front.png";
+            this.backCanvas = JSON.stringify(canvas);
+            this.renderCanvas(frontImg, this.frontCanvas);
         };
 
         this.changeBackground = function(color) {
