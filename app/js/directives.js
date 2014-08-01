@@ -48,6 +48,14 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                        });
                    });
 
+                   element.find('#designNextStep').click(function(e) {
+                       // when leaving the designer save the canvas
+                       // TODO: set it to read only as well. setting
+                       // canvas.selection = false doesn't seem to work.
+                       canvasService.saveCanvas();
+                       canvasService.disableEdit();
+                   });
+
                    scope.$on('mdeBgAvailableColorsChanged', function(e, o) {
                        scope.$apply(function() {
                            scope.colors = o.colors;
@@ -90,7 +98,7 @@ monadexDirectives.directive('mdTshirtCanvas', ['$timeout', 'canvasService',
             templateUrl: 'partials/designer/tshirt-canvas.html',
             link: function(scope, element, attrs) {
                 // initialize the canvasService
-                canvasService.init('tcanvas', "#tshirtFacing");
+                canvasService.init('tcanvas', "#tshirtFacing", "#shirtDiv");
                 $timeout(function() {
                     element.find("#drawingArea").hover(
                         canvasService.addCanvasBorder,
@@ -101,15 +109,11 @@ monadexDirectives.directive('mdTshirtCanvas', ['$timeout', 'canvasService',
                         var flipText = element.find('#flip-text');
                         if (flipText.text()==="Show Back View") {
                             flipText.text('Show Front View');
-                            canvasService.flip_back();
+                            canvasService.flipBack();
                         } else {
                             flipText.text('Show Back View');
-                            canvasService.flip_front();
+                            canvasService.flipFront();
                         }
-                    });
-
-                    scope.$on('mdeChangeBackground', function(event, color) {
-                        element.find("#shirtDiv").css("backgroundColor", color);
                     });
                 }, 0);
             }
@@ -296,7 +300,6 @@ monadexDirectives.directive('mdSalesGoalPanel', ['$timeout',
                         if (isNaN(val)) {
                             element.find('#profitPerTshirt').text("0");
                         } else {
-                            console.log("not equal nan");
                             element.find('#profitPerTshirt').text(val);
                         }
                     });
