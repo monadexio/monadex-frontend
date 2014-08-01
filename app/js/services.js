@@ -512,3 +512,18 @@ myService.service("canvasService", ['$rootScope',
         };
     }
 ]);
+
+myService.service("campaignInfoAccumulatorService", [
+    function() {
+        var tshirtType = null,
+            tshirtVariantName = null;
+
+        this.setTshirtType = function(type) {
+            tshirtType = type;
+        };
+        this.setTshirtVariant = function(name) {
+            tshirtVariantName = name;
+        };
+
+    }
+]);

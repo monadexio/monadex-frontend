@@ -10,8 +10,8 @@ monadexControllers.controller('MonadexTshirtLanding', [
 
 monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
     function($scope) {
-        // base cost for tshirt
         $scope.currentTshirtType = null;
+        $scope.currentVariant = null;
 
         $scope.tshirtTypes = [
             { id: 1,

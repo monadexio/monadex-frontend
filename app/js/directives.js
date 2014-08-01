@@ -15,7 +15,8 @@ monadexDirectives.directive('appVersion', ['version',
 // t-shirts with various qualities.
 monadexDirectives.directive('mdTshirtStyleQualityPanel',
                             ['$timeout', '$compile', 'canvasService',
-   function($timeout, $compile, canvasService) {
+                             'campaignInfoAccumulatorService',
+   function($timeout, $compile, canvasService, campaignInfoAccumulatorService) {
        return {
            restrict: 'E',
            scope: {
@@ -30,6 +31,7 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                        var col = element.find('.tshirt-variant').attr("colors");
                        scope.colors = eval(col);
                    };
+
                    var setInitBaseCostAndUnit = function() {
                        var baseCost =
                                element.find('.tshirt-variant').attr("basecost"),
@@ -57,17 +59,36 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                        });
                    };
 
+                   var setInitTshirtVariant = function() {
+                       var name = element.find('.tshirt-variant').attr("name");
+                       campaignInfoAccumulatorService.setTshirtVariant(name);
+                   };
+
+                   var setTshirtVariantFun = function() {
+                       element.find('.tshirt-variant').click(function() {
+                           var name = $(this).attr("name");
+                           campaignInfoAccumulatorService.setTshirtVariant(
+                               name
+                           );
+                       });
+                   };
+
                    scope.$apply(setInitColor);
                    setAvailableColorsFun();
                    setInitBaseCostAndUnit();
                    setBaseCostAndUnitFun();
+                   setInitTshirtVariant();
+                   setTshirtVariantFun();
 
                    element.find('#tshirt-type-selector').change(function(e) {
                        scope.$apply(function() {
                            setInitColor();
-                           setAvailableColorsFun();
-                           setBaseCostAndUnitFun();
                        });
+
+                       setAvailableColorsFun();
+                       setBaseCostAndUnitFun();
+                       setInitTshirtVariant();
+                       setTshirtVariantFun();
                    });
 
                    element.find('#designNextStep').click(function(e) {
@@ -80,6 +101,10 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                            // when leaving the designer save the canvas
                            // TODO: set it to read only as well. setting
                            // canvas.selection = false doesn't seem to work.
+                           campaignInfoAccumulatorService.setTshirtType(
+                               scope.currentTshirtType
+                           );
+
                            canvasService.disableEdit();
                        }
                    });
