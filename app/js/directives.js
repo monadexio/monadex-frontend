@@ -33,12 +33,13 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                    };
 
                    var setInitBaseCostAndUnit = function() {
-                       var baseCost =
-                               element.find('.tshirt-variant').attr("basecost"),
-                           unit = element.find('.tshirt-variant').attr("unit");
-                       element.find("#baseCostLabel").text(
-                           [baseCost, unit].join(" ")
-                       );
+                       var baseCostNum = element.find('.tshirt-variant').
+                               attr("basecost"),
+                           unit = element.find('.tshirt-variant').attr("unit"),
+                           baseCost = [baseCostNum, unit].join(" ");
+
+                       element.find("#baseCostLabel").text(baseCost);
+                       campaignInfoAccumulatorService.setBaseCost(baseCost);
                    };
 
                    var setAvailableColorsFun = function() {
@@ -51,11 +52,12 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
 
                    var setBaseCostAndUnitFun = function() {
                        element.find('.tshirt-variant').click(function() {
-                           var baseCost = $(this).attr("basecost"),
-                               unit = $(this).attr("unit");
-                           element.find("#baseCostLabel").text(
-                               [baseCost, unit].join(" ")
-                           );
+                           var baseCostNum = $(this).attr("basecost"),
+                               unit = $(this).attr("unit"),
+                               baseCost = [baseCostNum, unit].join(" ");
+
+                           element.find("#baseCostLabel").text(baseCost);
+                           campaignInfoAccumulatorService.setBaseCost(baseCost);
                        });
                    };
 
@@ -73,22 +75,32 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                        });
                    };
 
-                   scope.$apply(setInitColor);
-                   setAvailableColorsFun();
-                   setInitBaseCostAndUnit();
-                   setBaseCostAndUnitFun();
-                   setInitTshirtVariant();
-                   setTshirtVariantFun();
-
-                   element.find('#tshirt-type-selector').change(function(e) {
-                       scope.$apply(function() {
-                           setInitColor();
-                       });
-
+                   // set up the available colors
+                   var setupColor = function() {
+                       scope.$apply(setInitColor);
                        setAvailableColorsFun();
+                   };
+
+                   // set up the base cost
+                   var setupBaseCost = function() {
+                       setInitBaseCostAndUnit();
                        setBaseCostAndUnitFun();
+                   };
+
+                   // set up the tshirt variants
+                   var setupTshirtVariant = function() {
                        setInitTshirtVariant();
                        setTshirtVariantFun();
+                   };
+
+                   setupColor();
+                   setupBaseCost();
+                   setupTshirtVariant();
+
+                   element.find('#tshirt-type-selector').change(function(e) {
+                       setupColor();
+                       setupBaseCost();
+                       setupTshirtVariant();
                    });
 
                    element.find('#designNextStep').click(function(e) {
