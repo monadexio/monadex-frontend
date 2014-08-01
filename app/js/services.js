@@ -9,7 +9,7 @@ myService.value('version', '0.0.1');
 
 myService.service("canvasService", ['$rootScope',
     function($rootScope) {
-        var canvas;
+        var canvas = null;
 
         // Variables related to the demarcation lines for the
         // Drawing area.
@@ -32,6 +32,10 @@ myService.service("canvasService", ['$rootScope',
 
         // Position for the newly added text
         var newTextTop = 50;
+        // Edit switch
+        var enableEdit = true;
+        // background color
+        var bgColor = null;
 
         var offsetXFun = function(Point, OffsetVal) {
             return [Point[0]-OffsetVal, Point[1]];
@@ -200,9 +204,7 @@ myService.service("canvasService", ['$rootScope',
             };
 
             fabric.Text.prototype.lockUniScaling = true;
-
             fabric.Text.prototype.centeredScaling = true;
-
             fabric.Image.prototype.centeredScaling = true;
         })();
 
@@ -211,14 +213,14 @@ myService.service("canvasService", ['$rootScope',
             return canvas;
         };
 
-        this.init = function(canvasid, imageId) {
+        this.init = function(canvasId, imageId, tshirtDivId) {
             console.log("initialize...");
-
             this.imageId = imageId;
-            this.prevCanvas = null;
+            this.tshirtDivId = tshirtDivId;
 
-            canvas = new fabric.Canvas(canvasid, {
-                selectionBorderColor:'blue'
+            canvas = new fabric.Canvas(canvasId, {
+                selectionBorderColor:'blue',
+                selection: enableEdit ? true : false
             });
 
             canvas.on({
@@ -250,6 +252,39 @@ myService.service("canvasService", ['$rootScope',
                     $rootScope.$broadcast('mdeObjectCleared');
                 }
             });
+
+            this.restoreCanvas();
+        };
+
+        // this only saves the current side of the canvas, because the
+        // other side is either saved during the flip or doesn't need
+        // to be saved since it is empty.
+        this.saveCanvas = function() {
+            if (this.currentSide === "front") {
+                this.frontCanvas = JSON.stringify(canvas);
+            } else if (this.currentSide === "back") {
+                this.backCanvas = JSON.stringify(canvas);
+            }
+        };
+
+        this.restoreCanvas = function() {
+            // restore the canvas if possible
+            var frontImg = "img/crew_front.png";
+            this.renderCanvas(frontImg, this.frontCanvas);
+            this.currentSide = "front";
+
+            // restore the background color if possible
+            if(bgColor != null) {
+                $(this.tshirtDivId).css("backgroundColor", bgColor);
+            }
+        };
+
+        this.disableEdit = function() {
+            enableEdit = false;
+        };
+
+        this.enableEdit = function() {
+            enableEdit = true;
         };
 
         var addText = function(text, fontColor, fontFamily) {
@@ -335,25 +370,42 @@ myService.service("canvasService", ['$rootScope',
             }
         };
 
-        this.flip = function(imageSrc) {
-            var currentCanvas;
-
-            $(this.imageId).attr("src", imageSrc);
-            currentCanvas = JSON.stringify(canvas);
+        this.renderCanvas = function(Img, tshirtCanvas) {
+            $(this.imageId).attr("src", Img);
             canvas.clear();
-
-            if(this.prevCanvas != null) {
+            if(tshirtCanvas != null) {
                 canvas.loadFromJSON(
-                    this.prevCanvas,
+                    tshirtCanvas,
                     canvas.renderAll.bind(canvas)
                 );
             }
+        };
 
-            this.prevCanvas = currentCanvas;
+        this.flipBack = function() {
+            var backImg = "img/crew_back.png";
+            this.frontCanvas = JSON.stringify(canvas);
+            this.renderCanvas(backImg, this.backCanvas);
+            this.currentSide = "back";
+        };
+
+        this.flipFront = function() {
+            var frontImg = "img/crew_front.png";
+            this.backCanvas = JSON.stringify(canvas);
+            this.renderCanvas(frontImg, this.frontCanvas);
+            this.currentSide = "front";
+        };
+
+        this.getFrontCanvas = function() {
+            return this.frontCanvas;
+        };
+
+        this.getBackCanvas = function() {
+            return this.backCanvas;
         };
 
         this.changeBackground = function(color) {
-            $rootScope.$broadcast('mdeChangeBackground', color);
+            bgColor = color;
+            $(this.tshirtDivId).css("backgroundColor", color);
         };
 
         this.addCanvasBorder = function() {

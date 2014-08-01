@@ -23,7 +23,7 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                baseCost: "=",
                colors: "="
            },
-           templateUrl: 'partials/tshirt-designer-pages/tshirt-style-quality-panel.html',
+           templateUrl: 'partials/designer/tshirt-style-quality-panel.html',
            link: function(scope, element, attrs) {
                $timeout(function() {
                    var setInitColor = function() {
@@ -48,6 +48,14 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                        });
                    });
 
+                   element.find('#designNextStep').click(function(e) {
+                       // when leaving the designer save the canvas
+                       // TODO: set it to read only as well. setting
+                       // canvas.selection = false doesn't seem to work.
+                       canvasService.saveCanvas();
+                       canvasService.disableEdit();
+                   });
+
                    scope.$on('mdeBgAvailableColorsChanged', function(e, o) {
                        scope.$apply(function() {
                            scope.colors = o.colors;
@@ -68,7 +76,7 @@ monadexDirectives.directive('mdTshirtDesignPanel', ['$timeout',
                images: '=',
                fonts: "="
            },
-           templateUrl: 'partials/tshirt-designer-pages/tshirt-design-panel.html',
+           templateUrl: 'partials/designer/tshirt-design-panel.html',
            link: function(scope, element) {
                $timeout(function() {
                    element.find(".tab-link").click(function(event) {
@@ -87,10 +95,10 @@ monadexDirectives.directive('mdTshirtCanvas', ['$timeout', 'canvasService',
             restrict: 'E',
             scope: {
             },
-            templateUrl: 'partials/tshirt-designer-pages/tshirt-canvas.html',
+            templateUrl: 'partials/designer/tshirt-canvas.html',
             link: function(scope, element, attrs) {
                 // initialize the canvasService
-                canvasService.init('tcanvas', "#tshirtFacing");
+                canvasService.init('tcanvas', "#tshirtFacing", "#shirtDiv");
                 $timeout(function() {
                     element.find("#drawingArea").hover(
                         canvasService.addCanvasBorder,
@@ -101,15 +109,11 @@ monadexDirectives.directive('mdTshirtCanvas', ['$timeout', 'canvasService',
                         var flipText = element.find('#flip-text');
                         if (flipText.text()==="Show Back View") {
                             flipText.text('Show Front View');
-                            canvasService.flip("img/crew_back.png");
+                            canvasService.flipBack();
                         } else {
                             flipText.text('Show Back View');
-                            canvasService.flip("img/crew_front.png");
+                            canvasService.flipFront();
                         }
-                    });
-
-                    scope.$on('mdeChangeBackground', function(event, color) {
-                        element.find("#shirtDiv").css("backgroundColor", color);
                     });
                 }, 0);
             }
@@ -125,7 +129,7 @@ monadexDirectives.directive('mdBgColorPicker', ['$timeout', 'canvasService',
             scope: {
                 colors: '='
             },
-            templateUrl: 'partials/tshirt-designer-pages/bg-color-picker.html',
+            templateUrl: 'partials/designer/bg-color-picker.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     scope.$watch("colors", function() {
@@ -147,7 +151,7 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
             scope: {
                 fonts: "="
             },
-            templateUrl: 'partials/tshirt-designer-pages/text-input.html',
+            templateUrl: 'partials/designer/text-input.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find('#text-fontcolor').minicolors({
@@ -251,13 +255,70 @@ monadexDirectives.directive('mdImagePage', ['$timeout', 'canvasService',
             scope: {
                 images: "="
             },
-            templateUrl: 'partials/tshirt-designer-pages/image-page.html',
+            templateUrl: 'partials/designer/image-page.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     element.find(".img-thumbnail").on("click", function(e){
                         var el = e.target;
                         canvasService.addImage(el.src);
                     });
+                }, 0);
+            }
+        };
+    }
+]);
+
+monadexDirectives.directive('mdSalesGoalPanel', ['$timeout',
+    function($timeout){
+        return {
+            restrict: 'E',
+            scope: {
+            },
+            templateUrl: 'partials/sales_goal/sales-goal-panel.html',
+            link: function(scope, element, attrs) {
+                $timeout(function() {
+                    var sliderElem = element.find("#numOfTshirtSlider"),
+                        numInputElem = element.find("#numOfTshirtInput"),
+                        priceInputElem = element.find("#priceOfTshirtInput"),
+                        slider = sliderElem.slider({});
+
+                    // init the input value
+                    numInputElem.val(slider.slider('getValue'));
+                    priceInputElem.val("80");
+
+                    sliderElem.on('slideStop', function(e) {
+                        numInputElem.val(e.value);
+                    });
+
+                    numInputElem.keyup(function(e) {
+                        var val = Number($(this)[0].value);
+                        slider.slider('setValue', val);
+                    });
+
+                    priceInputElem.keyup(function(e) {
+                        var val = Number($(this)[0].value);
+                        if (isNaN(val)) {
+                            element.find('#profitPerTshirt').text("0");
+                        } else {
+                            element.find('#profitPerTshirt').text(val);
+                        }
+                    });
+                }, 0);
+            }
+        };
+    }
+]);
+
+monadexDirectives.directive('mdCampaignDetailsPanel', ['$timeout',
+    function($timeout){
+        return {
+            restrict: 'E',
+            scope: {
+                campaignLengths: "="
+            },
+            templateUrl: 'partials/campaign_details/campaign-details-panel.html',
+            link: function(scope, element, attrs) {
+                $timeout(function() {
                 }, 0);
             }
         };

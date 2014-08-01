@@ -1,0 +1,23 @@
+#numOfTshirtSlider .slider-selection {
+    background: #005b99; /* swedish blue */
+}
+
+#numOfTshirtSlider .slider-track {
+    background: #d4d4d4;
+}
+
+#numOfTshirtInput {
+    width: 60px
+}
+
+#priceOfTshirtInput {
+    width: 60px
+}
+
+.priceTag {
+    color: green
+}
+
+.slider.slider-horizontal {
+    width: 260px;
+}

@@ -7,7 +7,8 @@ var monadexApp = angular.module('monadexApp', [
     'monadexApp.filters',
     'monadexApp.services',
     'monadexApp.directives',
-    'monadexApp.controllers'
+    'monadexApp.controllers',
+    'textAngular'
 ]);
 
 monadexApp.config(['$routeProvider', function($routeProvider) {
@@ -22,8 +23,24 @@ monadexApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when(
         '/designer',
         {
-            templateUrl: 'partials/tshirt-designer-pages/designer-main.html',
+            templateUrl: 'partials/designer/designer-main.html',
             controller: 'MonadexTshirtDesigner'
+        }
+    );
+
+    $routeProvider.when(
+        '/sales_goal',
+        {
+            templateUrl: 'partials/sales_goal/sales-goal-main.html',
+            controller: 'MonadexTshirtSalesGoal'
+        }
+    );
+
+    $routeProvider.when(
+        '/campaign_details',
+        {
+            templateUrl: 'partials/campaign_details/campaign-details-main.html',
+            controller: 'MonadexTshirtCampaignDetails'
         }
     );
 
