@@ -260,10 +260,21 @@ myService.service("canvasService", ['$rootScope',
         // other side is either saved during the flip or doesn't need
         // to be saved since it is empty.
         this.saveCanvas = function() {
-            if (this.currentSide === "front") {
-                this.frontCanvas = JSON.stringify(canvas);
-            } else if (this.currentSide === "back") {
-                this.backCanvas = JSON.stringify(canvas);
+            // makes sure there are 1+ objects on the canvas
+            if (canvas.getObjects().length != 0) {
+                if (this.currentSide === "front") {
+                    this.frontCanvas = JSON.stringify(canvas);
+                    console.log("stringify");
+                    console.log(this.frontCanvas);
+                } else if (this.currentSide === "back") {
+                    this.backCanvas = JSON.stringify(canvas);
+                }
+            } else {
+                if (this.currentSide === "front") {
+                    this.frontCanvas = null;
+                } else if (this.currentSide === "back") {
+                    this.backCanvas = null;
+                }
             }
         };
 
@@ -277,6 +288,10 @@ myService.service("canvasService", ['$rootScope',
             if(bgColor != null) {
                 $(this.tshirtDivId).css("backgroundColor", bgColor);
             }
+        };
+
+        this.isEmptyCanvas = function() {
+            return (! this.frontCanvas) && (! this.backCanvas);
         };
 
         this.disableEdit = function() {

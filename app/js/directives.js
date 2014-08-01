@@ -49,11 +49,17 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                    });
 
                    element.find('#designNextStep').click(function(e) {
-                       // when leaving the designer save the canvas
-                       // TODO: set it to read only as well. setting
-                       // canvas.selection = false doesn't seem to work.
                        canvasService.saveCanvas();
-                       canvasService.disableEdit();
+
+                       if(canvasService.isEmptyCanvas()) {
+                           console.log("empty!!");
+                           e.preventDefault();
+                       } else {
+                           // when leaving the designer save the canvas
+                           // TODO: set it to read only as well. setting
+                           // canvas.selection = false doesn't seem to work.
+                           canvasService.disableEdit();
+                       }
                    });
 
                    scope.$on('mdeBgAvailableColorsChanged', function(e, o) {
