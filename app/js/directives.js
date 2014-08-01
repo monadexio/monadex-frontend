@@ -30,6 +30,15 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                        var col = element.find('.tshirt-variant').attr("colors");
                        scope.colors = eval(col);
                    };
+                   var setInitBaseCostAndUnit = function() {
+                       var baseCost =
+                               element.find('.tshirt-variant').attr("basecost"),
+                           unit = element.find('.tshirt-variant').attr("unit");
+                       element.find("#baseCostLabel").text(
+                           [baseCost, unit].join(" ")
+                       );
+                   };
+
                    var setAvailableColorsFun = function() {
                        element.find('.tshirt-variant').click(function() {
                            canvasService.setAvailableBgColors(eval(
@@ -38,13 +47,26 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                        });
                    };
 
+                   var setBaseCostAndUnitFun = function() {
+                       element.find('.tshirt-variant').click(function() {
+                           var baseCost = $(this).attr("basecost"),
+                               unit = $(this).attr("unit");
+                           element.find("#baseCostLabel").text(
+                               [baseCost, unit].join(" ")
+                           );
+                       });
+                   };
+
                    scope.$apply(setInitColor);
                    setAvailableColorsFun();
+                   setInitBaseCostAndUnit();
+                   setBaseCostAndUnitFun();
 
                    element.find('#tshirt-type-selector').change(function(e) {
                        scope.$apply(function() {
                            setInitColor();
                            setAvailableColorsFun();
+                           setBaseCostAndUnitFun();
                        });
                    });
 
@@ -52,7 +74,7 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                        canvasService.saveCanvas();
 
                        if(canvasService.isEmptyCanvas()) {
-                           console.log("empty!!");
+                           element.find("#emptyCanvasModal").modal('show');
                            e.preventDefault();
                        } else {
                            // when leaving the designer save the canvas
