@@ -485,6 +485,10 @@ monadexDirectives.directive('mdCampaignDetailsPanel', ['$timeout',
                             field: scope.campaignUrl,
                             warningId: '#urlWarning'
                         },
+                        {
+                            field: element.find("#tosCheckbox").prop("checked"),
+                            warningId: '#tosWarning'
+                        }
                        ].forEach(function(obj) {
                            verifyEmptyFun(obj.field, obj.warningId);
                        });
