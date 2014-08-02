@@ -162,7 +162,11 @@ monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
 
 monadexControllers.controller('MonadexTshirtSalesGoal', ['$scope',
     function($scope) {
-        $scope.numOfTshirts = 50;
+        $scope.tshirtsSalesGoalMin = 10;
+        $scope.tshirtsSalesGoalMax = 400;
+        $scope.tshirtsSalesGoal = 50;
+
+        $scope.tshirtPrice = 70;
     }
 ]);
 

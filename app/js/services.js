@@ -531,5 +531,8 @@ myService.service("campaignInfoAccumulatorService", [
             baseCost = cost;
         };
 
+        this.getBaseCost = function(cost) {
+            return baseCost;
+        };
     }
 ]);

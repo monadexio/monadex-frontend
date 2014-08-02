@@ -333,11 +333,16 @@ monadexDirectives.directive('mdImagePage', ['$timeout', 'canvasService',
     }
 ]);
 
-monadexDirectives.directive('mdSalesGoalPanel', ['$timeout',
-    function($timeout){
+monadexDirectives.directive('mdSalesGoalPanel',
+                            ['$timeout', 'campaignInfoAccumulatorService',
+    function($timeout, campaignInfoAccumulatorService){
         return {
             restrict: 'E',
             scope: {
+                tshirtsSalesGoal: "=",
+                tshirtsSalesGoalMin: "=",
+                tshirtsSalesGoalMax: "=",
+                tshirtPrice: "="
             },
             templateUrl: 'partials/sales_goal/sales-goal-panel.html',
             link: function(scope, element, attrs) {
@@ -345,27 +350,66 @@ monadexDirectives.directive('mdSalesGoalPanel', ['$timeout',
                     var sliderElem = element.find("#numOfTshirtSlider"),
                         numInputElem = element.find("#numOfTshirtInput"),
                         priceInputElem = element.find("#priceOfTshirtInput"),
-                        slider = sliderElem.slider({});
+                        slider = sliderElem.slider({}),
+                        NotAvailable = "N/A";
+                        baseCost = campaignInfoAccumulatorService.getBaseCost(),
+                        profitFun = function(price) {
+                            var profit = price - parseInt(baseCost);
+                            if (profit > 0) {
+                                return profit;
+                            } else {
+                                return 0;
+                            }
+                        };
 
                     // init the input value
                     numInputElem.val(slider.slider('getValue'));
-                    priceInputElem.val("80");
 
                     sliderElem.on('slideStop', function(e) {
-                        numInputElem.val(e.value);
+                        scope.$apply(function() {
+                           scope.tshirtsSalesGoal = e.value;
+                        });
                     });
 
                     numInputElem.keyup(function(e) {
                         var val = Number($(this)[0].value);
-                        slider.slider('setValue', val);
+                        if (isNaN(val)) {
+                            slider.slider('setValue', 10);
+                        } else {
+                            slider.slider('setValue', val);
+                        }
                     });
+
+                    // Display the base cost, the initial profit per tshirt
+                    // and the total estimated profit.
+                    element.find('#baseCostTag').text(
+                        baseCost === null ? NotAvailable : baseCost
+                    );
+                    element.find('#profitPerTshirt').text(
+                        profitFun(scope.tshirtPrice)
+                    );
+                    element.find('#estimatedProfitTag').text(
+                        profitFun(scope.tshirtPrice) * scope.tshirtsSalesGoal
+                    );
 
                     priceInputElem.keyup(function(e) {
                         var val = Number($(this)[0].value);
                         if (isNaN(val)) {
-                            element.find('#profitPerTshirt').text("0");
+                            element.find('#profitPerTshirt').text(
+                                NotAvailable
+                            );
+                            element.find('#estimatedProfitTag').text(
+                                NotAvailable
+                            );
                         } else {
-                            element.find('#profitPerTshirt').text(val);
+                            var profit = profitFun(val);
+                            element.find('#profitPerTshirt').text(
+                                profit
+                            );
+                            element.find('#estimatedProfitTag').text(
+                                profit * scope.tshirtsSalesGoal
+                            );
+
                         }
                     });
                 }, 0);
