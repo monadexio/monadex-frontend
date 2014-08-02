@@ -351,7 +351,7 @@ monadexDirectives.directive('mdSalesGoalPanel',
                         numInputElem = element.find("#numOfTshirtInput"),
                         priceInputElem = element.find("#priceOfTshirtInput"),
                         slider = sliderElem.slider({}),
-                        NotAvailable = "N/A";
+                        NotAvailable = "N/A",
                         baseCost = campaignInfoAccumulatorService.getBaseCost(),
                         profitFun = function(price) {
                             var profit = price - parseInt(baseCost);
@@ -360,6 +360,11 @@ monadexDirectives.directive('mdSalesGoalPanel',
                             } else {
                                 return 0;
                             }
+                        },
+                        displayProfitFun = function(price, goal) {
+                            element.find('#estimatedProfitTag').text(
+                                profitFun(price) * goal
+                            );
                         };
 
                     // init the input value
@@ -369,14 +374,28 @@ monadexDirectives.directive('mdSalesGoalPanel',
                         scope.$apply(function() {
                            scope.tshirtsSalesGoal = e.value;
                         });
+
+                        displayProfitFun(
+                            scope.tshirtPrice,
+                            scope.tshirtsSalesGoal
+                        );
                     });
 
                     numInputElem.keyup(function(e) {
                         var val = Number($(this)[0].value);
                         if (isNaN(val)) {
-                            slider.slider('setValue', 10);
+                            slider.slider(
+                                'setValue',
+                                scope.tshirtsSalesGoalMin
+                            );
+
+                            displayProfitFun(
+                                scope.tshirtPrice,
+                                scope.tshirtsSalesGoalMin
+                            );
                         } else {
                             slider.slider('setValue', val);
+                            displayProfitFun(scope.tshirtPrice, val);
                         }
                     });
 
@@ -385,11 +404,14 @@ monadexDirectives.directive('mdSalesGoalPanel',
                     element.find('#baseCostTag').text(
                         baseCost === null ? NotAvailable : baseCost
                     );
+
                     element.find('#profitPerTshirt').text(
                         profitFun(scope.tshirtPrice)
                     );
-                    element.find('#estimatedProfitTag').text(
-                        profitFun(scope.tshirtPrice) * scope.tshirtsSalesGoal
+
+                    displayProfitFun(
+                        scope.tshirtPrice,
+                        scope.tshirtsSalesGoal
                     );
 
                     priceInputElem.keyup(function(e) {
