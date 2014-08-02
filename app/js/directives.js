@@ -454,11 +454,45 @@ monadexDirectives.directive('mdCampaignDetailsPanel', ['$timeout',
         return {
             restrict: 'E',
             scope: {
-                campaignLengths: "="
+                campaignTitle: "=",
+                campaignDescription: "=",
+                campaignLengths: "=",
+                campaignUrl: "="
             },
             templateUrl: 'partials/campaign_details/campaign-details-panel.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
+                   element.find('#campaignDetailNextStep').click(function(e) {
+                       var status = "ok",
+                           verifyEmptyFun = function(field, warningId) {
+                               if(!field) {
+                                   element.find(warningId).removeClass('hide');
+                                   status = "not_ok";
+                               } else {
+                                   element.find(warningId).addClass('hide');
+                               }
+                           };
+
+                       [{
+                           field: scope.campaignTitle,
+                           warningId: '#titleWarning'
+                        },
+                        {
+                            field: scope.campaignDescription,
+                            warningId: '#descriptionWarning'
+                        },
+                        {
+                            field: scope.campaignUrl,
+                            warningId: '#urlWarning'
+                        },
+                       ].forEach(function(obj) {
+                           verifyEmptyFun(obj.field, obj.warningId);
+                       });
+
+                       if(status === "not_ok") {
+                           e.preventDefault();
+                       }
+                   });
                 }, 0);
             }
         };

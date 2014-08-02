@@ -532,12 +532,10 @@ myService.service("campaignInfoAccumulatorService", [
         };
 
         this.setSalesGoal = function(goal) {
-            console.log(goal);
             salesGoal = goal;
         };
 
         this.setPrice = function(price) {
-            console.log(price);
             price = price;
         };
 

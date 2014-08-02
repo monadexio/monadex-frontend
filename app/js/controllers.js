@@ -172,8 +172,9 @@ monadexControllers.controller('MonadexTshirtSalesGoal', ['$scope',
 
 monadexControllers.controller('MonadexTshirtCampaignDetails', ['$scope',
     function($scope) {
-        $scope.campaignTitle = "";
-        $scope.campaignDescription = "";
+        $scope.campaignTitle = null;
+        $scope.campaignDescription = null;
+        $scope.campaignUrl = null;
 
         var dateAfterDaysFromNow = function(days) {
             return Date.today().addDays(days).toString().split(" ").slice(0, 3).join(" ");
