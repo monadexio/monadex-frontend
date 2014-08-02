@@ -264,8 +264,6 @@ myService.service("canvasService", ['$rootScope',
             if (canvas.getObjects().length != 0) {
                 if (this.currentSide === "front") {
                     this.frontCanvas = JSON.stringify(canvas);
-                    console.log("stringify");
-                    console.log(this.frontCanvas);
                 } else if (this.currentSide === "back") {
                     this.backCanvas = JSON.stringify(canvas);
                 }
@@ -515,21 +513,34 @@ myService.service("canvasService", ['$rootScope',
 
 myService.service("campaignInfoAccumulatorService", [
     function() {
-        var tshirtType = null,
-            tshirtVariantName = null,
-            baseCost = null;
+        var type = null,
+            variantName = null,
+            baseCost = null,
+            salesGoal = null,
+            price = null;
 
         this.setTshirtType = function(type) {
-            tshirtType = type;
+            type = type;
         };
 
         this.setTshirtVariant = function(name) {
-            tshirtVariantName = name;
+            variantName = name;
         };
 
         this.setBaseCost = function(cost) {
             baseCost = cost;
         };
+
+        this.setSalesGoal = function(goal) {
+            console.log(goal);
+            salesGoal = goal;
+        };
+
+        this.setPrice = function(price) {
+            console.log(price);
+            price = price;
+        };
+
 
         this.getBaseCost = function(cost) {
             return baseCost;

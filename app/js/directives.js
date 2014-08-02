@@ -434,6 +434,15 @@ monadexDirectives.directive('mdSalesGoalPanel',
 
                         }
                     });
+
+                   element.find('#salesGoalNextStep').click(function(e) {
+                       campaignInfoAccumulatorService.setSalesGoal(
+                           scope.tshirtsSalesGoal
+                       );
+                       campaignInfoAccumulatorService.setSalesGoal(
+                           scope.tshirtPrice
+                       );
+                   });
                 }, 0);
             }
         };
