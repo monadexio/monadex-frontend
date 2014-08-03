@@ -15,7 +15,8 @@ monadexDirectives.directive('appVersion', ['version',
 // t-shirts with various qualities.
 monadexDirectives.directive('mdTshirtStyleQualityPanel',
                             ['$timeout', '$compile', 'canvasService',
-   function($timeout, $compile, canvasService) {
+                             'campaignInfoAccumulatorService',
+   function($timeout, $compile, canvasService, campaignInfoAccumulatorService) {
        return {
            restrict: 'E',
            scope: {
@@ -30,6 +31,17 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                        var col = element.find('.tshirt-variant').attr("colors");
                        scope.colors = eval(col);
                    };
+
+                   var setInitBaseCostAndUnit = function() {
+                       var baseCostNum = element.find('.tshirt-variant').
+                               attr("basecost"),
+                           unit = element.find('.tshirt-variant').attr("unit"),
+                           baseCost = [baseCostNum, unit].join(" ");
+
+                       element.find("#baseCostLabel").text(baseCost);
+                       campaignInfoAccumulatorService.setBaseCost(baseCost);
+                   };
+
                    var setAvailableColorsFun = function() {
                        element.find('.tshirt-variant').click(function() {
                            canvasService.setAvailableBgColors(eval(
@@ -38,22 +50,75 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                        });
                    };
 
-                   scope.$apply(setInitColor);
-                   setAvailableColorsFun();
+                   var setBaseCostAndUnitFun = function() {
+                       element.find('.tshirt-variant').click(function() {
+                           var baseCostNum = $(this).attr("basecost"),
+                               unit = $(this).attr("unit"),
+                               baseCost = [baseCostNum, unit].join(" ");
+
+                           element.find("#baseCostLabel").text(baseCost);
+                           campaignInfoAccumulatorService.setBaseCost(baseCost);
+                       });
+                   };
+
+                   var setInitTshirtVariant = function() {
+                       var name = element.find('.tshirt-variant').attr("name");
+                       campaignInfoAccumulatorService.setTshirtVariant(name);
+                   };
+
+                   var setTshirtVariantFun = function() {
+                       element.find('.tshirt-variant').click(function() {
+                           var name = $(this).attr("name");
+                           campaignInfoAccumulatorService.setTshirtVariant(
+                               name
+                           );
+                       });
+                   };
+
+                   // set up the available colors
+                   var setupColor = function() {
+                       scope.$apply(setInitColor);
+                       setAvailableColorsFun();
+                   };
+
+                   // set up the base cost
+                   var setupBaseCost = function() {
+                       setInitBaseCostAndUnit();
+                       setBaseCostAndUnitFun();
+                   };
+
+                   // set up the tshirt variants
+                   var setupTshirtVariant = function() {
+                       setInitTshirtVariant();
+                       setTshirtVariantFun();
+                   };
+
+                   setupColor();
+                   setupBaseCost();
+                   setupTshirtVariant();
 
                    element.find('#tshirt-type-selector').change(function(e) {
-                       scope.$apply(function() {
-                           setInitColor();
-                           setAvailableColorsFun();
-                       });
+                       setupColor();
+                       setupBaseCost();
+                       setupTshirtVariant();
                    });
 
                    element.find('#designNextStep').click(function(e) {
-                       // when leaving the designer save the canvas
-                       // TODO: set it to read only as well. setting
-                       // canvas.selection = false doesn't seem to work.
                        canvasService.saveCanvas();
-                       canvasService.disableEdit();
+
+                       if(canvasService.isEmptyCanvas()) {
+                           element.find("#emptyCanvasModal").modal('show');
+                           e.preventDefault();
+                       } else {
+                           // when leaving the designer save the canvas
+                           // TODO: set it to read only as well. setting
+                           // canvas.selection = false doesn't seem to work.
+                           campaignInfoAccumulatorService.setTshirtType(
+                               scope.currentTshirtType
+                           );
+
+                           canvasService.disableEdit();
+                       }
                    });
 
                    scope.$on('mdeBgAvailableColorsChanged', function(e, o) {
@@ -268,11 +333,16 @@ monadexDirectives.directive('mdImagePage', ['$timeout', 'canvasService',
     }
 ]);
 
-monadexDirectives.directive('mdSalesGoalPanel', ['$timeout',
-    function($timeout){
+monadexDirectives.directive('mdSalesGoalPanel',
+                            ['$timeout', 'campaignInfoAccumulatorService',
+    function($timeout, campaignInfoAccumulatorService){
         return {
             restrict: 'E',
             scope: {
+                tshirtsSalesGoal: "=",
+                tshirtsSalesGoalMin: "=",
+                tshirtsSalesGoalMax: "=",
+                tshirtPrice: "="
             },
             templateUrl: 'partials/sales_goal/sales-goal-panel.html',
             link: function(scope, element, attrs) {
@@ -280,37 +350,108 @@ monadexDirectives.directive('mdSalesGoalPanel', ['$timeout',
                     var sliderElem = element.find("#numOfTshirtSlider"),
                         numInputElem = element.find("#numOfTshirtInput"),
                         priceInputElem = element.find("#priceOfTshirtInput"),
-                        slider = sliderElem.slider({});
+                        slider = sliderElem.slider({}),
+                        NotAvailable = "N/A",
+                        baseCost = campaignInfoAccumulatorService.getBaseCost(),
+                        profitFun = function(price) {
+                            var profit = price - parseInt(baseCost);
+                            if (profit > 0) {
+                                return profit;
+                            } else {
+                                return 0;
+                            }
+                        },
+                        displayProfitFun = function(price, goal) {
+                            element.find('#estimatedProfitTag').text(
+                                profitFun(price) * goal
+                            );
+                        };
 
                     // init the input value
                     numInputElem.val(slider.slider('getValue'));
-                    priceInputElem.val("80");
 
                     sliderElem.on('slideStop', function(e) {
-                        numInputElem.val(e.value);
+                        scope.$apply(function() {
+                           scope.tshirtsSalesGoal = e.value;
+                        });
+
+                        displayProfitFun(
+                            scope.tshirtPrice,
+                            scope.tshirtsSalesGoal
+                        );
                     });
 
                     numInputElem.keyup(function(e) {
                         var val = Number($(this)[0].value);
-                        slider.slider('setValue', val);
+                        if (isNaN(val)) {
+                            slider.slider(
+                                'setValue',
+                                scope.tshirtsSalesGoalMin
+                            );
+
+                            displayProfitFun(
+                                scope.tshirtPrice,
+                                scope.tshirtsSalesGoalMin
+                            );
+                        } else {
+                            slider.slider('setValue', val);
+                            displayProfitFun(scope.tshirtPrice, val);
+                        }
                     });
+
+                    // Display the base cost, the initial profit per tshirt
+                    // and the total estimated profit.
+                    element.find('#baseCostTag').text(
+                        baseCost === null ? NotAvailable : baseCost
+                    );
+
+                    element.find('#profitPerTshirt').text(
+                        profitFun(scope.tshirtPrice)
+                    );
+
+                    displayProfitFun(
+                        scope.tshirtPrice,
+                        scope.tshirtsSalesGoal
+                    );
 
                     priceInputElem.keyup(function(e) {
                         var val = Number($(this)[0].value);
                         if (isNaN(val)) {
-                            element.find('#profitPerTshirt').text("0");
+                            element.find('#profitPerTshirt').text(
+                                NotAvailable
+                            );
+                            element.find('#estimatedProfitTag').text(
+                                NotAvailable
+                            );
                         } else {
-                            element.find('#profitPerTshirt').text(val);
+                            var profit = profitFun(val);
+                            element.find('#profitPerTshirt').text(
+                                profit
+                            );
+                            element.find('#estimatedProfitTag').text(
+                                profit * scope.tshirtsSalesGoal
+                            );
+
                         }
                     });
+
+                   element.find('#salesGoalNextStep').click(function(e) {
+                       campaignInfoAccumulatorService.setSalesGoal(
+                           scope.tshirtsSalesGoal
+                       );
+                       campaignInfoAccumulatorService.setPrice(
+                           scope.tshirtPrice
+                       );
+                   });
                 }, 0);
             }
         };
     }
 ]);
 
-monadexDirectives.directive('mdCampaignDetailsPanel', ['$timeout',
-    function($timeout){
+monadexDirectives.directive('mdCampaignDetailsPanel',
+                            ['$timeout', 'campaignInfoAccumulatorService',
+    function($timeout, campaignInfoAccumulatorService){
         return {
             restrict: 'E',
             scope: {
@@ -319,6 +460,94 @@ monadexDirectives.directive('mdCampaignDetailsPanel', ['$timeout',
             templateUrl: 'partials/campaign_details/campaign-details-panel.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
+                   element.find('#campaignDetailNextStep').click(function(e) {
+                       var status = "ok",
+                           verifyEmptyFun = function(field, warningId) {
+                               if(!field) {
+                                   element.find(warningId).removeClass('hide');
+                                   status = "not_ok";
+                               } else {
+                                   element.find(warningId).addClass('hide');
+                               }
+                           };
+
+                       [{
+                           field: scope.campaignTitle,
+                           warningId: '#titleWarning'
+                        },
+                        {
+                            field: scope.campaignDescription,
+                            warningId: '#descriptionWarning'
+                        },
+                        {
+                            field: scope.campaignUrl,
+                            warningId: '#urlWarning'
+                        },
+                        {
+                            field: element.find("#tosCheckbox").prop("checked"),
+                            warningId: '#tosWarning'
+                        }
+                       ].forEach(function(obj) {
+                           verifyEmptyFun(obj.field, obj.warningId);
+                       });
+
+                       if(status === "not_ok") {
+                           e.preventDefault();
+                       } else {
+                           campaignInfoAccumulatorService.setTitle(
+                               scope.campaignTitle
+                           );
+                           campaignInfoAccumulatorService.setDescription(
+                               scope.campaignDescription
+                           );
+                           campaignInfoAccumulatorService.setUrl(
+                               scope.campaignUrl
+                           );
+                           campaignInfoAccumulatorService.setLength(
+                               scope.currentCampaignLength
+                           );
+                       }
+                   });
+                }, 0);
+            }
+        };
+    }
+]);
+
+monadexDirectives.directive('mdCampaignInfoPanel',
+                            ['$timeout', 'campaignInfoAccumulatorService',
+    function($timeout, campaignInfoAccumulatorService){
+        return {
+            restrict: 'E',
+            scope: {
+                campaignTitle: "=",
+                campaignDescription: "=",
+                campaignSalesGoal: "=",
+                campaignUrl: "=",
+                currentCampaignLength: "=",
+                tshirtVariant: "=",
+                tshirtType: "=",
+                tshirtBaseCost: "=",
+                tshirtPrice: "="
+            },
+            templateUrl: 'partials/campaign_page/campaign-info-panel.html',
+            link: function(scope, element, attrs) {
+                $timeout(function() {
+                    scope.$apply(function() {
+                        var cs = campaignInfoAccumulatorService;
+
+                        scope.campaignTitle = cs.getTitle();
+                        scope.campaignDescription = cs.getDescription();
+                        scope.campaignSalesGoal = cs.getSalesGoal();
+                        scope.campaignUrl = cs.getUrl();
+                        scope.currentCampaignLength = cs.getLength();
+                        scope.tshirtVariant = cs.getTshirtVariant();
+                        scope.tshirtType =
+                            cs.getTshirtType() === null ?
+                            null : cs.getTshirtType().id;
+                        scope.tshirtBaseCost = cs.getBaseCost();
+                        scope.tshirtPrice = cs.getPrice();
+                    });
                 }, 0);
             }
         };

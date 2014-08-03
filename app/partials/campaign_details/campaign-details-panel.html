@@ -5,13 +5,18 @@
   <input id="campaignTitleInput" ng-model="campaignTitle">
   <br/>
   <small>Summarize your campaign in 40 characters or less</small>
+  <p id="titleWarning" class="bg-danger hide"> Campaign title can not be empty. </p>
 
   <hr/>
   <h4>Description</h4>
   <text-angular
-     ta-toolbar="[['bold','italics', 'underline'], ['insertLink', 'insertImage']]"
+     ta-toolbar="[['bold','italics', 'underline'], ['insertLink',
+                 'insertImage'], ['html']]"
      ng-model="campaignDescription">
+    My awesome campaign.
   </text-angular>
+
+  <p id="descriptionWarning" class="bg-danger hide"> Description can not be empty. </p>
 
   <hr/>
 
@@ -29,18 +34,25 @@
   <br/>
   <small>This is where you will send buyers to view your campaign</small>
 
+  <p id="urlWarning" class="bg-danger hide"> A correct URL needs to
+  be entered </p>
+
   <hr/>
   <div class="checkbox">
     <label>
-      <input type="checkbox" value="">
+      <input id="tosCheckbox" type="checkbox" value=""/>
       <p>I have read and agreed to the terms of service (TOS) and can
         confirm that the images, slogans, and content used in my campaign
         do not infringe upon the rights of any third party.</p>
     </label>
   </div>
+  <p id="tosWarning" class="bg-danger hide"> Please agree to the
+  terms of service before proceeding. </p>
+
+  <hr/>
 
   <a href="#campaign_page" type="button" class="btn btn-lg btn-block btn-success"
-     name="designNextStep" id="designNextStep">Launch your campaign
+     name="campaignDetailNextStep" id="campaignDetailNextStep">Launch your campaign
     <i class="glyphicon glyphicon-chevron-right glyphicon-white"></i>
   </a>
 </div>

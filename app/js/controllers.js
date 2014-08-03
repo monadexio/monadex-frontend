@@ -10,9 +10,8 @@ monadexControllers.controller('MonadexTshirtLanding', [
 
 monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
     function($scope) {
-        // base cost for tshirt
-        $scope.baseCost = 50;
         $scope.currentTshirtType = null;
+        $scope.currentVariant = null;
 
         $scope.tshirtTypes = [
             { id: 1,
@@ -25,21 +24,27 @@ monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
                             {title:"Gray", style:"background-color:#f0f0f0;"},
                             {title:"Salmon", style:"background-color:#eead91;"},
                             {title:"Kiwi", style:"background-color:#8aa140;"},
-                          ]
+                          ],
+                  baseCost: 50,
+                  unit: "SEK"
                 },
                 { name: "Canvas Ringspun Tee",
                   description: "Premium material",
                   colors: [ {title:"Heather Orange", style:"background-color:#fc8d74;"},
                             {title:"Heather Dark Chocolate", style:"background-color:#432d26;"},
                             {title:"Salmon", style:"background-color:#eead91;"}
-                          ]
+                          ],
+                  baseCost: 60,
+                  unit: "SEK"
                 },
                 { name: "American Apparel Crew",
                   description: "Brand name",
                   colors: [ {title:"Avocado", style:"background-color:#aeba5e;"},
                             {title:"Kiwi", style:"background-color:#8aa140;"},
                             {title:"Irish Green", style:"background-color:#1f6522;"}
-                          ]
+                          ],
+                  baseCost: 55,
+                  unit: "SEK"
                 }
               ]
             },
@@ -51,14 +56,18 @@ monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
                   colors: [ {title:"White", style:"background-color:#ffffff;"},
                             {title:"Dark Heather", style:"background-color:#616161;"},
                             {title:"Gray", style:"background-color:#f0f0f0;"}
-                          ]
+                          ],
+                  baseCost: 70,
+                  unit: "SEK"
                 },
                 { name: "Hanes 6.1oz Long Sleeve",
                   description: "Premium material",
                   colors: [ {title:"Heather Orange", style:"background-color:#fc8d74;"},
                             {title:"Heather Dark Chocolate", style:"background-color:#432d26;"},
                             {title:"Salmon", style:"background-color:#eead91;"}
-                          ]
+                          ],
+                  baseCost: 72,
+                  unit: "SEK"
                 }
               ]
             },
@@ -70,14 +79,18 @@ monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
                   colors: [ {title:"White", style:"background-color:#ffffff;"},
                             {title:"Dark Heather", style:"background-color:#616161;"},
                             {title:"Gray", style:"background-color:#f0f0f0;"}
-                          ]
+                          ],
+                  baseCost: 80,
+                  unit: "SEK"
                 },
                 { name: "Canvas Poly-Cotton Hoodie",
                   description: "Premium blend hoodie",
                   colors: [ {title:"Heather Orange", style:"background-color:#fc8d74;"},
                             {title:"Heather Dark Chocolate", style:"background-color:#432d26;"},
                             {title:"Salmon", style:"background-color:#eead91;"}
-                          ]
+                          ],
+                  baseCost: 82,
+                  unit: "SEK"
                 }
               ]
             },
@@ -89,27 +102,30 @@ monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
                   colors: [ {title:"White", style:"background-color:#ffffff;"},
                             {title:"Dark Heather", style:"background-color:#616161;"},
                             {title:"Gray", style:"background-color:#f0f0f0;"}
-                          ]
+                          ],
+                  baseCost: 102,
+                  unit: "SEK"
                 },
                 { name: "Canvas Ringspun Tank",
                   description: "Premium material",
                   colors: [ {title:"Heather Orange", style:"background-color:#fc8d74;"},
                             {title:"Heather Dark Chocolate", style:"background-color:#432d26;"},
                             {title:"Salmon", style:"background-color:#eead91;"}
-                          ]
+                          ],
+                  baseCost: 98,
+                  unit: "SEK"
                 },
                 { name: "American Apparel Tank",
                   description: "Top of the line",
                   colors: [ {title:"Avocado", style:"background-color:#aeba5e;"},
                             {title:"Kiwi", style:"background-color:#8aa140;"},
                             {title:"Irish Green", style:"background-color:#1f6522;"},
-                          ]
+                          ],
+                  baseCost: 92,
+                  unit: "SEK"
                 }
               ]
             }
-        ];
-
-        $scope.colors = [
         ];
 
         $scope.images = [
@@ -146,14 +162,19 @@ monadexControllers.controller('MonadexTshirtDesigner', ['$scope',
 
 monadexControllers.controller('MonadexTshirtSalesGoal', ['$scope',
     function($scope) {
-        $scope.numOfTshirts = 50;
+        $scope.tshirtsSalesGoalMin = 10;
+        $scope.tshirtsSalesGoalMax = 400;
+        $scope.tshirtsSalesGoal = 50;
+
+        $scope.tshirtPrice = 70;
     }
 ]);
 
 monadexControllers.controller('MonadexTshirtCampaignDetails', ['$scope',
     function($scope) {
-        $scope.campaignTitle = "";
-        $scope.campaignDescription = "";
+        $scope.campaignTitle = null;
+        $scope.campaignDescription = null;
+        $scope.campaignUrl = null;
 
         var dateAfterDaysFromNow = function(days) {
             return Date.today().addDays(days).toString().split(" ").slice(0, 3).join(" ");
@@ -165,5 +186,11 @@ monadexControllers.controller('MonadexTshirtCampaignDetails', ['$scope',
                 return days.toString() + " days " + "(Ending " + dateAfterDaysFromNow(days) + ")";
             }
         );
+    }
+]);
+
+monadexControllers.controller('MonadexTshirtCampaignPage', ['$scope',
+    function($scope) {
+        $scope.tshirtPrice = null;
     }
 ]);
