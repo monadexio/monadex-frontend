@@ -455,16 +455,10 @@ monadexDirectives.directive('mdCampaignDetailsPanel',
         return {
             restrict: 'E',
             scope: {
-                campaignTitle: "=",
-                campaignDescription: "=",
-                campaignLengths: "=",
-                currentCampaignLength: "=",
-                campaignUrl: "="
+                campaignLengths: "="
             },
             templateUrl: 'partials/campaign_details/campaign-details-panel.html',
             link: function(scope, element, attrs) {
-                console.log("curent legnth");
-                console.log(scope.currentCampaignLength);
                 $timeout(function() {
                    element.find('#campaignDetailNextStep').click(function(e) {
                        var status = "ok",
@@ -500,7 +494,6 @@ monadexDirectives.directive('mdCampaignDetailsPanel',
                        if(status === "not_ok") {
                            e.preventDefault();
                        } else {
-                           console.log(scope.campaignDescription);
                            campaignInfoAccumulatorService.setTitle(
                                scope.campaignTitle
                            );
@@ -541,21 +534,20 @@ monadexDirectives.directive('mdCampaignInfoPanel',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     scope.$apply(function() {
-                        scope.campaignTitle = campaignInfoAccumulatorService.getTitle();
-                        scope.campaignDescription = campaignInfoAccumulatorService.getDescription();
-                        scope.campaignSalesGoal = campaignInfoAccumulatorService.getSalesGoal();
-                        scope.campaignUrl = campaignInfoAccumulatorService.getUrl();
-                        scope.currentCampaignLength = campaignInfoAccumulatorService.getLength();
+                        var cs = campaignInfoAccumulatorService;
 
-                        scope.tshirtVariant = campaignInfoAccumulatorService.getTshirtVariant();
-                        scope.tshirtType = campaignInfoAccumulatorService.getTshirtType();
-                        scope.tshirtBaseCost = campaignInfoAccumulatorService.getBaseCost();
-                        scope.tshirtPrice = campaignInfoAccumulatorService.getPrice();
-
-                        console.log("after apply");
-                        console.log(campaignInfoAccumulatorService.getLength());
+                        scope.campaignTitle = cs.getTitle();
+                        scope.campaignDescription = cs.getDescription();
+                        scope.campaignSalesGoal = cs.getSalesGoal();
+                        scope.campaignUrl = cs.getUrl();
+                        scope.currentCampaignLength = cs.getLength();
+                        scope.tshirtVariant = cs.getTshirtVariant();
+                        scope.tshirtType =
+                            cs.getTshirtType() === null ?
+                            null : cs.getTshirtType().id;
+                        scope.tshirtBaseCost = cs.getBaseCost();
+                        scope.tshirtPrice = cs.getPrice();
                     });
-
                 }, 0);
             }
         };
