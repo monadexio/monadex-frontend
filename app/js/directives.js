@@ -439,7 +439,7 @@ monadexDirectives.directive('mdSalesGoalPanel',
                        campaignInfoAccumulatorService.setSalesGoal(
                            scope.tshirtsSalesGoal
                        );
-                       campaignInfoAccumulatorService.setSalesGoal(
+                       campaignInfoAccumulatorService.setPrice(
                            scope.tshirtPrice
                        );
                    });
@@ -449,18 +449,22 @@ monadexDirectives.directive('mdSalesGoalPanel',
     }
 ]);
 
-monadexDirectives.directive('mdCampaignDetailsPanel', ['$timeout',
-    function($timeout){
+monadexDirectives.directive('mdCampaignDetailsPanel',
+                            ['$timeout', 'campaignInfoAccumulatorService',
+    function($timeout, campaignInfoAccumulatorService){
         return {
             restrict: 'E',
             scope: {
                 campaignTitle: "=",
                 campaignDescription: "=",
                 campaignLengths: "=",
+                currentCampaignLength: "=",
                 campaignUrl: "="
             },
             templateUrl: 'partials/campaign_details/campaign-details-panel.html',
             link: function(scope, element, attrs) {
+                console.log("curent legnth");
+                console.log(scope.currentCampaignLength);
                 $timeout(function() {
                    element.find('#campaignDetailNextStep').click(function(e) {
                        var status = "ok",
@@ -495,8 +499,63 @@ monadexDirectives.directive('mdCampaignDetailsPanel', ['$timeout',
 
                        if(status === "not_ok") {
                            e.preventDefault();
+                       } else {
+                           console.log(scope.campaignDescription);
+                           campaignInfoAccumulatorService.setTitle(
+                               scope.campaignTitle
+                           );
+                           campaignInfoAccumulatorService.setDescription(
+                               scope.campaignDescription
+                           );
+                           campaignInfoAccumulatorService.setUrl(
+                               scope.campaignUrl
+                           );
+                           campaignInfoAccumulatorService.setLength(
+                               scope.currentCampaignLength
+                           );
                        }
                    });
+                }, 0);
+            }
+        };
+    }
+]);
+
+monadexDirectives.directive('mdCampaignInfoPanel',
+                            ['$timeout', 'campaignInfoAccumulatorService',
+    function($timeout, campaignInfoAccumulatorService){
+        return {
+            restrict: 'E',
+            scope: {
+                campaignTitle: "=",
+                campaignDescription: "=",
+                campaignSalesGoal: "=",
+                campaignUrl: "=",
+                currentCampaignLength: "=",
+                tshirtVariant: "=",
+                tshirtType: "=",
+                tshirtBaseCost: "=",
+                tshirtPrice: "="
+            },
+            templateUrl: 'partials/campaign_page/campaign-info-panel.html',
+            link: function(scope, element, attrs) {
+                $timeout(function() {
+                    scope.$apply(function() {
+                        scope.campaignTitle = campaignInfoAccumulatorService.getTitle();
+                        scope.campaignDescription = campaignInfoAccumulatorService.getDescription();
+                        scope.campaignSalesGoal = campaignInfoAccumulatorService.getSalesGoal();
+                        scope.campaignUrl = campaignInfoAccumulatorService.getUrl();
+                        scope.currentCampaignLength = campaignInfoAccumulatorService.getLength();
+
+                        scope.tshirtVariant = campaignInfoAccumulatorService.getTshirtVariant();
+                        scope.tshirtType = campaignInfoAccumulatorService.getTshirtType();
+                        scope.tshirtBaseCost = campaignInfoAccumulatorService.getBaseCost();
+                        scope.tshirtPrice = campaignInfoAccumulatorService.getPrice();
+
+                        console.log("after apply");
+                        console.log(campaignInfoAccumulatorService.getLength());
+                    });
+
                 }, 0);
             }
         };

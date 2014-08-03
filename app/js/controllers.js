@@ -188,3 +188,9 @@ monadexControllers.controller('MonadexTshirtCampaignDetails', ['$scope',
         );
     }
 ]);
+
+monadexControllers.controller('MonadexTshirtCampaignPage', ['$scope',
+    function($scope) {
+        $scope.tshirtPrice = null;
+    }
+]);

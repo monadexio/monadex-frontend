@@ -44,6 +44,14 @@ monadexApp.config(['$routeProvider', function($routeProvider) {
         }
     );
 
+    $routeProvider.when(
+        '/campaign_page',
+        {
+            templateUrl: 'partials/campaign_page/campaign-page-main.html',
+            controller: 'MonadexTshirtCampaignPage'
+        }
+    );
+
     $routeProvider.otherwise({redirectTo: '/landing'});
 }]);
 
