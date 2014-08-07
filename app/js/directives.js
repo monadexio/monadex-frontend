@@ -21,54 +21,54 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
            restrict: 'E',
            scope: {
                tshirtTypes: '=',
-               baseCost: "=",
-               colors: "="
+               baseCost: '=',
+               colors: '='
            },
            templateUrl: 'partials/designer/tshirt-style-quality-panel.html',
            link: function(scope, element, attrs) {
                $timeout(function() {
                    var setInitColor = function() {
-                       var col = element.find('.tshirt-variant').attr("colors");
+                       var col = element.find('.tshirt-variant').attr('colors');
                        scope.colors = eval(col);
                    };
 
                    var setInitBaseCostAndUnit = function() {
                        var baseCostNum = element.find('.tshirt-variant').
-                               attr("basecost"),
-                           unit = element.find('.tshirt-variant').attr("unit"),
-                           baseCost = [baseCostNum, unit].join(" ");
+                               attr('basecost'),
+                           unit = element.find('.tshirt-variant').attr('unit'),
+                           baseCost = [baseCostNum, unit].join(' ');
 
-                       element.find("#baseCostLabel").text(baseCost);
+                       element.find('#baseCostLabel').text(baseCost);
                        campaignInfoAccumulatorService.setBaseCost(baseCost);
                    };
 
                    var setAvailableColorsFun = function() {
                        element.find('.tshirt-variant').click(function() {
                            canvasService.setAvailableBgColors(eval(
-                               $(this).attr("colors")
+                               $(this).attr('colors')
                            ));
                        });
                    };
 
                    var setBaseCostAndUnitFun = function() {
                        element.find('.tshirt-variant').click(function() {
-                           var baseCostNum = $(this).attr("basecost"),
-                               unit = $(this).attr("unit"),
-                               baseCost = [baseCostNum, unit].join(" ");
+                           var baseCostNum = $(this).attr('basecost'),
+                               unit = $(this).attr('unit'),
+                               baseCost = [baseCostNum, unit].join(' ');
 
-                           element.find("#baseCostLabel").text(baseCost);
+                           element.find('#baseCostLabel').text(baseCost);
                            campaignInfoAccumulatorService.setBaseCost(baseCost);
                        });
                    };
 
                    var setInitTshirtVariant = function() {
-                       var name = element.find('.tshirt-variant').attr("name");
+                       var name = element.find('.tshirt-variant').attr('name');
                        campaignInfoAccumulatorService.setTshirtVariant(name);
                    };
 
                    var setTshirtVariantFun = function() {
                        element.find('.tshirt-variant').click(function() {
-                           var name = $(this).attr("name");
+                           var name = $(this).attr('name');
                            campaignInfoAccumulatorService.setTshirtVariant(
                                name
                            );
@@ -107,7 +107,7 @@ monadexDirectives.directive('mdTshirtStyleQualityPanel',
                        canvasService.saveCanvas();
 
                        if(canvasService.isEmptyCanvas()) {
-                           element.find("#emptyCanvasModal").modal('show');
+                           element.find('#emptyCanvasModal').modal('show');
                            e.preventDefault();
                        } else {
                            // when leaving the designer save the canvas
@@ -137,14 +137,14 @@ monadexDirectives.directive('mdTshirtDesignPanel', ['$timeout',
        return {
            restrict: 'E',
            scope: {
-               colors: "=",
+               colors: '=',
                images: '=',
-               fonts: "="
+               fonts: '='
            },
            templateUrl: 'partials/designer/tshirt-design-panel.html',
            link: function(scope, element) {
                $timeout(function() {
-                   element.find(".tab-link").click(function(event) {
+                   element.find('.tab-link').click(function(event) {
                        event.preventDefault();
                    });
                }, 0);
@@ -163,16 +163,16 @@ monadexDirectives.directive('mdTshirtCanvas', ['$timeout', 'canvasService',
             templateUrl: 'partials/designer/tshirt-canvas.html',
             link: function(scope, element, attrs) {
                 // initialize the canvasService
-                canvasService.init('tcanvas', "#tshirtFacing", "#shirtDiv");
+                canvasService.init('tcanvas', '#tshirtFacing', '#shirtDiv');
                 $timeout(function() {
-                    element.find("#drawingArea").hover(
+                    element.find('#drawingArea').hover(
                         canvasService.addCanvasBorder,
                         canvasService.removeCanvasBorder
                     );
 
                     element.find('#flip').click(function() {
                         var flipText = element.find('#flip-text');
-                        if (flipText.text()==="Show Back View") {
+                        if (flipText.text()==='Show Back View') {
                             flipText.text('Show Front View');
                             canvasService.flipBack();
                         } else {
@@ -197,9 +197,9 @@ monadexDirectives.directive('mdBgColorPicker', ['$timeout', 'canvasService',
             templateUrl: 'partials/designer/bg-color-picker.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
-                    scope.$watch("colors", function() {
-                        element.find('.color-preview').on("click", function(){
-                            var color = $(this).css("background-color");
+                    scope.$watch('colors', function() {
+                        element.find('.color-preview').on('click', function(){
+                            var color = $(this).css('background-color');
                             canvasService.changeBackground(color);
                         });
                     });
@@ -214,7 +214,7 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
         return {
             restrict: 'E',
             scope: {
-                fonts: "="
+                fonts: '='
             },
             templateUrl: 'partials/designer/text-input.html',
             link: function(scope, element, attrs) {
@@ -225,33 +225,33 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
                         }
                     });
 
-                    element.find("#text-bold").click(
+                    element.find('#text-bold').click(
                         canvasService.toggleActiveTextBold
                     );
 
-                    element.find("#text-italic").click(
+                    element.find('#text-italic').click(
                         canvasService.toggleActiveTextItalic
                     );
 
-                    element.find("#text-underline").click(
+                    element.find('#text-underline').click(
                         canvasService.toggleActiveTextUnderline
                     );
 
-                    element.find("#text-left").click(function() {
+                    element.find('#text-left').click(function() {
                         canvasService.setActiveTextAlignment('left');
                     });
 
-                    element.find("#text-center").click(function() {
+                    element.find('#text-center').click(function() {
                         canvasService.setActiveTextAlignment('center');
                     });
 
-                    element.find("#text-right").click(function() {
+                    element.find('#text-right').click(function() {
                         canvasService.setActiveTextAlignment('right');
                     });
 
-                    element.find(".font-family-picker").change(
+                    element.find('.font-family-picker').change(
                         function(event) {
-                            var sclass = ".font-family-picker option:selected",
+                            var sclass = '.font-family-picker option:selected',
                                 selected = element.find(sclass)[0],
                                 font = $(selected).text();
 
@@ -260,17 +260,17 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
                         }
                     );
 
-                    element.find("#text-string").keyup(function(e){
+                    element.find('#text-string').keyup(function(e){
                         var text = $(this)[0].value;
 
                         if(canvasService.activeTextP()) {
                             canvasService.renderActiveTextContent(text);
-                        } else if (text != "") {
+                        } else if (text != '') {
                             var miniColorValFun = function(sel) {
-                                return element.find(sel).minicolors("value");
+                                return element.find(sel).minicolors('value');
                             },
                                 fontColor = miniColorValFun('#text-fontcolor'),
-                                sfClass = ".font-family-picker option:selected",
+                                sfClass = '.font-family-picker option:selected',
                                 sFontObj = element.find(sfClass)[0],
                                 fontFamily = $(sFontObj).text();
 
@@ -282,7 +282,7 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
                     });
 
                     scope.$on('mdeTextObjectSelected', function(event, props) {
-                        element.find("#text-string").val(props.text);
+                        element.find('#text-string').val(props.text);
 
                         element.find('#text-fontcolor').minicolors(
                             'value', props.fontColor
@@ -296,16 +296,16 @@ monadexDirectives.directive('mdTextInput', ['$timeout', 'canvasService',
                             }
                         }
 
-                        element.find(".font-family-picker").val(index || 0);
+                        element.find('.font-family-picker').val(index || 0);
                     });
 
                     scope.$on('mdeObjectCleared', function(event) {
-                        element.find("#text-string").val("");
+                        element.find('#text-string').val('');
                         element.find('#text-fontcolor').minicolors(
-                            'value', "#000000"
+                            'value', '#000000'
                         );
 
-                        element.find(".font-family-picker").val(0);
+                        element.find('.font-family-picker').val(0);
                     });
                 }, 0);
             }
@@ -318,12 +318,12 @@ monadexDirectives.directive('mdImagePage', ['$timeout', 'canvasService',
         return {
             restrict: 'E',
             scope: {
-                images: "="
+                images: '='
             },
             templateUrl: 'partials/designer/image-page.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
-                    element.find(".img-thumbnail").on("click", function(e){
+                    element.find('.img-thumbnail').on('click', function(e){
                         var el = e.target;
                         canvasService.addImage(el.src);
                     });
@@ -339,19 +339,19 @@ monadexDirectives.directive('mdSalesGoalPanel',
         return {
             restrict: 'E',
             scope: {
-                tshirtsSalesGoal: "=",
-                tshirtsSalesGoalMin: "=",
-                tshirtsSalesGoalMax: "=",
-                tshirtPrice: "="
+                tshirtsSalesGoal: '=',
+                tshirtsSalesGoalMin: '=',
+                tshirtsSalesGoalMax: '=',
+                tshirtPrice: '='
             },
             templateUrl: 'partials/sales_goal/sales-goal-panel.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
-                    var sliderElem = element.find("#numOfTshirtSlider"),
-                        numInputElem = element.find("#numOfTshirtInput"),
-                        priceInputElem = element.find("#priceOfTshirtInput"),
+                    var sliderElem = element.find('#numOfTshirtSlider'),
+                        numInputElem = element.find('#numOfTshirtInput'),
+                        priceInputElem = element.find('#priceOfTshirtInput'),
                         slider = sliderElem.slider({}),
-                        NotAvailable = "N/A",
+                        NotAvailable = 'N/A',
                         baseCost = campaignInfoAccumulatorService.getBaseCost(),
                         profitFun = function(price) {
                             var profit = price - parseInt(baseCost);
@@ -455,17 +455,17 @@ monadexDirectives.directive('mdCampaignDetailsPanel',
         return {
             restrict: 'E',
             scope: {
-                campaignLengths: "="
+                campaignLengths: '='
             },
             templateUrl: 'partials/campaign_details/campaign-details-panel.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                    element.find('#campaignDetailNextStep').click(function(e) {
-                       var status = "ok",
+                       var status = 'ok',
                            verifyEmptyFun = function(field, warningId) {
                                if(!field) {
                                    element.find(warningId).removeClass('hide');
-                                   status = "not_ok";
+                                   status = 'not_ok';
                                } else {
                                    element.find(warningId).addClass('hide');
                                }
@@ -484,14 +484,14 @@ monadexDirectives.directive('mdCampaignDetailsPanel',
                             warningId: '#urlWarning'
                         },
                         {
-                            field: element.find("#tosCheckbox").prop("checked"),
+                            field: element.find('#tosCheckbox').prop('checked'),
                             warningId: '#tosWarning'
                         }
                        ].forEach(function(obj) {
                            verifyEmptyFun(obj.field, obj.warningId);
                        });
 
-                       if(status === "not_ok") {
+                       if(status === 'not_ok') {
                            e.preventDefault();
                        } else {
                            campaignInfoAccumulatorService.setTitle(
@@ -520,15 +520,15 @@ monadexDirectives.directive('mdCampaignInfoPanel',
         return {
             restrict: 'E',
             scope: {
-                campaignTitle: "=",
-                campaignDescription: "=",
-                campaignSalesGoal: "=",
-                campaignUrl: "=",
-                currentCampaignLength: "=",
-                tshirtVariant: "=",
-                tshirtType: "=",
-                tshirtBaseCost: "=",
-                tshirtPrice: "="
+                campaignTitle: '=',
+                campaignDescription: '=',
+                campaignSalesGoal: '=',
+                campaignUrl: '=',
+                currentCampaignLength: '=',
+                tshirtVariant: '=',
+                tshirtType: '=',
+                tshirtBaseCost: '=',
+                tshirtPrice: '='
             },
             templateUrl: 'partials/campaign_page/campaign-info-panel.html',
             link: function(scope, element, attrs) {

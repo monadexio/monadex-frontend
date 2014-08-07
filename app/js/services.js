@@ -7,7 +7,7 @@ var myService = angular.module('monadexApp.services', []);
 
 myService.value('version', '0.0.1');
 
-myService.service("canvasService", ['$rootScope',
+myService.service('canvasService', ['$rootScope',
     function($rootScope) {
         var canvas = null;
 
@@ -21,8 +21,8 @@ myService.service("canvasService", ['$rootScope',
             DownRightPoint  = [DrawAreaWidth, DrawAreaHeight],
             LineWidthOffset = 1,
             lineProps = {
-                "stroke":"#000000",
-                "strokeWidth":1,
+                'stroke':'#000000',
+                'strokeWidth':1,
                 hasBorders:false,
                 hasControls:false,
                 hasRotatingPoint:false,
@@ -214,7 +214,7 @@ myService.service("canvasService", ['$rootScope',
         };
 
         this.init = function(canvasId, imageId, tshirtDivId) {
-            console.log("initialize...");
+            console.log('initialize...');
             this.imageId = imageId;
             this.tshirtDivId = tshirtDivId;
 
@@ -262,15 +262,15 @@ myService.service("canvasService", ['$rootScope',
         this.saveCanvas = function() {
             // makes sure there are 1+ objects on the canvas
             if (canvas.getObjects().length != 0) {
-                if (this.currentSide === "front") {
+                if (this.currentSide === 'front') {
                     this.frontCanvas = JSON.stringify(canvas);
-                } else if (this.currentSide === "back") {
+                } else if (this.currentSide === 'back') {
                     this.backCanvas = JSON.stringify(canvas);
                 }
             } else {
-                if (this.currentSide === "front") {
+                if (this.currentSide === 'front') {
                     this.frontCanvas = null;
-                } else if (this.currentSide === "back") {
+                } else if (this.currentSide === 'back') {
                     this.backCanvas = null;
                 }
             }
@@ -278,13 +278,13 @@ myService.service("canvasService", ['$rootScope',
 
         this.restoreCanvas = function() {
             // restore the canvas if possible
-            var frontImg = "img/crew_front.png";
+            var frontImg = 'img/crew_front.png';
             this.renderCanvas(frontImg, this.frontCanvas);
-            this.currentSide = "front";
+            this.currentSide = 'front';
 
             // restore the background color if possible
             if(bgColor != null) {
-                $(this.tshirtDivId).css("backgroundColor", bgColor);
+                $(this.tshirtDivId).css('backgroundColor', bgColor);
             }
         };
 
@@ -313,7 +313,7 @@ myService.service("canvasService", ['$rootScope',
                     fill: fontColor,
                     scaleX: 0.5,
                     scaleY: 0.5,
-                    textAlign: "center",
+                    textAlign: 'center',
                     fontWeight: '',
                     hasRotatingPoint: true
                 }
@@ -372,7 +372,7 @@ myService.service("canvasService", ['$rootScope',
                 activeGroup = canvas.getActiveGroup();
             if (activeObject) {
                 canvas.remove(activeObject);
-                $("#text-string").val("");
+                $('#text-string').val('');
             }
             else if (activeGroup) {
                 var objectsInGroup = activeGroup.getObjects();
@@ -384,7 +384,7 @@ myService.service("canvasService", ['$rootScope',
         };
 
         this.renderCanvas = function(Img, tshirtCanvas) {
-            $(this.imageId).attr("src", Img);
+            $(this.imageId).attr('src', Img);
             canvas.clear();
             if(tshirtCanvas != null) {
                 canvas.loadFromJSON(
@@ -395,17 +395,17 @@ myService.service("canvasService", ['$rootScope',
         };
 
         this.flipBack = function() {
-            var backImg = "img/crew_back.png";
+            var backImg = 'img/crew_back.png';
             this.frontCanvas = JSON.stringify(canvas);
             this.renderCanvas(backImg, this.backCanvas);
-            this.currentSide = "back";
+            this.currentSide = 'back';
         };
 
         this.flipFront = function() {
-            var frontImg = "img/crew_front.png";
+            var frontImg = 'img/crew_front.png';
             this.backCanvas = JSON.stringify(canvas);
             this.renderCanvas(frontImg, this.frontCanvas);
-            this.currentSide = "front";
+            this.currentSide = 'front';
         };
 
         this.getFrontCanvas = function() {
@@ -418,7 +418,7 @@ myService.service("canvasService", ['$rootScope',
 
         this.changeBackground = function(color) {
             bgColor = color;
-            $(this.tshirtDivId).css("backgroundColor", color);
+            $(this.tshirtDivId).css('backgroundColor', color);
         };
 
         this.addCanvasBorder = function() {
@@ -446,7 +446,7 @@ myService.service("canvasService", ['$rootScope',
         this.renderActiveTextContent = function(text) {
             var activeObject = canvas.getActiveObject();
             if (activeObject && activeObject.type === 'text') {
-                if(text === "") {
+                if(text === '') {
                     canvas.remove(activeObject);
                 } else {
                     activeObject.setText(text);
@@ -511,7 +511,7 @@ myService.service("canvasService", ['$rootScope',
     }
 ]);
 
-myService.service("campaignInfoAccumulatorService", [
+myService.service('campaignInfoAccumulatorService', [
     function() {
         this.type = null;
         this.variantName = null;
